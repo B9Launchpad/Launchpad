@@ -1,0 +1,49 @@
+{
+    "greeting": "Hello!",
+    "chooseYourLanguage": "Choose your language",
+    "chooseYourRegion": "Choose your region",
+    "style": "Choose your style",
+    "styleOption": {
+        "light": "Light",
+        "dark": "Dark",
+        "auto": "Device Setting"
+    },
+    "personalDetails": {
+        "title": "Personal details",
+        "name": "Your name",
+        "email": "Your email address",
+        "wrongEmail": "Wrong address?",
+        "otherEmail": "Use a different email",
+        "picture": "Profile picture",
+        "pictureInstructions": "If you wish, you may upload your profile picture. Supported file formats: .png, .jpg, .jpeg, .svg, .webp."
+    },
+    "security": {
+        "password": {
+            "title": "Let's make your account secure",
+            "password": "Create password",
+            "repeatPassword": "Repeat password",
+            "configure2FA": "I would like to configure 2FA",
+            "2FAInstructions": "2-Factor-Authentication, or 2FA, is a great way to secure your account against potential hackers.",
+            "require2FA": "Require 2FA for all users"
+        },
+        "methods": {
+            "title": "Choose your 2FA methods",
+            "app": "Authenticator App",
+            "passkey": "Passkey",
+            "passkeyNote": "Note: Passkeys simplify login, but do not add extra security."
+        },
+        "2FA": {
+            "title": "Your authenticator app code",
+            "instructions": "Download or open an authenticator app, such as Google Authenticator, Microsoft Authenticator, etc. and scan",
+            "notScannable": "If you cannot scan this QR code, please enter this secret code manually into your authenticator app: <1>{{code}}</1>",
+            "6digitCode": "6-digit-code",
+            "6digitCodeInstructions": "Please enter the 6-digit passcode shown in your authenticator app"
+        }
+    },
+    "company": {
+        "title": "Your company",
+        "name": "Company name",
+        "logo": "Company logo",
+        "logoInstructions": "If you wish, you may upload your company's logo to replace B9 Launchpad logo throughout the panel."
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "showMore": "Mehr zeigen",
+    "showLess": "Weniger zeigen",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfUse": "Nutzungsbedingungen",
+    "copyrightNote": "alle rechte vorbehalten",
+    "greeting": "Hallo, {{name}}!",
+    "submit": "Bestätigen",
+    "tryAgain": "Erneut versuchen",
+    "continue": "Weiter",
+    "or": "oder",
+    "fillOutError": "Dieses Feld muss ausgefüllt werden."
+}

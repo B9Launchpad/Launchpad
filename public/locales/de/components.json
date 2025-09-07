@@ -1,0 +1,19 @@
+{
+    "fileupload": {
+        "drag": "Ziehen Sie Datei hierin zum Hochladen",
+        "browse": "Dateien durchsuchen",
+        "supportedFormats": "Unterstützte Erweiterungen: {{formats}}.",
+        "errorRejectedFiles_one": "{{count}} Datei wurde nicht hochgeladen, da sie nicht erlaubt ist.",
+        "errorRejectedFiles_plural": "{{count}} Dateien wurden nicht hochgeladen, da sie nicht erlaubt sind."
+    },
+    "newPassword": {
+        "password": "Neues Passwort",
+        "repeatPassword": "Passwort wiederholen",
+        "instructions": "Ihr Passwort muss die folgenden Anforderungen erfüllen:",
+        "characters": "Zeichen",
+        "lowercase": "klein",
+        "uppercase": "groß",
+        "specialCharacter": "Sonderzeichen",
+        "numbers": "Zahlen"
+    }
+}

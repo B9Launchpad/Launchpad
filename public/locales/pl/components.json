@@ -1,0 +1,17 @@
+{
+    "fileupload": {
+        "drag": "Przeciągnij pliki, aby je przesłać",
+        "browse": "Wybierz plik",
+        "supportedFormats": "Obsługiwane formaty plików: {{formats}}."
+    },
+    "newPassword": {
+        "password": "Nowe hasło",
+        "repeatPassword": "Powtórz hasło",
+        "instructions": "Twoje hasło musi spełniać następujące wymagania:",
+        "characters": "znaków",
+        "lowercase": "małe",
+        "uppercase": "wielkie",
+        "specialCharacter": "specjalny",
+        "numbers": "cyfry"
+    }
+}

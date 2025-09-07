@@ -1,0 +1,19 @@
+{
+    "fileupload": {
+        "drag": "Drag files to upload",
+        "browse": "Browse files",
+        "supportedFormats": "Supported file formats: {{formats}}.",
+        "errorRejectedFiles_one": "{{count}} file was not uploaded because it is not allowed.",
+        "errorRejectedFiles_other": "{{count}} files were not uploaded because they are not allowed."
+    },
+    "newPassword": {
+        "password": "New password",
+        "repeatPassword": "Repeat password",
+        "instructions": "Your password must meet the following requirements:",
+        "characters": "characters",
+        "lowercase": "lowercase",
+        "uppercase": "uppercase",
+        "specialCharacter": "special",
+        "numbers": "numbers"
+    }
+}

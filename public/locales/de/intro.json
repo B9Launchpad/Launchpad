@@ -1,0 +1,49 @@
+{
+    "greeting": "Hallo!",
+    "chooseYourLanguage": "Wählen Sie Ihre Sprache",
+    "chooseYourRegion": "Wählen Sie Ihr Region",
+    "style": "Wählen Sie Ihr Stil",
+    "styleOption": {
+        "light": "Hell",
+        "dark": "Dunkel",
+        "auto": "Mit Gerät synchronisieren"
+    },
+    "personalDetails": {
+        "title": "Persönliche Daten",
+        "name": "Ihre Name",
+        "email": "Ihre Email Adresse",
+        "wrongEmail": "Falsche Adresse?",
+        "otherEmail": "Andere Email verwenden",
+        "picture": "Profilbild",
+        "pictureInstructions": "Wenn Sie möchten, können Sie Ihres Profilbild hochladen. Unterstützte Erweiterungen: .png, .jpg, .jpeg, .svg, .webp."
+    },
+    "security": {
+        "password": {
+            "title": "Lass uns Ihr Konto schützen",
+            "password": "Passwort erstellen",
+            "repeatPassword": "Passwort wiederholen",
+            "configure2FA": "Ich möchte 2FA konfigurieren",
+            "2FAInstructions": "2-Faktor-Authentifizierung, oder kurz 2FA, ist eine gute Möglichkeit, Ihrem {{productName}}-Konto eine zusätzliche Sicherheitsebene hinzuzufügen, um sicherzustellen, dass nur Sie sich einloggen können.",
+            "require2FA": "2FA für alle Benutzern erfordern"
+        },
+        "methods": {
+            "title": "Wählen Sie Ihre 2FA-Methode aus",
+            "app": "Authentifizierungs-App",
+            "passkey": "Sicherheitsschüssel",
+            "passkeyNote": "Hinweis: {{passkey}} vereinfachen die Anmeldung, bieten aber keine zusätzliche Sicherheit."
+        },
+        "2FA": {
+            "title": "Ihre Authentifizierungs-App-Code",
+            "instructions": "Laden Sie eine Authentifizierungs-Apps, z.B.: Google Authenticator, Microsoft Authenticator, usw. herunter oder öffnen Sie sie, und scannen",
+            "notScannable": "Falls Sie diesen QR-Code nicht scannen können, geben Sie diesen Geheimcode bitte manuell in Ihre Authentifizierungs-App ein: <1>{{code}}</1>",
+            "6digitCode": "6-stelliger Code",
+            "6digitCodeInstructions": "Bitte geben Sie den 6-stelligen Passcode ein, der in Ihrer Authentifizierungs-App angezeigt wird"
+        }
+    },
+    "company": {
+        "title": "Ihr Unternehmen",
+        "name": "Firmenname",
+        "logo": "Firmenlogo",
+        "logoInstructions": "Wenn Sie möchten, können Sie des Logo Ihrer Firma hochladen, das das Logo {{productName}}s ersetzen wird."
+    }
+}

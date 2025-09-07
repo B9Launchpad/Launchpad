@@ -1,0 +1,49 @@
+{
+    "greeting": "Cześć!",
+    "chooseYourLanguage": "Wybierz swój język",
+    "chooseYourRegion": "Wybierz swój region",
+    "style": "Wybierz swój styl",
+    "styleOption": {
+        "light": "Świetły",
+        "dark": "Ciemny",
+        "auto": "Synchronizuj z urządzeniem"
+    },
+    "personalDetails": {
+        "title": "Dane osobowe",
+        "name": "Twoje imię",
+        "email": "Twój adres e-mail",
+        "wrongEmail": "Nieprawidłowy adres?",
+        "otherEmail": "Użyj innego adresu e-mail",
+        "picture": "Zdjęcie profilowe",
+        "pictureInstructions": "Jeśli chcesz, możesz przesłać swoje zdjęcie profilowe. Obsługiwane formaty plików: .png, .jpg, .jpeg, .svg, .webp."
+    },
+    "security": {
+        "password": {
+            "title": "Zadbajmy o bezpieczeństwo Twojego konta",
+            "password": "Stwórz hasło",
+            "repeatPassword": "Powtórz hasło",
+            "configure2FA": "Chcę skonfigurować 2FA",
+            "2FAInstructions": "Uwierzytelnianie dwuskładnikowe (2FA) to świetny sposób na dodanie dodatkowej warstwy bezpieczeństwa do konta {{productName}}, aby mieć pewność, że tylko Ty możesz się zalogować.",
+            "require2FA": "Wymagaj 2FA dla wszystkich użytkowników"
+        },
+        "methods": {
+            "title": "Wybierz swoją metodę 2FA",
+            "app": "Aplikacja uwierzytelniająca",
+            "passkey": "Passkey",
+            "passkeyNote": "Uwaga: {{passkey}} upraszcza logowanie, ale nie zwiększa bezpieczeństwa."
+        },
+        "2FA": {
+            "title": "Twój kod z aplikacji uwierzytelniającej",
+            "instructions": "Pobierz lub otwórz aplikację uwierzytelniającą, np. Google Authenticator, Microsoft Authenticator itd., i zeskanuj kod",
+            "notScannable": "Jeśli nie możesz zeskanować tego kodu QR, wpisz ten tajny kod ręcznie w swojej aplikacji uwierzytelniającej: <1>{{code}}</1>",
+            "6digitCode": "6-cyfrowy kod",
+            "6digitCodeInstructions": "Wpisz 6-cyfrowy kod wyświetlany w Twojej aplikacji uwierzytelniającej"
+        }
+    },
+    "company": {
+        "title": "Twoja firma",
+        "name": "Nazwa firmy",
+        "logo": "Logotyp firmy",
+        "logoInstructions": "Jeśli chcesz, możesz przesłać logotyp swojej firmy, który zamieni logotyp {{productName}}a."
+    }
+}

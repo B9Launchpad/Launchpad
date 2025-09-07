@@ -1,0 +1,17 @@
+{
+    "fileupload": {
+        "drag": "Перетащите сюда файлы, чтобы их загрузить",
+        "browse": "Выбрать файл",
+        "supportedFormats": "Поддерживаемые форматы файлов: {{formats}}."
+    },
+    "newPassword": {
+        "password": "Новый пароль",
+        "repeatPassword": "Повторите пароль",
+        "instructions": "Ваш пароль должен соответствовать следующим требованиям:",
+        "characters": "символов",
+        "lowercase": "маленькие",
+        "uppercase": "большие",
+        "specialCharacter": "спец. символы",
+        "numbers": "цифры"
+    }
+}

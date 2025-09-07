@@ -1,0 +1,7 @@
+{
+    "require2fa": false,
+    "requireRegularPasswordChange": false,
+    "sessionTimeInDays": 7,
+    "maxLoginAttemtps": false,
+    "allowRegistration": false
+}

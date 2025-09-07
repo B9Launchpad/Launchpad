@@ -1,0 +1,50 @@
+/* This file is used for basic definitions of global HTML elements, such as h1, h2, ul, li, p, etc.
+
+For more intricate styles related to visual identity, where, for example, layouts need to be configured, please use main.css, or for more complex style definitions
+please create a separate stylesheet file. 
+
+For example, if your element only appears once and needs a lot of styling (e.g. over 100 lines), create a separate file for it. */
+
+h1 {
+    font: var(--text-title-header);
+    margin: 0;
+    color: var(--text);
+}
+
+h2 {
+    font: var(--text-subtitle);
+    margin: 0;
+    color: var(--text);
+}
+
+p {
+    color: var(--text);
+}
+
+small {
+    font: var(--font-small);
+    color: var(--muted);
+}
+
+a {
+    cursor: pointer;
+    font: var(--font-small);
+    color: var(--access);
+}
+
+em {
+    font: var(--font-emphasised);
+    color: var(--text);
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.w100 {
+    width: 100%;
+}

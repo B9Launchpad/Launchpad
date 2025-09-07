@@ -1,0 +1,13 @@
+{
+    "showMore": "Pokaż więcej",
+    "showLess": "Pokaż mniej",
+    "privacyPolicy": "Polityka prywatności",
+    "termsOfUse": "Warunki użytkowania",
+    "copyrightNote": "wszelkie prawa zastrzeżone",
+    "greeting": "Witamy, {{name}}!",
+    "submit": "Podtwierdź",
+    "tryAgain": "Spróbuj ponownie",
+    "continue": "Dalej",
+    "or": "albo",
+    "fillOutError": "To pole musi zostać wypełnione."
+}

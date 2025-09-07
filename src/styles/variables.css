@@ -1,0 +1,209 @@
+/* General & Light Theme Variable Declarations */
+:root { 
+    /* Text and Basic Variables */
+    --text: #000000;
+    --muted: #5C5E66;
+    --warning: #F0B132;
+    --access: #5865F2;
+    --success: #43A25B;
+    --critical: #F23F42;
+    --contrast: #FFFFFF;
+    --icon: #1D1D1B;
+
+    /* UI Backgrounds */
+    --background: #EEEEEE;
+    --background-content: #FFFFFF;
+    --background-login: #EEEEEECC;
+
+    /* Buttons, tags, etc. Backgrounds */
+    /* Primary Type */
+    --background-primary: #000000;
+    --hover-background-primary: #AAAAAA;
+    --hover-text-primary: #000000;
+    /* Secondary Type */
+    --background-secondary: #CBCBCB;
+    --hover-background-secondary: #5C5E66;
+    --hover-text-secondary: #FFFFFF;
+    /* Access Type Button */
+    --background-access: #DEE1FE;
+    --hover-background-access: #5865F2;
+    --hover-text-access: #DEE1FE;
+    /* Critical Type */
+    --background-critical: #F1C5C1;
+    --hover-background-critical: #F23F42;
+    --hover-text-critical: #F1C5C1;
+
+    --background-warning: #FFF1D4;
+    --background-tag: #D9D9D9;
+    /* Table */
+    --background-table-hero: #D9D9D9;
+
+    /* Other Primary */
+    --purple: #9747FF;
+    --pink: #DC6BA6;
+    --orange: #E84F13;
+    --blue: #2A3D8F;
+    --brown: #A75616;
+    /* Other Backgrounds */
+    --background-purple: #E3CDFF;
+    --background-pink: #FFE2F1;
+    --background-orange: #FFDDD0;
+    --background-blue: #CDD6FF;
+    --background-brown: #E4B997;
+
+    /* Standard font size declaration */
+    --font-family: 'Montserrat';
+
+    --font-weight-bold: 600;
+    --font-weight-regular: 500;
+    --font-weight-thin: 400;
+
+    --font-size-primary: 20px;
+    --font-size-secondary: 16px;
+    --font-size-tertiary: 14px;
+    --font-size-title: 24px;
+    --font-size-header: 32px;
+    --font-size-large: 48px;
+
+    /* Standard font combination declaration */
+
+    --text-title-large:
+        var(--font-weight-bold)
+        var(--font-size-large)
+        var(--font-family);
+
+    --text-title-header:
+        var(--font-weight-bold)
+        var(--font-size-header)
+        var(--font-family);
+
+    --text-subtitle: 
+        var(--font-weight-regular)
+        var(--font-size-title)
+        var(--font-family);
+    
+    --text-primary-bold:
+        var(--font-weight-bold)
+        var(--font-size-primary)
+        var(--font-family);
+
+    --font-primary:
+        var(--font-weight-regular)
+        var(--font-size-primary)
+        var(--font-family);
+        
+    --text-secondary:
+        var(--font-weight-regular)
+        var(--font-size-secondary)
+        var(--font-family);
+
+    --text-tertiary:
+        var(--font-weight-regular)
+        var(--font-size-tertiary)
+        var(--font-family);
+
+    --input-label:
+        var(--font-weight-bold)
+        var(--font-size-primary)
+        var(--font-family);
+
+    --input-description:
+        var(--font-weight-regular)
+        var(--font-size-secondary)
+        var(--font-family);
+
+    --input-content: 
+        var(--font-weight-regular)
+        var(--font-size-secondary)
+        var(--font-family);
+
+    --font-small:
+        var(--font-weight-regular)
+        var(--font-size-secondary)
+        var(--font-family);
+
+    --font-emphasised:
+        var(--font-weight-regular)
+        var(--font-size-primary)
+        var(--font-family);
+
+    --font-title:
+        var(--font-weight-bold)
+        var(--font-size-title)
+        var(--font-family);
+
+    /* Miscelanneous */
+
+    --radius-small: 8px;
+    --radius: 12px;
+    --radius-large: 24px;
+    --gap-large: 24px;
+    --gap-standard: 12px;
+    --gap-small: 6px;
+    --transition: 150ms ease-in-out;
+    --border-thin: solid 1px;
+
+    --padding-outer-border: 3px;
+
+    --transition: 150ms ease-out;
+
+    --focus-outline: 2px solid var(--access);
+
+    --checkbox-radio-size: 20px;
+}
+
+/* Dark Mode Variable Declarations */
+.dark {
+    /* Text and Basic Variables */
+    --text: #FFFFFF;
+    --muted: #868686;
+    --warning: #F0B132;
+    --success: #3BA561;
+    --access: #5865F2;
+    --critical: #E14636;
+    --contrast: #000000;
+    --icon: #F8F8F8;
+
+    /* UI Backgrounds */
+    --background: #0D0D0D;
+    --background-content: #1D1D1B;
+    --background-login: #0D0D0DCC;
+    /* Buttons, tags, etc. Backgrounds */
+    --background-primary: #FFFFFF;
+    --background-secondary: #393939;
+    --background-warning: #FFF1D4;
+    --background-access: #DEE1FE;
+    --background-critical: #F1C5C1;
+    --background-tag: #E2E2E2;
+    /* Table */
+    --background-table-hero: #2C2C2C;
+
+    /* Other Primary */
+    --purple: #9747FF;
+    --pink: #DC6BA6;
+    --orange: #E84F13;
+    --blue: #2A3D8F;
+    --brown: #A75616;
+    /* Other Backgrounds */
+    --background-purple: #E3CDFF;
+    --background-pink: #FFE2F1;
+    --background-orange: #FFDDD0;
+    --background-blue: #CDD6FF;
+    --background-brown: #E4B997;
+}
+
+/* Bringing standard styles down to desired Launchpad Identity */
+
+ul {
+    list-style-type: none;
+    padding-inline-start: none;
+    margin: 0px;
+}
+
+a {
+    text-decoration: none;
+}
+
+p {
+    margin: 0;
+}

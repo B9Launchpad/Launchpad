@@ -1,0 +1,15 @@
+{
+    "showMore": "View more",
+    "showLess": "View less",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfUse": "Terms of Use",
+    "copyrightNote": "all rights reserved",
+    "greeting": "Hi, {{name}}!",
+    "submit": "Submit",
+    "tryAgain": "Try again",
+    "Launchpad": "Launchpad",
+    "B9 Creators": "B9 Creators",
+    "continue": "Continue",
+    "or": "or",
+    "fillOutError": "This field must be filled out."
+}

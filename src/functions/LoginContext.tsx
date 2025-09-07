@@ -1,0 +1,66 @@
+import { createContext, useContext, useState } from "react";
+import { useCookie } from "./useCookie";
+import securityConfig from "../config/security.json"
+import { useNavigate } from "react-router-dom";
+
+export type loginCredentials = { username: string, password: string} | null
+type LoginStatus = "isIdle" | "isProcessing" | "isError";
+interface LoginContextProps {
+    status: LoginStatus;
+    handleRequest: (credentials: loginCredentials) => void;
+    handleRetry: () => void;
+    setStatus: (status: LoginStatus) => void;
+}
+
+const LoginContext = createContext<LoginContextProps | undefined>(undefined);
+
+export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
+    const [status, setStatus] = useState<LoginStatus>("isIdle")
+    const [credentials, setCredentials] = useState<loginCredentials>(null);
+    const navigate = useNavigate()
+
+    const handleRequest = async (credentials: loginCredentials) => {
+        setCredentials(credentials)
+        try {
+            const response = await fetch('http://localhost:8080/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(credentials),
+                mode: 'cors', // явно указываем CORS режим
+                credentials: "include"
+            });
+            setStatus("isProcessing");
+
+            const status = await response.status;
+
+            if(status === 202) {
+                navigate("/onboarding/playground");
+            }
+        } catch (error: any) {
+            console.log(error);
+            setStatus("isError")
+        }
+    }
+
+    const handleRetry = () => {
+        if(credentials) handleRequest(credentials);
+    }
+
+    return (
+        <LoginContext.Provider value={{status, handleRequest, handleRetry, setStatus}}>
+            { children }
+        </LoginContext.Provider>
+
+    )
+}
+
+export const useLogin = () => {
+  const ctx = useContext(LoginContext);
+  if (!ctx) {
+    throw new Error("useLogin must be used within a LoginProvider");
+  }
+  return ctx; // TypeScript now knows this is LoginContextProps, not undefined
+};

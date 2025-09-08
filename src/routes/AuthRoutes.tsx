@@ -17,7 +17,7 @@ export default function AuthRoutes() {
                     <LoginPage/>
                 </LoginProvider>
             </GuestLayout>} />
-        <Route path="/timeout" element={<GuestLayout backgroundURL='/static/guest-building.webp'><SessionTimeoutPage/></GuestLayout>} />
+        <Route path="/timeout" element={<GuestLayout backgroundURL='/static/GuestLayout/guest-spacious.webp'><SessionTimeoutPage/></GuestLayout>} />
         <Route path="/reset" element={<GuestLayout backgroundURL='/static/guest-soviet.webp'><PasswordResetPage/></GuestLayout>} />
     </Routes>
     )

@@ -34,7 +34,7 @@ export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
             });
             setStatus("isProcessing");
 
-            const status = await response.status;
+            const status = response.status;
 
             if(status === 202) {
                 navigate("/onboarding/playground");

@@ -14,6 +14,10 @@
     font: var(--text-title-large)
 }
 
+body {
+    background-color: var(--background-content);
+}
+
 /* Guest layout settings */
 
 div.guest__layout {

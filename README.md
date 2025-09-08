@@ -4,7 +4,7 @@ This documentation explains the standards undertaken in coding of frontend apps 
 ### Note: Please keep Server-Side Rendering in mind whilst making changes or developing this frontend.
 #### What does this mean?
 To keep this project Server-Side Rendering (SSR)-friendly, you need to avoid the direct use of elements that a server does not have, for example, ``window``, ``document``and so on.
-If you require to use elements that are not available to the SSR API, please provide them into ``useEffect`` hook with workarounds for SSR, compatibility, for example:
+If you would like or require to use elements that are not available to the SSR API, please provide them into ``useEffect`` hook or filter SSR with ``typeof window`` checks to provide workarounds for SSR, compatibility, for example:
 
 ```ts
 // I need to check if <html> has class "dark".
@@ -17,16 +17,20 @@ useEffect(() => {
 }, [])
 ```
 
-For more information on this topic, there is a very [helpful article](https://stephencook.dev/blog/using-window-in-react-ssr/) about this.
+For more information on this topic, there is a [very helpful article](https://stephencook.dev/blog/using-window-in-react-ssr/) about this.
 
 ## Technologies used
 Frontend makes use of **TSX (React Typescript)** by default. Please make sure to avoid using standard or incompatible JavaScript code and/or libraries.
 
-For styling, the **standard CSS** option is currently the enforced one. This means you must avoid using TailWind, SCSS, etc. as it will be incompatible with the Launchpad. If you have any suggestions on improving stylesheet coding, please report yourself in the group chat.
+For styling, the **standard CSS** option is currently the enforced one. This means you must avoid using TailWind, SCSS, etc. as it will be incompatible with the Launchpad. If you have any suggestions on improving stylesheet coding, please create a ticket in the **Issues** section of this repository.
 
-For localisation, **i18n** method and the corresponding library are being used. Please avoid putting text in directly without leaving a note to localise.
+For localisation, **i18n** method and the [corresponding library](https://www.i18next.com/) are being used. Please avoid putting text in directly without leaving a note to localise and/or translate:
 
-Currently, there are 4 languages supported: Standard German, English, Russian and Polish. Their localisation files may be found here:
+```ts
+// TODO: i18n : localise/translate
+```
+
+Currently, there are 4 languages supported: Standard German, British English, Russian and Polish. Their localisation files may be found here:
 ```
 /src/i18n/en.json
 /src/i18n/de.json
@@ -36,7 +40,7 @@ Currently, there are 4 languages supported: Standard German, English, Russian an
 
 Configuration for i18n is at ``src/i18n/index.ts``.
 
-For animations, feel free to use standard CSS. However, knowledge of ``react-spring`` is recommended to implement more difficult or two-way animations that would take more effort and logical difficulties in CSS and TSX files (i.e. manipulating height transition animations, etc.)
+For animations, feel free to use standard CSS. However, knowledge of [react-spring](https://www.react-spring.dev/docs) is recommended to implement more difficult or two-way animations that would take more effort and logical difficulties in CSS and TSX files (i.e. manipulating height transition animations, etc.)
 
 ## Dealing with components
 

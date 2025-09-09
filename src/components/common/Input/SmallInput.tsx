@@ -18,6 +18,7 @@ interface SmallInputProps {
 const InputSmall = forwardRef<HTMLInputElement, SmallInputProps>(({ label, placeholder, id, autofocus, onChange, type = 'text', children, error, value, maxLength, autoComplete = 'off', name}, ref) => {
     const inputRef = (ref as React.RefObject<HTMLInputElement>);
     const [charCount, setCharCount] = useState(value?.length);
+    const [currentValue, setCurrentValue] = useState<string | undefined>(value);
 
     useEffect(() => {
         setCharCount(value?.length);
@@ -33,13 +34,14 @@ const InputSmall = forwardRef<HTMLInputElement, SmallInputProps>(({ label, place
             onChange(e);
         }
         setCharCount(e.target.value.length);
+        setCurrentValue(e.currentTarget.value);
     }
 
 
     return (
         <div className="input__small--wrap">
             { label && ( <label className={`input__label`}>{label}</label> )}
-            <input maxLength={maxLength} id={id} autoFocus={autofocus} autoComplete={autoComplete} name={name} onChange={handleChange} onClick={disableError} value={value} type={type} className={`input__main ${error ? 'input__main--error' : ''}`} ref={inputRef} placeholder={placeholder}></input>
+            <input maxLength={maxLength} id={id} autoFocus={autofocus} autoComplete={autoComplete} name={name} onChange={handleChange} onClick={disableError} value={currentValue} type={type} className={`input__main ${error ? 'input__main--error' : ''}`} ref={inputRef} placeholder={placeholder}></input>
             {maxLength && (
                 <small className="input__char--counter">
                     {charCount}/{maxLength}

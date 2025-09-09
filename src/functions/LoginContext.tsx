@@ -4,9 +4,10 @@ import securityConfig from "../config/security.json"
 import { useNavigate } from "react-router-dom";
 
 export type loginCredentials = { username: string, password: string} | null
-type LoginStatus = "isIdle" | "isProcessing" | "isError";
+type LoginStatus = "isIdle" | "isProcessing" | "isError" | "isUnauthorised";
 interface LoginContextProps {
     status: LoginStatus;
+    credentials: loginCredentials;
     handleRequest: (credentials: loginCredentials) => void;
     handleRetry: () => void;
     setStatus: (status: LoginStatus) => void;
@@ -38,7 +39,9 @@ export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
 
             if(status === 202) {
                 navigate("/onboarding/playground");
-            }
+            } else if (status === 401) (
+                setStatus("isUnauthorised")
+            )
         } catch (error: any) {
             console.log(error);
             setStatus("isError")
@@ -50,7 +53,7 @@ export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
     }
 
     return (
-        <LoginContext.Provider value={{status, handleRequest, handleRetry, setStatus}}>
+        <LoginContext.Provider value={{status, credentials, handleRequest, handleRetry, setStatus}}>
             { children }
         </LoginContext.Provider>
 

@@ -12,15 +12,30 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({children}) => {
 
     // TODO: Change token verification via backend :\
 
-    useEffect(() => {
-        const token = "w21r"
+    const verifyToken = async() => {
 
+        try {
+            const response = await fetch('http://localhost:8080/verify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                mode: 'cors', // явно указываем CORS режим
+                credentials: "include"
+            });
 
-        if(!token) {
+            const status = response.status;
+
+            if(status === 200) setIsAuthenticated(true);
+
+        } catch (error: any) {
             setIsAuthenticated(false);
-        } else {
-            setIsAuthenticated(true)
         }
+    }
+
+    useEffect(() => {
+        verifyToken();
     }, [])
 
     if(isAuthenticated === null) return <main><h1>Loading...</h1></main>

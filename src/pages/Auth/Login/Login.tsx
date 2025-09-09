@@ -18,13 +18,22 @@ const LoginPromptPage: React.FC = () => {
     const additionalOAuthRef = useRef<HTMLDivElement>(null);
     const loginRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
-    const { handleRequest } = useLogin();
+    const { handleRequest, status, credentials } = useLogin();
+    const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
 
     useEffect(() => {
         if(additionalOAuthRef.current) {
             setAdditionalOAuthHeight(additionalOAuthRef.current.scrollHeight);
         }
     })
+
+    useEffect(() => {
+        if(status === "isUnauthorised") {
+            setErrors({
+                username: t('processing.unauthorisedError')
+            })
+        }
+    }, [status, handleRequest])
 
     const SpringConfig = {
         mass: 1,
@@ -48,7 +57,19 @@ const LoginPromptPage: React.FC = () => {
             password: passwordRef.current.value
         }
 
-        handleRequest(credentials);
+        let newErrors: typeof errors = {};
+        
+        if(!credentials.username) {
+            newErrors.username = t('validation.usernameRequired')
+        } else if(credentials.username && !credentials.password) {
+            newErrors.password = t('validation.passwordRequired');
+        }
+
+        setErrors(newErrors);
+
+        if (Object.keys(newErrors).length === 0) {
+            handleRequest(credentials);
+        }
     }
 
 
@@ -60,9 +81,9 @@ const LoginPromptPage: React.FC = () => {
                     <small>{t('instructions')}</small>
                 </div>
                 {/* Login */}
-                <InputSmall ref={loginRef} label={t('loginPrompt')} />
+                <InputSmall ref={loginRef} value={credentials?.username} label={t('loginPrompt')} error={errors.username}/>
                 {/* Password */}
-                <InputSmall ref={passwordRef} type="password" label={t('passwordPrompt')}><small>{t('forgotPassword')} <NavLink to={'/login/reset'}>{t('resetPrompt')}</NavLink></small></InputSmall>
+                <InputSmall ref={passwordRef} error={errors.password} type="password" label={t('passwordPrompt')}><small>{t('forgotPassword')} <NavLink to={'/login/reset'}>{t('resetPrompt')}</NavLink></small></InputSmall>
             </div>
             <div className="secondary__content centre">
                 <Button onClick={handleClick}>{t('login')}</Button>

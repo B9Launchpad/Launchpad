@@ -1,4 +1,4 @@
-import { useRoutes } from 'react-router-dom';
+import { Navigate, useRoutes } from 'react-router-dom';
 import AuthRoutes from './AuthRoutes';
 import IntroRoutes from './IntroRoutes';
 //import DashboardRoutes from './DashboardRoutes';
@@ -13,6 +13,10 @@ export default function AppRoutes() {
     {
       path: 'onboarding/*',
       element: <IntroRoutes />
+    },
+    {
+      path: '/',
+      element: <Navigate to="/onboarding/playground" replace/>
     }
   ]);
 

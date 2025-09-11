@@ -103,6 +103,8 @@ const NewPassword = forwardRef<NewPasswordRef>((_props, ref) => {
     }
   }, [contentRef.current, passwordError]);
 
+  // TO DO: Export spring configs instead of writing same ones into different files.
+
     const SpringConfig = {
         mass: 1,
         tension: 200,
@@ -114,6 +116,7 @@ const NewPassword = forwardRef<NewPasswordRef>((_props, ref) => {
     height: expanded ? contentHeight : 0,
     opacity: expanded ? 1 : 0,
     overflow: 'hidden',
+    // Overflow Y?
     config: SpringConfig,
   });
 
@@ -124,6 +127,8 @@ const NewPassword = forwardRef<NewPasswordRef>((_props, ref) => {
                 <div className="input-requirements__wrap">
                     <p>{t('newPassword.instructions')}</p>
                     <div className="input-requirements__content">
+
+                        { /* TO DO: Wrap these into single component*/ }
                         <div className={`input-requirements__item ${fulfilledCharacterCount? "active" : ""}`}>
                             <em className="input-requirements__requirement">8-20</em>
                             <small>{t('newPassword.characters')}</small>

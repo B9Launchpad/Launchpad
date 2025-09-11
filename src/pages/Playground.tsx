@@ -18,24 +18,30 @@ import { useContext, useRef, useState } from 'react';
 import SearchContext, { SearchProvider } from '../functions/SearchContext';
 import axios from 'axios';
 import { useCookie } from '../functions/useCookie';
+import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 
 function PlaygroundPage() {
   const smallTableRef = useRef<SmallTableRef<ReceiptItem>>(null);
   const { getCookie } = useCookie();
+  const navigate = useNavigate();
+  const { t } = useTranslation("auth");
 
   const AxiosPost = async () => {
-    const token = getCookie("token");
-
-    const response = await fetch("http://localhost:8080/new-profile", {
-      method: "GET",
+    const response = await fetch("http://localhost:8080/logout", {
+      method: "POST",
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
+      mode: 'cors',
+      credentials: 'include'
     });
 
-    const responseText = await response.text();
-    alert(responseText)
+    const status = response.status;
+    if(status < 300) {
+      navigate("/login")
+    }
   }
 
   const options = [
@@ -80,7 +86,7 @@ const handleGet = () => {
   return (
     <section style={{backgroundColor: "var(--background-content)"}}>
     
-    <Button onClick={AxiosPost}>Send shit to axios</Button>
+    <Button variant='critical' onClick={AxiosPost}>{t('logout.logout')}</Button>
 
     <SearchProvider>
       <InputSearch label='Search' placeholder="Search by item names, SKU, quantity and price"></InputSearch>

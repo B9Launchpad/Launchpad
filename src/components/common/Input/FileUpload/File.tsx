@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
 import { getExtensionsForMimeType } from "../../../../utils/mime-lookup";
+import IconFileTypeArchive from "../../../icons/Files/Archive";
+import IconFileTypeOther from "../../../icons/Files/Other";
+import Button from "../../Button";
+import IconSecurity from "../../../icons/Security";
+import IconBin from "../../../icons/Bin";
 
 
-interface FileViewProps {
+interface FilePreviewProps {
     file: { 
+        name: string;
         type: string;
         size: number;
     }
@@ -12,7 +18,7 @@ interface FileViewProps {
 
 type FileType = 'archive' | 'other'
 
-const FileView: React.FC<FileViewProps> = ({ file, editMode }) => {
+const FilePreview: React.FC<FilePreviewProps> = ({ file, editMode }) => {
     const [fileType, setFileType] = useState<FileType>();
     const extensions = getExtensionsForMimeType(file.type);
 
@@ -23,7 +29,7 @@ const FileView: React.FC<FileViewProps> = ({ file, editMode }) => {
 
         const k = 1000
         const dm = decimals < 0 ? 0 : decimals
-        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PiB', 'EiB', 'ZiB', 'YiB']
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
 
         const i = Math.floor(Math.log(bytes) / Math.log(k))
 
@@ -40,11 +46,25 @@ const FileView: React.FC<FileViewProps> = ({ file, editMode }) => {
     
 
     return (
-        <>
-            <p>{fileType}</p>
-            <p>{formatBytes(file.size)}</p>
-        </>
+        <div className="file-preview__wrap">
+            <div className="file-preview__main">
+                {fileType === 'archive' ? (
+                    <IconFileTypeArchive className="file-preview__icon"></IconFileTypeArchive>
+                ) : (
+                    <IconFileTypeOther className="file-preview__icon"></IconFileTypeOther>
+                )}
+                <div className="file-preview__content">
+                    <p><strong className="file-preview__name">{file.name}</strong></p>
+                    <small>{formatBytes(file.size)}</small>
+                </div>
+            </div>
+            <div className="file-preview__controls">
+                <Button variant={editMode === true ? 'critical' : 'primary'} icon={editMode === true ? <IconBin></IconBin> : <IconSecurity></IconSecurity>}>
+                    Hello
+                </Button>
+            </div>
+        </div>
     )
 }
 
-export default FileView;
+export default FilePreview;

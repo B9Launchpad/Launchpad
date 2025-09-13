@@ -461,6 +461,12 @@ section {
     fill: var(--icon)
 }
 
+.input__file-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-standard);
+}
+
 .file-preview__wrap {
     background-color: var(--background-access);
     display: flex;

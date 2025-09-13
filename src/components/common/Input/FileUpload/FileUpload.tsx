@@ -29,7 +29,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
 }) => {
     const { t } = useTranslation("components");
     const fileInputRef = useRef<HTMLInputElement>(null);    
-    const [uploadedFiles, setUploadedFiles] = useState<FileList | null>(null);  
+    const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);  
     const [isDraggedOver, setIsDraggedOver] = useState<boolean>(false);
     const [rejectedFilesCount, setRejectedFilesCount] = useState<number>(0);
     const { supportedFormats, mimeExtensions } = useGetSupportedFormats(accept);
@@ -41,9 +41,9 @@ const FileUpload: React.FC<FileUploadProps> = ({
 
 // inside FileUpload component
 
-// TO DO: 1. Preview files get removed if new ones get dragged, this needs to be fixed.
+// TO DO: 1. FIXED — Preview files get removed if new ones get dragged, this needs to be fixed.
 //        2. Read file contents and arrange them into base64 or other viable form to transmit to backend.
-//        3. Implement delete button functionality (including small button as shown in Figma designs for File Previews)
+//        3. PARTIALLY IMPLEMENTED: Implement delete button functionality (including small button as shown in Figma designs for File Previews)
 
 const processFiles = (files: File[]) => {
   setErrorMessage(null);
@@ -54,7 +54,18 @@ const processFiles = (files: File[]) => {
   const dataTransfer = new DataTransfer();
   filteredFiles.forEach(file => dataTransfer.items.add(file));
 
-  setUploadedFiles(dataTransfer.files);
+
+  if(allowMultiple) {
+    setUploadedFiles(prev => [
+      ...prev,
+      ...Array.from(dataTransfer.files),
+    ]);
+  } else {
+    if(rejectedCount === 0) {
+      setUploadedFiles(Array.from(dataTransfer.files));
+    }
+  }
+  
   if (onFilesSelected) onFilesSelected(dataTransfer.files)
   if (rejectedCount > 0) {
     setErrorMessage(t('fileupload.errorRejectedFiles', {count: rejectedCount}));
@@ -81,6 +92,12 @@ const processFiles = (files: File[]) => {
     const files = e.target.files ? Array.from(e.target.files) : [];
     processFiles(files);
   };
+
+  const handleDelete = (index: number) => {
+    const files = [...uploadedFiles];
+    files.splice(index, 1)
+    setUploadedFiles(files);
+  }
 
 
   const handleClick = () => {
@@ -133,7 +150,9 @@ const processFiles = (files: File[]) => {
       {uploadedFiles && (
         <div className="input__file-list">
           {Array.from(uploadedFiles).map((file, index) => (
-            <div key={index}><FilePreview file={file} editMode={true}></FilePreview></div>
+            <div key={index}>
+              <FilePreview file={file} editMode={true} handleClick={() => handleDelete(index)}/>
+            </div>
           ))}
         </div>
       )}

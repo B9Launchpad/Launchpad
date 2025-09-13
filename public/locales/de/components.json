@@ -5,7 +5,7 @@
         "browse": "Dateien durchsuchen",
         "supportedFormats": "Unterstützte Erweiterungen: {{formats}}.",
         "errorRejectedFiles_one": "{{count}} Datei wurde nicht hochgeladen, da sie nicht erlaubt ist.",
-        "errorRejectedFiles_plural": "{{count}} Dateien wurden nicht hochgeladen, da sie nicht erlaubt sind."
+        "errorRejectedFiles_other": "{{count}} Dateien wurden nicht hochgeladen, da sie nicht erlaubt sind."
     },
     "newPassword": {
         "password": "Neues Passwort",

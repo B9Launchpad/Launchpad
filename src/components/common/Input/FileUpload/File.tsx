@@ -14,11 +14,12 @@ interface FilePreviewProps {
         size: number;
     }
     editMode: boolean;
+    handleClick?: () => void;
 }
 
 type FileType = 'archive' | 'other'
 
-const FilePreview: React.FC<FilePreviewProps> = ({ file, editMode }) => {
+const FilePreview: React.FC<FilePreviewProps> = ({ file, editMode, handleClick }) => {
     const [fileType, setFileType] = useState<FileType>();
     const extensions = getExtensionsForMimeType(file.type);
 
@@ -42,7 +43,7 @@ const FilePreview: React.FC<FilePreviewProps> = ({ file, editMode }) => {
         } else {
             setFileType('other');
         }
-    }, []);
+    }, [file]);
     
 
     return (
@@ -59,7 +60,7 @@ const FilePreview: React.FC<FilePreviewProps> = ({ file, editMode }) => {
                 </div>
             </div>
             <div className="file-preview__controls">
-                <Button variant={editMode === true ? 'critical' : 'primary'} icon={editMode === true ? <IconBin></IconBin> : <IconSecurity></IconSecurity>}>
+                <Button onClick={handleClick} variant={editMode === true ? 'critical' : 'primary'} icon={editMode === true ? <IconBin></IconBin> : <IconSecurity></IconSecurity>}>
                     Hello
                 </Button>
             </div>

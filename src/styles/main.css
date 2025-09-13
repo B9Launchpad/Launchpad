@@ -461,6 +461,41 @@ section {
     fill: var(--icon)
 }
 
+.file-preview__wrap {
+    background-color: var(--background-access);
+    display: flex;
+    flex-direction: row;
+    border-radius: var(--radius);
+    padding: var(--padding);
+    width: 512px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.file-preview__main {
+    display: flex;
+    flex-direction: row;
+    gap: var(--gap-standard);
+}
+
+.file-preview__name {
+    max-width: 32ch;
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--access);
+}
+
+.file-preview__content {
+    display: flex;
+    flex-direction: column;
+}
+
+.file-preview__icon {
+    height: 48px;
+}
+
     /* Input Password Requirements */
 
     .input-requirements__wrap {

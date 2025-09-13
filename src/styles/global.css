@@ -26,6 +26,10 @@ small {
     color: var(--muted);
 }
 
+strong {
+    font-weight: var(--font-weight-bold)
+}
+
 a {
     cursor: pointer;
     font: var(--font-small);

@@ -3,7 +3,7 @@ import { useTranslation } from "react-i18next";
 import UploadIcon from "../../../icons/Upload";
 import useGetSupportedFormats from "../../../../functions/getSupportedFormats";
 import Button from "../../Button";
-import FileView from "./File";
+import FilePreview from "./File";
 
 
 interface FileUploadProps {
@@ -40,6 +40,10 @@ const FileUpload: React.FC<FileUploadProps> = ({
     }
 
 // inside FileUpload component
+
+// TO DO: 1. Preview files get removed if new ones get dragged, this needs to be fixed.
+//        2. Read file contents and arrange them into base64 or other viable form to transmit to backend.
+//        3. Implement delete button functionality (including small button as shown in Figma designs for File Previews)
 
 const processFiles = (files: File[]) => {
   setErrorMessage(null);
@@ -129,7 +133,7 @@ const processFiles = (files: File[]) => {
       {uploadedFiles && (
         <div className="input__file-list">
           {Array.from(uploadedFiles).map((file, index) => (
-            <div key={index}><FileView file={file} editMode={false}></FileView></div>
+            <div key={index}><FilePreview file={file} editMode={true}></FilePreview></div>
           ))}
         </div>
       )}

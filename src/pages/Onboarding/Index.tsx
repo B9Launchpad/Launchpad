@@ -91,7 +91,7 @@ const OnboardingStage: React.FC = () => {
     });
 
     useEffect(() => {
-        setTheme("dark");
+        setTheme("light");
     }, [setTheme])
 
     const handlePageChange = (step: number, chips?: string[] | undefined) => {

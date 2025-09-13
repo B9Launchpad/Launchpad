@@ -2,7 +2,7 @@ import IntroLayout from "../../../components/layout/IntroLayout";
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/common/Button";
 import InputString, { InputStringRef } from "../../../components/common/Input/StringInput";
-import FileUpload from "../../../components/common/FileUpload";
+import FileUpload from "../../../components/common/Input/FileUpload/FileUpload";
 import { OnboardingDataType } from "../Index";
 import { useRef } from "react";
 

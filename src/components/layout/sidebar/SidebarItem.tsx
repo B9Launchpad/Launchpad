@@ -2,6 +2,7 @@ import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import DropdownIcon from '../../icons/Dropdown';
 import { useSpring, animated } from '@react-spring/web';
+import SpringConfig from '../../../utils/SpringConfig';
 
 /* ===== TO DO =====
 
@@ -36,13 +37,6 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ children, icon, url, type = '
       setContentHeight(contentRef.current.scrollHeight);
     }
   }, [items]);
-
-    const SpringConfig = {
-        mass: 1,
-        tension: 200,
-        precision: 1,
-        velocity: 0.0002,
-    }
 
   const style = useSpring({
     height: expanded ? contentHeight : 0,

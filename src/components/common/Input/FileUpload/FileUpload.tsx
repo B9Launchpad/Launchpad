@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import UploadIcon from "../icons/Upload";
-import useGetSupportedFormats from "../../functions/getSupportedFormats";
-import Button from "./Button";
+import UploadIcon from "../../../icons/Upload";
+import useGetSupportedFormats from "../../../../functions/getSupportedFormats";
+import Button from "../../Button";
+import FileView from "./File";
 
 
 interface FileUploadProps {
@@ -43,13 +44,14 @@ const FileUpload: React.FC<FileUploadProps> = ({
 const processFiles = (files: File[]) => {
   setErrorMessage(null);
   const filteredFiles = files.filter(checkIsAllowed);
+  console.log(filteredFiles)
   const rejectedCount = files.length - filteredFiles.length;
 
   const dataTransfer = new DataTransfer();
   filteredFiles.forEach(file => dataTransfer.items.add(file));
 
   setUploadedFiles(dataTransfer.files);
-  if (onFilesSelected) onFilesSelected(dataTransfer.files);
+  if (onFilesSelected) onFilesSelected(dataTransfer.files)
   if (rejectedCount > 0) {
     setErrorMessage(t('fileupload.errorRejectedFiles', {count: rejectedCount}));
   } else {
@@ -61,11 +63,11 @@ const processFiles = (files: File[]) => {
     e.preventDefault();
     if (disabled) return;
     const files = Array.from(e.dataTransfer.files);
-    alert(files.length)
+    console.log(files)
 
     if (allowMultiple) {
       processFiles(files);
-    } else if (files.length > 1) {
+    } else {
       processFiles([files[0]]);
     }
     setIsDraggedOver(false);
@@ -115,7 +117,7 @@ const processFiles = (files: File[]) => {
         onDrop={handleDrop}
     >
         <UploadIcon />
-        <em>{t("fileupload.drag")}</em>
+        <em>{t("fileupload.drag", {count: allowMultiple ? 2 : 1})}</em>
         <small>{t("or", { ns: "general" })}</small>
         <Button type="button"  disabled={disabled}>
             {t("fileupload.browse")}
@@ -124,13 +126,13 @@ const processFiles = (files: File[]) => {
 
       {errorMessage && <p className="input__error-message">{errorMessage}</p>}
 
-      {/*uploadedFiles && (
-        <ul className="input__file-list">
+      {uploadedFiles && (
+        <div className="input__file-list">
           {Array.from(uploadedFiles).map((file, index) => (
-            <li key={index}>{file.name}</li>
+            <div key={index}><FileView file={file} editMode={false}></FileView></div>
           ))}
-        </ul>
-      )*/}
+        </div>
+      )}
     </div>
   );
 };

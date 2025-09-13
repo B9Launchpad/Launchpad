@@ -7,7 +7,7 @@ import InputString from '../components/common/Input/StringInput';
 import InputSearch, { searchQuery } from '../components/common/Input/SearchInput';
 import Profile from '../components/common/Profile';
 import PadSelect from '../components/misc/intro/PadSelect';
-import FileUpload from '../components/common/FileUpload';
+import FileUpload from '../components/common/Input/FileUpload/FileUpload';
 import InputCheckbox, { CheckboxOption } from '../components/common/Input/Checkbox';
 import NewPassword from '../components/common/Input/NewPassword';
 import InputRadio from '../components/common/Input/Radio';
@@ -124,7 +124,7 @@ const handleGet = () => {
       <InputString isMandatory={true} title={'Hello world!'} description={'This is where you type something'} type={'string'}/>
 
       
-      <FileUpload accept='.png' title='Profile picutre' description="Upload sm" allowMultiple={false}></FileUpload>
+      <FileUpload accept='.png .jpg .zip' title='Profile picutre' description="Upload sm" allowMultiple={false}></FileUpload>
       
       <NewPassword></NewPassword>
 

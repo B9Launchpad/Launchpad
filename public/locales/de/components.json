@@ -1,6 +1,7 @@
 {
     "fileupload": {
-        "drag": "Ziehen Sie Datei hierin zum Hochladen",
+        "drag_one": "Ziehen Sie Datei hierin zum Hochladen",
+        "drag_other": "Ziehen Sie Dateien hierin zum Hochladen",
         "browse": "Dateien durchsuchen",
         "supportedFormats": "Unterstützte Erweiterungen: {{formats}}.",
         "errorRejectedFiles_one": "{{count}} Datei wurde nicht hochgeladen, da sie nicht erlaubt ist.",

@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next"
 import { useSpring, animated } from "react-spring"
 import { NavLink } from "react-router-dom"
 import { loginCredentials, useLogin } from "../../../functions/LoginContext"
+import SpringConfig from "../../../utils/SpringConfig"
 
 
 const LoginPromptPage: React.FC = () => {
@@ -35,17 +36,10 @@ const LoginPromptPage: React.FC = () => {
         }
     }, [status, handleRequest])
 
-    const SpringConfig = {
-        mass: 1,
-        tension: 200,
-        precision: 1,
-        velocity: 0.0002,
-    }
-
     const style = useSpring({
       height: expandedOAuthOptions ? additionalOAuthHeight : 0,
       opacity: expandedOAuthOptions ? 1 : 0,
-      overflow: 'hidden',
+      overflow: 'hidden ',
       config: SpringConfig,
     });
 

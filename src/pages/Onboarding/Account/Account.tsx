@@ -4,7 +4,7 @@ import Button from "../../../components/common/Button";
 import PadSelect from "../../../components/misc/intro/PadSelect";
 import InputString, { InputStringRef } from "../../../components/common/Input/StringInput";
 import { NavLink } from "react-router-dom";
-import FileUpload from "../../../components/common/FileUpload";
+import FileUpload from "../../../components/common/Input/FileUpload/FileUpload";
 import { OnboardingDataType } from "../Index";
 import { useRef, useState } from "react";
 
@@ -17,14 +17,14 @@ const OnboardingAccount: React.FC<OnboardingProps> = ({ onNext, data }) => {
     const { t } = useTranslation('intro')
     const nameRef = useRef<InputStringRef>(null)
     const emailRef = useRef<InputStringRef>(null)
-    const [error, setError] = useState<string>("")
+    const [errors, setErrors] = useState<{ name?: string; email?: string, picture?: string }>({});
 
     const handleSubmit = () => {
         if(nameRef.current && emailRef.current) {
             // Check if name is filled out
             if(nameRef.current.value.length < 1) {
-                setError(t("fillOutError", { ns: "general" }))
-                return
+                nameRef.current.error(t("fillOutError", { ns: "general" }))
+                return;
             }
 
             // Collect data from fields and push
@@ -39,7 +39,7 @@ const OnboardingAccount: React.FC<OnboardingProps> = ({ onNext, data }) => {
         <IntroLayout>
             <div className="intro__content">
                 <h1>{t('personalDetails.title')}</h1>
-                <InputString ref={nameRef} autoComplete={"name"} title={t('personalDetails.name')} isMandatory={true} type="string" error={error}></InputString>
+                <InputString ref={nameRef} autoComplete={"name"} title={t('personalDetails.name')} isMandatory={true} type="string"></InputString>
                 <InputString ref={emailRef} autoComplete={"email"} title={t('personalDetails.email')} value="gsafiannikov@b9creators.co.uk" disabled={true} isMandatory={true} type="string">
                     <small>
                         {t('personalDetails.wrongEmail')} <NavLink to={'/login/reset'}>{t('personalDetails.otherEmail')}</NavLink>

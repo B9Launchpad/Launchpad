@@ -673,7 +673,6 @@ table {
 .pad-select__option.image {
     gap: 0px;
     padding: 0px;
-    border-radius: 12px;
     height: auto;
     width: 256px;
     overflow: hidden;
@@ -720,7 +719,7 @@ Please consider alternatives before removing */
         border: var(--border-thin) transparent;
         border-radius: calc(var(--padding-outer-border) + var(--radius-large));
         overflow: hidden;
-        display: inline-block;
+        display: inline-flex;
         transition: border-color var(--transition) 
     }
     .pad-select__option--wrap.selected {

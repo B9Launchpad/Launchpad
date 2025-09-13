@@ -5,6 +5,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "re
 import InputString, { InputStringRef } from "./StringInput";
 import { useSpring, animated } from "react-spring";
 import { useTranslation } from "react-i18next";
+import SpringConfig from "../../../utils/SpringConfig";
 
 export type NewPasswordRef = {
     validate: () => false | string;
@@ -103,19 +104,9 @@ const NewPassword = forwardRef<NewPasswordRef>((_props, ref) => {
     }
   }, [contentRef.current, passwordError]);
 
-  // TO DO: Export spring configs instead of writing same ones into different files.
-
-    const SpringConfig = {
-        mass: 1,
-        tension: 200,
-        precision: 1,
-        velocity: 0.0002,
-    }
-
   const style = useSpring({
     height: expanded ? contentHeight : 0,
     opacity: expanded ? 1 : 0,
-    overflow: 'hidden',
     // Overflow Y?
     config: SpringConfig,
   });

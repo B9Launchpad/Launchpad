@@ -26,8 +26,8 @@ export type InputStringRef = HTMLInputElement & {
 };
 
 const InputString = forwardRef<InputStringRef, SmallInputProps>(({ title, placeholder, id, autofocus, onChange, type = 'text', children, error = "", value = "", maxLength, autoComplete = 'off', name, disabled = false, isMandatory, description}, ref) => {
+    const inputRef = (ref as React.RefObject<HTMLInputElement>);
     const [inputValue, setInputValue] = useState<string>(value)
-    const inputRef = useRef<HTMLInputElement>(null);
     const [charCount, setCharCount] = useState(value?.length);
     const lastInteractionWasKeyboard = useLastInteractionKeyboard();
     const [currentError, setCurrentError] = useState<string>(error);
@@ -81,7 +81,7 @@ const InputString = forwardRef<InputStringRef, SmallInputProps>(({ title, placeh
 
     return (
         <div className={`input__wrap`}>
-            <div className={`input__content ${disabled == true ? 'disabled' : ''}`}>
+            <div className={`input__content ${disabled === true ? 'disabled' : ''}`}>
                 <span className="input__title-content">
                     <p className="input__title">{title}</p>
                     {isMandatory && (<p className="input__mandatory">*</p>)}

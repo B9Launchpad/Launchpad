@@ -1,7 +1,7 @@
 //import AppleLogo from "../../components/icons/Logos/AppleLogo";
 import LoginPromptPage from "./Login";
 import LoginErrorPage from "./Error";
-import { useLogin } from "../../../functions/LoginContext";
+import { useLogin } from "../../../functions/Auth/LoginContext";
 import LoginProcessingPage from "./Processing";
 
 const LoginPage: React.FC = () => {

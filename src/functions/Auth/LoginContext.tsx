@@ -1,6 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { useCookie } from "./useCookie";
-import securityConfig from "../config/security.json"
+import securityConfig from "../../config/security.json"
 import { useNavigate } from "react-router-dom";
 
 export type loginCredentials = { username: string, password: string} | null
@@ -23,7 +22,7 @@ export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
     const handleRequest = async (credentials: loginCredentials) => {
         setCredentials(credentials)
         try {
-            const response = await fetch('http://localhost:8080/login', {
+            const response = await fetch('http://localhost:8080/new-login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

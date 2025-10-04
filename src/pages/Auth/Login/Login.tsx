@@ -8,17 +8,18 @@ import GithubLogo from "../../../components/icons/Logos/GithubLogo"
 import { useTranslation } from "react-i18next"
 import { useSpring, animated } from "react-spring"
 import { NavLink } from "react-router-dom"
-import { loginCredentials, useLogin } from "../../../functions/LoginContext"
+import { loginCredentials, useLogin } from "../../../functions/Auth/LoginContext"
 import SpringConfig from "../../../utils/SpringConfig"
 
+import { InputSmallRef } from "../../../components/common/Input/SmallInput"
 
 const LoginPromptPage: React.FC = () => {
     const { t } = useTranslation('auth');
     const [additionalOAuthHeight, setAdditionalOAuthHeight] = useState(0);
     const [expandedOAuthOptions, setExpandOAuthOptions] = useState<Boolean>(false);
     const additionalOAuthRef = useRef<HTMLDivElement>(null);
-    const loginRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null);
+    const loginRef = useRef<InputSmallRef>(null);
+    const passwordRef = useRef<InputSmallRef>(null);
     const { handleRequest, status, credentials } = useLogin();
     const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
 

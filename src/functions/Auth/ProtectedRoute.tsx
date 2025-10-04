@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useCookie } from "./useCookie";
 import { Navigate } from "react-router-dom";
 
 interface ProtectedRouteProps {
@@ -8,7 +7,6 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null) // null = loading, true/false = ready
-    const { getCookie } = useCookie();
 
     // TODO: Change token verification via backend :\
 

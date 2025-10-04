@@ -15,6 +15,7 @@ interface FileUploadProps {
     accept: string;
     allowMultiple: boolean;
     onFilesSelected?: (files: FileList | null) => void;
+    ariaLabel?: string;
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({
@@ -25,7 +26,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
     disabled = false,
     accept,
     allowMultiple,
-    onFilesSelected
+    onFilesSelected,
+    ariaLabel = "File upload"
 }) => {
     const { t } = useTranslation("components");
     const fileInputRef = useRef<HTMLInputElement>(null);    
@@ -122,6 +124,7 @@ const processFiles = (files: File[]) => {
         onChange={handleChange}
         disabled={disabled}
         style={{ display: "none" }}
+        aria-label={ariaLabel}
       />
 
     <div

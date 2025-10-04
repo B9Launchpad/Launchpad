@@ -1,7 +1,7 @@
 import Button from "../../../components/common/Button"
 import { NavLink } from "react-router-dom"
 import { useTranslation } from "react-i18next"
-import { useLogin } from "../../../functions/LoginContext";
+import { useLogin } from "../../../functions/Auth/LoginContext";
 
 const LoginErrorPage: React.FC = () => {
     const { t } = useTranslation('auth');

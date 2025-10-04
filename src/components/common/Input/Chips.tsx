@@ -125,7 +125,7 @@ const InputChips = forwardRef<InputChipsRef, SmallInputProps>(({ title, allowSam
 
     return (
         <div className={`input__wrap`}>
-            <div className={`input__content ${disabled == true ? 'disabled' : ''}`}>
+            <div className={`input__content ${disabled === true ? 'disabled' : ''}`}>
                 <span className="input__title-content">
                     <p className="input__title">{title}</p>
                     {isMandatory && (<p className="input__mandatory">*</p>)}

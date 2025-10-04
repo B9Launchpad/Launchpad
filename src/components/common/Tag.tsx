@@ -9,6 +9,7 @@ interface TagProps {
 const Tag: React.FC<TagProps> = ({ children, color = "secondary", onClick, icon, iconAfterText = false }) => {
     return (
         <div 
+            role={"button"}
             onClick={onClick}
             className={`tag__wrap ${color} 
             ${onClick ? "clickable" : ""}`}

@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next"
 import Button from "../../../components/common/Button";
 import InputSmall, {InputSmallRef} from "../../../components/common/Input/SmallInput";
@@ -17,12 +17,29 @@ const ResetCodePage = () => {
         const input = inputRef.current;
         const code = parseInt(input.get());
 
+        if((""+code).split("").length < 6) {
+            input.error(t('reset.codeError'));
+            return;
+        }
+
         handleCode(code);
 
         if(data.codeValid === false) {
             input.error(t('reset.codeError'));
         }
     }
+
+    useEffect(() => {
+        if(!inputRef.current) return;
+        const input = inputRef.current;
+        if(data.fetchError === true) {
+            input.error(t('errors.fetch', { ns: "general" }))
+        } else if (data.codeValid === false) {
+            input.error(t('reset.codeError'))
+        } else {
+            input.error("");
+        }
+    }, [data])
 
     return (
         <form onSubmit={validateCode}>

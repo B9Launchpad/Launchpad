@@ -26,8 +26,8 @@ export type InputStringRef = HTMLInputElement & {
 };
 
 const InputString = forwardRef<InputStringRef, SmallInputProps>(({ title, placeholder, id, autofocus, onChange, type = 'text', children, error = "", value = "", maxLength, autoComplete = 'off', name, disabled = false, isMandatory, description}, ref) => {
-    const inputRef = (ref as React.RefObject<HTMLInputElement>);
-    const [inputValue, setInputValue] = useState<string>(value)
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [inputValue, setInputValue] = useState<string>(value);
     const [charCount, setCharCount] = useState(value?.length);
     const lastInteractionWasKeyboard = useLastInteractionKeyboard();
     const [currentError, setCurrentError] = useState<string>(error);

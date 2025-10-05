@@ -2,6 +2,8 @@ import { createContext, useContext, useState } from "react";
 import securityConfig from "../../config/security.json"
 import { useNavigate } from "react-router-dom";
 
+// TO DO: Implement securityConfig (contemplate whether on backend or frontend)
+
 export type loginCredentials = { username: string, password: string} | null
 type LoginStatus = "isIdle" | "isProcessing" | "isError" | "isUnauthorised";
 interface LoginContextProps {
@@ -43,7 +45,7 @@ export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
             )
         } catch (error: any) {
             console.log(error);
-            setStatus("isError")
+            setStatus("isError");
         }
     }
 

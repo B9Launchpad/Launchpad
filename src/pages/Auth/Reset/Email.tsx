@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import Button from "../../../components/common/Button";
@@ -8,7 +8,7 @@ import validateEmail from "../../../functions/validateEmail";
 
 
 const ResetEmailPage = () => {
-    const { handleEmail } = useReset();
+    const { handleEmail, data } = useReset();
     const { t } = useTranslation('auth')
     const emailRef = useRef<InputSmallRef>(null);
 
@@ -27,6 +27,17 @@ const ResetEmailPage = () => {
         }
     }
 
+    useEffect(() => {
+        if(!emailRef.current) return;
+        if(data.fetchError === true) {
+            emailRef.current.error(t('errors.fetch', { ns: "general" }))
+        } else if (data.emailValid === false) {
+            emailRef.current.error(t('reset.emailNotFoundError'))
+        } else {
+            emailRef.current.error("");
+        }
+    }, [data])
+
     return (
         <form onSubmit={handleEntry}>
             <div className="hero__content">
@@ -41,7 +52,7 @@ const ResetEmailPage = () => {
                     ref={emailRef}
                     label={t('loginPrompt')}
                 >
-                    <small>{t('reset.rememberPassword')} 
+                    <small>{t('reset.rememberPassword')}{' '}
                         <NavLink to={'/login'}>
                             {t('reset.backToLogin')}
                         </NavLink>

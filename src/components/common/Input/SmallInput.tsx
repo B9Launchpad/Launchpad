@@ -29,12 +29,12 @@ export type InputSmallRef = HTMLInputElement & {
 
 const InputSmall = forwardRef<InputSmallRef, SmallInputProps>(
   (
-    { label, placeholder, id, autofocus, onChange, type = "text", children, error = "", value, maxLength, autoComplete = "off", name },
+    { label, placeholder, id, autofocus, onChange, type = "text", children, error = "", value = "", maxLength, autoComplete = "off", name },
     ref
   ) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [charCount, setCharCount] = useState(value?.length ?? 0);
-    const [currentValue, setCurrentValue] = useState<string | undefined>(value);
+    const [currentValue, setCurrentValue] = useState<string>(value);
     const [currentError, setCurrentError] = useState<string>(error);
 
     useEffect(() => {

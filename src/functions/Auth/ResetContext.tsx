@@ -69,7 +69,8 @@ export const ResetProvider = ({ children }: {children: React.ReactNode}) => {
                 body: {
                     email: data.email,
                     code: String(code)
-                }
+                },
+                includeCredentials: true
             })
 
             const { status } = res;

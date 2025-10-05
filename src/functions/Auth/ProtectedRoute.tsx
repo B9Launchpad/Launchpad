@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
+import makeFetchRequest from "../../utils/makeFetchRequest";
+import LoginProcessingPage from "../../pages/Auth/Login/Processing";
 
 interface ProtectedRouteProps {
     children: React.ReactNode;
@@ -11,19 +13,24 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({children}) => {
     // TODO: Change token verification via backend :\
 
     const verifyToken = async() => {
-
+        
         try {
-            const response = await fetch('http://localhost:8080/verify', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                mode: 'cors', // явно указываем CORS режим
-                credentials: "include"
-            });
+            //const response = await fetch('http://localhost:8080/verify', {
+            //    method: 'POST',
+            //    headers: {
+            //        'Content-Type': 'application/json',
+            //        'Accept': 'application/json',
+            //    },
+            //    mode: 'cors', // явно указываем CORS режим
+            //    credentials: "include"
+            //});
 
-            const status = response.status;
+            const res = await makeFetchRequest({
+                url: '/verify',
+                includeCredentials: true,
+            })
+
+            const { status } = res;
 
             if(status === 200) setIsAuthenticated(true);
 
@@ -36,7 +43,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({children}) => {
         verifyToken();
     }, [])
 
-    if(isAuthenticated === null) return <main><h1>Loading...</h1></main>
+    if(isAuthenticated === null) return <LoginProcessingPage/>
     if(!isAuthenticated) return <Navigate to="/login" replace />
 
     return <>{children}</>; // isAuthenticated === true return

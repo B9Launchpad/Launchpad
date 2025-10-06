@@ -23,7 +23,7 @@ const ResetEmailPage = () => {
         if(validateEmail(email)) {
             handleEmail(email);
         } else {
-            input.error(t('reset.initialError'))
+            input.error(t('reset.emailNotFoundError'))
         }
     }
 

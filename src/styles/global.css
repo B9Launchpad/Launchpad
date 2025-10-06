@@ -36,6 +36,10 @@ a {
     color: var(--access);
 }
 
+a:focus-visible, .access:focus-visible {
+    outline: var(--focus-outline)
+}
+
 em {
     font: var(--font-emphasised);
     color: var(--text);

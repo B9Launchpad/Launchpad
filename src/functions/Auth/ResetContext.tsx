@@ -11,6 +11,7 @@ export type ResetData =
     codeValid: boolean | null, 
     changeAccepted: boolean | null
     fetchError: boolean,
+    isAwaitingResponse: boolean
 }
 interface ResetContextProps {
     data: ResetData;
@@ -30,7 +31,8 @@ export const ResetProvider = ({ children }: {children: React.ReactNode}) => {
             emailValid: null,
             codeValid: null,
             changeAccepted: null,
-            fetchError: false
+            fetchError: false,
+            isAwaitingResponse: false
         }
     )
     const navigate = useNavigate()
@@ -47,7 +49,12 @@ export const ResetProvider = ({ children }: {children: React.ReactNode}) => {
                     email: email
                 }
             })
-
+            
+            setData((prev) => ({
+                ...prev,
+                isAwaitingResponse: false,
+            }))
+            
             const { status } = res;
             setFetchError(false)
 

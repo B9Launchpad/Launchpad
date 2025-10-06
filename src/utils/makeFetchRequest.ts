@@ -2,10 +2,12 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 interface FetchOptions {
     url: string;
-    method?: string;
+    method?: "POST" | "GET" | "PUT" | "PATCH" | "OPTIONS" | "HEAD" | "DELETE";
     body?: any;
     includeCredentials?: boolean;
 }
+
+// TO DO: Report if makeFetchRequest is currently awaiting response;
 
 const makeFetchRequest = async ({ url, method = 'POST', body, includeCredentials = false }: FetchOptions) => {
     if(!url.includes('://')) {

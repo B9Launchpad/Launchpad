@@ -26,6 +26,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({children}) => {
             //});
 
             const res = await makeFetchRequest({
+                method: "GET",
                 url: '/verify',
                 includeCredentials: true,
             })

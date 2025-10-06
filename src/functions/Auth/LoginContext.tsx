@@ -4,20 +4,20 @@ import { useNavigate } from "react-router-dom";
 
 // TO DO: Implement securityConfig (contemplate whether on backend or frontend)
 
-export type loginCredentials = { username: string, password: string} | null
+export type loginCredentials = { email: string, password: string} | null
 type LoginStatus = "isIdle" | "isProcessing" | "isError" | "isUnauthorised";
 interface LoginContextProps {
-    status: LoginStatus;
+    loginStatus: LoginStatus;
     credentials: loginCredentials;
     handleRequest: (credentials: loginCredentials) => void;
     handleRetry: () => void;
-    setStatus: (status: LoginStatus) => void;
+    setLoginStatus: (loginStatus: LoginStatus) => void;
 }
 
 const LoginContext = createContext<LoginContextProps | undefined>(undefined);
 
 export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
-    const [status, setStatus] = useState<LoginStatus>("isIdle")
+    const [loginStatus, setLoginStatus] = useState<LoginStatus>("isIdle")
     const [credentials, setCredentials] = useState<loginCredentials>(null);
     const navigate = useNavigate()
 
@@ -33,18 +33,18 @@ export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
                 body: JSON.stringify(credentials),
                 credentials: "include"
             });
-            setStatus("isProcessing");
+            setLoginStatus("isProcessing");
 
             const status = response.status;
 
             if(status === 202) {
                 navigate("/onboarding/playground");
-            } else if (status === 401) (
-                setStatus("isUnauthorised")
-            )
+            } else if (status === 401) {
+                setLoginStatus("isUnauthorised");
+            }
         } catch (error: any) {
             console.log(error);
-            setStatus("isError");
+            setLoginStatus("isError");
         }
     }
 
@@ -53,7 +53,7 @@ export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
     }
 
     return (
-        <LoginContext.Provider value={{status, credentials, handleRequest, handleRetry, setStatus}}>
+        <LoginContext.Provider value={{loginStatus, credentials, handleRequest, handleRetry, setLoginStatus}}>
             { children }
         </LoginContext.Provider>
 

@@ -35,31 +35,13 @@ const NewPassword = forwardRef<NewPasswordRef>((_props, ref) => {
         const numberRegex = /[0-9]/;
         const specialCharacterRegex = /[!-\/:-@\[-`\{-~]/;
 
-        if(value.length > 7 && value.length < 21) {
-            setFulfilledCharacterCount(true)
-        } else {
-            setFulfilledCharacterCount(false);
-        }
-        if(lowercaseRegex.test(value)) {
-            setFulfilledSmall(true)
-        } else {
-            setFulfilledSmall(false)
-        }
-        if(uppercaseRegex.test(value)) {
-            setFulfilledUpper(true)
-        } else {
-            setFulfilledUpper(false)
-        }
-        if(specialCharacterRegex.test(value)) {
-            setFulfilledSpecialChar(true);
-        } else {
-            setFulfilledSpecialChar(false);
-        }
-        if(numberRegex.test(value)) {
-            setFulfilledNumber(true)
-        } else {
-            setFulfilledNumber(false)
-        }
+
+        setFulfilledCharacterCount(value.length > 7 && value.length < 21)
+        setFulfilledSmall(lowercaseRegex.test(value));
+        setFulfilledUpper(uppercaseRegex.test(value));
+        setFulfilledSpecialChar(specialCharacterRegex.test(value));
+        setFulfilledNumber(numberRegex.test(value));
+
         setNewPassword(value);
     }
 

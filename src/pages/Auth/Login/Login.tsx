@@ -13,6 +13,13 @@ import SpringConfig from "../../../utils/SpringConfig"
 
 import { InputSmallRef } from "../../../components/common/Input/SmallInput"
 
+type loginErrors = { username: string; password: string };
+const errorsInit = {
+    username: "",
+    password: ""
+}
+
+
 const LoginPromptPage: React.FC = () => {
     const { t } = useTranslation('auth');
     const [additionalOAuthHeight, setAdditionalOAuthHeight] = useState(0);
@@ -20,8 +27,8 @@ const LoginPromptPage: React.FC = () => {
     const additionalOAuthRef = useRef<HTMLDivElement>(null);
     const loginRef = useRef<InputSmallRef>(null);
     const passwordRef = useRef<InputSmallRef>(null);
-    const { handleRequest, status, credentials } = useLogin();
-    const [errors, setErrors] = useState<{ username?: string; password?: string }>({});
+    const { handleRequest, loginStatus, credentials } = useLogin();
+    const [errors, setErrors] = useState<loginErrors>(errorsInit);
 
     useEffect(() => {
         if(additionalOAuthRef.current) {
@@ -30,12 +37,21 @@ const LoginPromptPage: React.FC = () => {
     })
 
     useEffect(() => {
-        if(status === "isUnauthorised") {
-            setErrors({
-                username: t('processing.unauthorisedError')
-            })
+        if(loginStatus === "isUnauthorised") {
+            setErrors((prev) => ({
+                ...prev,
+                password: t('processing.unauthorisedError')
+            }))
         }
-    }, [status, handleRequest])
+    }, [loginStatus, handleRequest])
+
+    useEffect(() => {
+        if(!loginRef.current || !passwordRef.current) return;
+
+        loginRef.current.error(errors.username);
+        passwordRef.current.error(errors.password);
+
+    }, [errors])
 
     const style = useSpring({
       height: expandedOAuthOptions ? additionalOAuthHeight : 0,
@@ -44,44 +60,45 @@ const LoginPromptPage: React.FC = () => {
       config: SpringConfig,
     });
 
-    const handleClick = () => {
+    const handleClick = (e?: any) => {
+        e?.preventDefault();
         if(!loginRef.current || !passwordRef.current) return;
 
         const credentials: loginCredentials = {
-            username: loginRef.current.value,
+            email: loginRef.current.value,
             password: passwordRef.current.value
         }
 
-        let newErrors: typeof errors = {};
+        let newErrors: loginErrors = errorsInit;
         
-        if(!credentials.username) {
+        if(!credentials.email) {
             newErrors.username = t('validation.usernameRequired')
-        } else if(credentials.username && !credentials.password) {
+        } else if(credentials.email && !credentials.password) {
             newErrors.password = t('validation.passwordRequired');
         }
 
         setErrors(newErrors);
 
-        if (Object.keys(newErrors).length === 0) {
+        if (Object.values(newErrors).every(val => val === "")) {
             handleRequest(credentials);
         }
     }
 
 
     return (
-        <>
+        <form onSubmit={handleClick}>
             <div className="hero__content">
                 <div>
                     <h1>{t('welcome', { ns: 'auth' })}</h1>
                     <small>{t('instructions')}</small>
                 </div>
                 {/* Login */}
-                <InputSmall ref={loginRef} value={credentials?.username} label={t('loginPrompt')} error={errors.username}/>
+                <InputSmall ref={loginRef} value={credentials?.email} label={t('loginPrompt')}/>
                 {/* Password */}
-                <InputSmall ref={passwordRef} error={errors.password} type="password" label={t('passwordPrompt')}><small>{t('forgotPassword')} <NavLink to={'/login/reset'}>{t('resetPrompt')}</NavLink></small></InputSmall>
+                <InputSmall ref={passwordRef} type="password" label={t('passwordPrompt')}><small>{t('forgotPassword')} <NavLink to={'/login/reset'}>{t('resetPrompt')}</NavLink></small></InputSmall>
             </div>
             <div className="secondary__content centre">
-                <Button onClick={handleClick}>{t('login')}</Button>
+                <Button type="submit" onClick={handleClick}>{t('login')}</Button>
                 <em>{t('or')}</em>
                 <Button icon={<PasskeyIcon/>} variant='tertiary'>{t('OAuthWith', {method: 'Passkey'})}</Button>
                 <Button icon={<GoogleLogo/>} variant='tertiary'>{t('OAuthContinue', {method: 'Google'})}</Button>
@@ -95,7 +112,7 @@ const LoginPromptPage: React.FC = () => {
                     <a onClick={() => { setExpandOAuthOptions(!expandedOAuthOptions) }} className="access">{t('showMore', { ns: 'general' })}</a> 
                 )}
             </div>
-        </>
+        </form>
     )
 }
 

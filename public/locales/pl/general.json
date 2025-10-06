@@ -9,5 +9,10 @@
     "tryAgain": "Spróbuj ponownie",
     "continue": "Dalej",
     "or": "albo",
-    "fillOutError": "To pole musi zostać wypełnione."
+    "fillOutError": "",
+
+    "errors": {
+        "fillOut": "To pole musi zostać wypełnione.",
+        "fetch": "Nie udało się połączyć z serwerem, proszę spróbować ponownie."
+    }
 }

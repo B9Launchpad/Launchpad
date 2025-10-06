@@ -9,5 +9,9 @@
     "tryAgain": "Erneut versuchen",
     "continue": "Weiter",
     "or": "oder",
-    "fillOutError": "Dieses Feld muss ausgefüllt werden."
+
+    "errors": {
+        "fillOut": "Dieses Feld muss ausgefüllt werden.",
+        "fetch": "Es konnte keine Verbindung zum Server hergestellt werden, versuchen Sie es später erneut."
+    }
 }

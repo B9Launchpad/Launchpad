@@ -5,7 +5,7 @@ import { useLogin } from "../../../functions/Auth/LoginContext";
 
 const LoginErrorPage: React.FC = () => {
     const { t } = useTranslation('auth');
-    const { setStatus, handleRetry } = useLogin();
+    const { setLoginStatus, handleRetry } = useLogin();
 
     return (
         <>
@@ -19,7 +19,7 @@ const LoginErrorPage: React.FC = () => {
                 <Button onClick={handleRetry} type="submit">
                     {t('tryAgain', {ns: 'general'})}
                 </Button>
-                <small>{t('processing.stillNotWorking')} <NavLink onClick={() => setStatus("isIdle")} to={''}>{t('processing.tryAnotherWay')}</NavLink></small>
+                <small>{t('processing.stillNotWorking')} <NavLink onClick={() => setLoginStatus("isIdle")} to={''}>{t('processing.tryAnotherWay')}</NavLink></small>
             </div>
         </>
     )

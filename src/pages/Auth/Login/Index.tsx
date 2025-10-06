@@ -6,20 +6,17 @@ import LoginProcessingPage from "./Processing";
 
 const LoginPage: React.FC = () => {
 
-    const { status } = useLogin();
+    const { loginStatus } = useLogin();
 
 
-    if(status === "isProcessing") {
-        return <LoginProcessingPage />
+    switch (loginStatus) {
+        case "isProcessing":
+            return <LoginProcessingPage />
+        case "isError":
+            return <LoginErrorPage />
+        default:
+            return <LoginPromptPage />
     }
-
-    if(status === "isError") {
-        return <LoginErrorPage />
-    }
-
-    return (
-        <LoginPromptPage/>
-    )
 }
 
 export default LoginPage;

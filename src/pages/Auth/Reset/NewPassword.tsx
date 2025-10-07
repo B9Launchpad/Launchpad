@@ -1,24 +1,34 @@
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import { useTranslation } from "react-i18next";
 import NewPassword, {NewPasswordRef} from "../../../components/common/Input/NewPassword";
 import Button from "../../../components/common/Button";
 import { useReset } from "../../../functions/Auth/ResetContext";
+import { useNavigate } from "react-router-dom";
 
 
 const ResetNewPasswordPage = () => {
     const newPasswordRef = useRef<NewPasswordRef>(null);
     const { t } = useTranslation('auth');
-    const { handleReset } = useReset();
+    const { data, handleReset } = useReset();
+    const navigate = useNavigate();
 
-    const handleSubmit = () => {
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
         if(!newPasswordRef.current) return;
 
         const password = newPasswordRef.current.validate();
 
-        if(typeof password === "string") {
-            handleReset(password)
-        }
+        if(typeof password !== "string") return;
+        
+        handleReset(password)
     }
+
+    useEffect(() => {
+        if(data.changeAccepted === true) {
+            navigate("/login")
+        }
+    }, [data.changeAccepted]);
 
     return (
         <form onSubmit={handleSubmit}>

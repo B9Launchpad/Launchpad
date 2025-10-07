@@ -49,7 +49,7 @@ export const ResetProvider = ({ children }: {children: React.ReactNode}) => {
                     email: email
                 }
             })
-            
+
             setData((prev) => ({
                 ...prev,
                 isAwaitingResponse: false,
@@ -97,24 +97,21 @@ export const ResetProvider = ({ children }: {children: React.ReactNode}) => {
 
     const handleReset = async (newPassword: string) => {
         try {
-            const response = await fetch('http://localhost:8080/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
+            const res = await makeFetchRequest({
+                url: "/login/reset-password",
+                body: {
+                    password: newPassword,
                 },
-                body: JSON.stringify(newPassword),
-                mode: 'cors', // явно указываем CORS режим
-                credentials: "include"
-            });
+                includeCredentials: true
+            })
 
-            const status = response.status;
+            const { status } = res;
 
-            if(status === 202) {
+            if(status === 200) {
                 setData((prev) => ({ ...prev, changeAccepted: true }))
-            } else if (status === 401) (
+            } else if (status === 401) {
                 setData((prev) => ({ ...prev, changeAccepted: false }))
-            )
+            }
         } catch (error: any) {
             console.log(error);
         }

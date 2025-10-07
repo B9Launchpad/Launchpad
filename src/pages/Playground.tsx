@@ -30,11 +30,7 @@ function PlaygroundPage() {
 
   const AxiosPost = async () => {
     const response = await fetch("http://localhost:8080/logout", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      mode: 'cors',
+      method: "GET",
       credentials: 'include'
     });
 

@@ -26,17 +26,6 @@ interface ResetContextProps {
 const ResetContext = createContext<ResetContextProps | undefined>(undefined);
 
 export const ResetProvider = ({ children }: {children: React.ReactNode}) => {
-    const isFetching = useFetchStatus();
-    
-
-    // !!! DEBUG USE ONLY, REMOVE AFTER IMPLEMENTED !!!
-    useEffect(() => {
-        if(isFetching) {
-            alert('fetch')
-        } else {
-            alert("nofetch")
-        }
-    })
 
     const [data, setData] = useState<ResetData>(
         {

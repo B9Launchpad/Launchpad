@@ -5,6 +5,7 @@ import Button from "../../../components/common/Button";
 import InputSmall, {InputSmallRef} from "../../../components/common/Input/SmallInput";
 import { useReset } from "../../../functions/Auth/ResetContext";
 import validateEmail from "../../../functions/validateEmail";
+import FormComponent from "../../../components/common/Input/Form";
 
 
 const ResetEmailPage = () => {
@@ -39,7 +40,7 @@ const ResetEmailPage = () => {
     }, [data])
 
     return (
-        <form onSubmit={handleEntry}>
+        <FormComponent onSubmit={handleEntry}>
             <div className="hero__content">
                 <div>
                     <h1>{t('reset.title')}</h1>
@@ -59,12 +60,7 @@ const ResetEmailPage = () => {
                     </small>
                 </InputSmall>
             </div>
-            <div className="hero__content">
-                <Button type="submit">
-                    { t('submit', {ns: 'general'}) }
-                </Button>
-            </div>
-        </form>
+        </FormComponent>
     )
 }
 

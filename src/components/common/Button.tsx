@@ -1,5 +1,6 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useLastInteractionKeyboard from "../../functions/useLastInteractionKeyboard";
+import { useFetchStatus } from "../../utils/fetch/useFetchStatus";
 
 // Configuring interface for propos to be used within the button
 interface ButtonProps {
@@ -14,9 +15,13 @@ interface ButtonProps {
 }
 
 // Declaration of Button component with its configured props and styles
-const Button: React.FC<ButtonProps> = ({ variant='primary', tabIndex = 0, icon, onClick, children, disabled, className, type}) => {
+const Button: React.FC<ButtonProps> = ({ variant='primary', tabIndex = 0, icon, onClick, children, disabled = false, className, type}) => {
     const lastInteractionWasKeyboard = useLastInteractionKeyboard();
     const buttonRef = useRef<HTMLButtonElement>(null);
+    const [isDisabled, setIsDisabled] = useState<boolean>(disabled);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    // CONSIDER CLEANUP!
+    const fetchStatus = useFetchStatus();
 
     const handleFocus = () => {
         if(lastInteractionWasKeyboard) {
@@ -28,11 +33,30 @@ const Button: React.FC<ButtonProps> = ({ variant='primary', tabIndex = 0, icon, 
         buttonRef.current?.classList.remove("focused");
     }
 
+    const handleClick = (/*e: React.MouseEvent<HTMLButtonElement>*/) => {
+        if(onClick) onClick();
+
+        // expand for further use
+    }
+
+    useEffect(() => {
+        if(type !== "submit" || disabled) return;
+
+        setIsDisabled(fetchStatus);
+        setIsLoading(fetchStatus);
+
+        return () => {
+            setIsDisabled(disabled);
+            setIsLoading(false);
+        }
+    }, [fetchStatus])
+
     return (
         <button className={[
             className, // optional external classes
             variant,   // 'primary', 'secondary', etc.
-            icon && 'icon' // if icon exists, add 'icon' class
+            icon && 'icon', // if icon exists, add 'icon' class
+            isLoading && "loading"
             ].filter(Boolean).join(' ')}
             onFocus={handleFocus} 
             onBlur={handleBlur}
@@ -42,7 +66,7 @@ const Button: React.FC<ButtonProps> = ({ variant='primary', tabIndex = 0, icon, 
 
             // Declaration of classes based on button type
 
-            onClick={disabled ? undefined : onClick} disabled={disabled}>
+            onClick={handleClick} disabled={isDisabled}>
             {icon && <span className="button__icon-container">{icon}</span>}
             {children}
         </button>

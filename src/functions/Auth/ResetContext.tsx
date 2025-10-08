@@ -1,7 +1,8 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import securityConfig from "../../config/security.json"
 import { useNavigate } from "react-router-dom";
-import makeFetchRequest from "../../utils/makeFetchRequest";
+import makeFetchRequest from "../../utils/fetch/makeFetchRequest";
+import { useFetchStatus } from "../../utils/fetch/useFetchStatus";
 
 export type loginCredentials = { email: string} | null
 export type ResetData = 
@@ -25,6 +26,16 @@ interface ResetContextProps {
 const ResetContext = createContext<ResetContextProps | undefined>(undefined);
 
 export const ResetProvider = ({ children }: {children: React.ReactNode}) => {
+    const isFetching = useFetchStatus();
+    
+    useEffect(() => {
+        if(isFetching) {
+            alert('fetch')
+        } else {
+            alert("nofetch")
+        }
+    })
+
     const [data, setData] = useState<ResetData>(
         {
             email: null,

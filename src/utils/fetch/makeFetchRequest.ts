@@ -1,3 +1,5 @@
+import { fetchStatus } from "./fetchStatus";
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 interface FetchOptions {
@@ -15,6 +17,8 @@ const makeFetchRequest = async ({ url, method = 'POST', body, includeCredentials
     }
 
     try {
+        fetchStatus.set(true);
+
         const response = await fetch(url, {
             method,
             headers: {
@@ -34,7 +38,9 @@ const makeFetchRequest = async ({ url, method = 'POST', body, includeCredentials
     } catch (error: any) {
         console.log(error);
         throw error;
-  }
+    } finally {
+        fetchStatus.set(false);
+    }
 };
 
 export default makeFetchRequest;

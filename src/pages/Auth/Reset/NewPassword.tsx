@@ -4,6 +4,7 @@ import NewPassword, {NewPasswordRef} from "../../../components/common/Input/NewP
 import Button from "../../../components/common/Button";
 import { useReset } from "../../../functions/Auth/ResetContext";
 import { useNavigate } from "react-router-dom";
+import FormComponent from "../../../components/common/Input/Form";
 
 
 const ResetNewPasswordPage = () => {
@@ -31,7 +32,7 @@ const ResetNewPasswordPage = () => {
     }, [data.changeAccepted]);
 
     return (
-        <form onSubmit={handleSubmit}>
+        <FormComponent onSubmit={handleSubmit}>
             <div className="hero__content">
                 <div>
                     <em>{t('greeting', {name: 'Tatiana', ns: 'general'})}</em>
@@ -42,12 +43,7 @@ const ResetNewPasswordPage = () => {
                 </div>
                 <NewPassword ref={newPasswordRef}></NewPassword>
             </div>
-            <div className="hero__content">
-                <Button type="submit">
-                    { t('reset.resetPassword') }
-                </Button>
-            </div>
-        </form>
+        </FormComponent>
     )
 }
 

@@ -5,6 +5,7 @@ import InputSmall, {InputSmallRef} from "../../../components/common/Input/SmallI
 import { useReset } from "../../../functions/Auth/ResetContext";
 import FormComponent from "../../../components/common/Input/Form";
 import { NavLink } from "react-router-dom";
+import maskEmail from "../../../functions/Auth/maskEmail";
 
 const ResetCodePage = () => {
     const { t } = useTranslation('auth');
@@ -52,7 +53,7 @@ const ResetCodePage = () => {
             <div className="hero__content">
                 <div>
                     <h1>{t('reset.challengeMailTitle')}</h1>
-                    <small>{t('reset.challengeMailInstructions')}</small>
+                    <small>{t('reset.challengeMailInstructions', {email: maskEmail(data.email)})}</small>
                 </div>
                 <InputSmall 
                     id="otp"
@@ -61,9 +62,9 @@ const ResetCodePage = () => {
                     label={t('reset.resetCode')}
                     ref={inputRef}
                 >
-                    <small>{t('reset.rememberPassword')}{' '}
+                    <small>{t('reset.wrongEmail')}{' '}
                         <NavLink onClick={handleReturn} to={'#'}>
-                            {t('reset.backToLogin')}
+                            {t('reset.goBack')}
                         </NavLink>
                     </small>
                 </InputSmall>

@@ -7,7 +7,7 @@ import { useFetchStatus } from "../../utils/fetch/useFetchStatus";
 export type loginCredentials = { email: string} | null
 export type ResetData = 
 { 
-    email: string | null
+    email: string
     emailValid: boolean | null, 
     codeValid: boolean | null, 
     changeAccepted: boolean | null
@@ -29,7 +29,7 @@ export const ResetProvider = ({ children }: {children: React.ReactNode}) => {
 
     const [data, setData] = useState<ResetData>(
         {
-            email: null,
+            email: "",
             emailValid: null,
             codeValid: null,
             changeAccepted: null,

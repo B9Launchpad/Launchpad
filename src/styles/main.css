@@ -456,8 +456,14 @@ section {
     color: var(--critical)
 }
 
+.input__sub-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
 .input__char--counter {
-    text-align: right;
+    align-self: right;
 }
 
 /* Input File Upload */

@@ -4,6 +4,7 @@ import Button from "../../../components/common/Button";
 import InputSmall, {InputSmallRef} from "../../../components/common/Input/SmallInput";
 import { useReset } from "../../../functions/Auth/ResetContext";
 import FormComponent from "../../../components/common/Input/Form";
+import { NavLink } from "react-router-dom";
 
 const ResetCodePage = () => {
     const { t } = useTranslation('auth');
@@ -42,6 +43,10 @@ const ResetCodePage = () => {
         }
     }, [data])
 
+    const handleReturn = () => {
+        data.emailValid = null;
+    }
+
     return (
         <FormComponent onSubmit={validateCode}>
             <div className="hero__content">
@@ -55,7 +60,13 @@ const ResetCodePage = () => {
                     autoComplete="one-time-code"
                     label={t('reset.resetCode')}
                     ref={inputRef}
-                />
+                >
+                    <small>{t('reset.rememberPassword')}{' '}
+                        <NavLink onClick={handleReturn} to={'#'}>
+                            {t('reset.backToLogin')}
+                        </NavLink>
+                    </small>
+                </InputSmall>
             </div>
         </FormComponent>
     )

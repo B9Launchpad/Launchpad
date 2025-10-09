@@ -83,15 +83,19 @@ const InputSmall = forwardRef<InputSmallRef, SmallInputProps>(
             }`}
             placeholder={placeholder}
         />
-        {maxLength && (
-            <small className="input__char--counter">
-                {charCount}/{maxLength}
-            </small>
+        {(maxLength || currentError || children) && (
+            <div className="input__sub-content">
+                {children}
+                {maxLength && (
+                    <small className="input__char--counter">
+                        {charCount}/{maxLength}
+                    </small>
+                )}
+                {currentError && (
+                    <p className="input__error-message">{currentError}</p>
+                )}
+            </div>
         )}
-        {currentError && (
-            <p className="input__error-message">{currentError}</p>
-        )}
-        {children}
       </div>
     );
   }

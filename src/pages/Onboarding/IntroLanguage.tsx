@@ -44,16 +44,19 @@ const OnboardingLanguage: React.FC<OnboardingProps> = ({onNext, data}) => {
                 <InputSelect value={currentLanguage} onChange={handleChange} title={t('chooseYourLanguage')}>
                     <option value="en">English</option>
                     <option value="de">Deutsch</option>
-                    <option value="pl">Polski</option>
-                    <option value="ru">Русский</option>
+                    <option value="pl">polski</option>
+                    <option value="ru">русский</option>
                 </InputSelect>
                 <InputSelect onChange={handleRegionChange} title={t('chooseYourRegion')}>
                     {
-                        supportedCountries.map((country: string) => {
-                            return (
-                                <option value={country}>{t(country, {ns: "countries"})}</option>
-                            )
-                        }) 
+                        supportedCountries.map((country: string) => ({
+                            key: country,
+                            label: t(country, {ns: 'countries'} )
+                        }))
+                        .sort((a, b) => a.label.localeCompare(b.label))
+                        .map(({key, label}) => (
+                            <option value={key} key={key}>{label}</option>
+                        ))
                     }
                 </InputSelect>
                 <Button onClick={handleSubmit}>{t("continue", {ns: "general"})}</Button>

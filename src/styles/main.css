@@ -119,6 +119,7 @@ div.guest__layout {
 
 /* Button Styles Declaration */
 button {
+    position: relative;
     cursor: pointer;
     font-weight: 500;
     font-size: 20px;
@@ -221,6 +222,34 @@ button {
         color: var(--text);
         fill: var(--icon);
         background-color: var(--background-secondary);
+    }
+
+    button.loading::after {
+        border-radius: inherit;
+        content: "";
+        position: absolute;
+        inset: 0;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            110deg,
+            color-mix(in srgb, var(--contrast), transparent 90%) 0%,
+            color-mix(in srgb, var(--contrast), transparent 60%) 40%,
+            color-mix(in srgb, var(--contrast), transparent 90%) 80%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite linear;
+    }
+
+    @keyframes shimmer {
+      0% {
+        background-position: -200% 0;
+      }
+      100% {
+        background-position: 200% 0;
+      }
     }
 
 
@@ -427,8 +456,14 @@ section {
     color: var(--critical)
 }
 
+.input__sub-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
 .input__char--counter {
-    text-align: right;
+    align-self: right;
 }
 
 /* Input File Upload */

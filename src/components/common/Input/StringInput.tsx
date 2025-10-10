@@ -90,14 +90,18 @@ const InputString = forwardRef<InputStringRef, SmallInputProps>(({ title, placeh
             </div>
             <div className={`input__field`}>
                 <input onFocus={handleFocus} onBlur={handleBlur} disabled={disabled} maxLength={maxLength} id={id} autoFocus={autofocus} autoComplete={autoComplete} name={name} onChange={handleChange} onClick={disableError} value={inputValue} type={type} className={`input__main ${currentError ? 'input__main--error' : ''} ${disabled == true ? 'disabled' : ''}`} ref={inputRef} placeholder={placeholder}></input>
-                {maxLength && (
-                    <small className="input__char--counter">
-                        {charCount}/{maxLength}
-                    </small>
-                )}
-                {children}
-                {currentError && (
-                    <p className="input__error-message">{currentError}</p>
+                {(maxLength || currentError || children) && (
+                    <div className="input__sub-content">
+                        {children}
+                        {maxLength && (
+                            <small className="input__char--counter">
+                                {charCount}/{maxLength}
+                            </small>
+                        )}
+                        {currentError && (
+                            <p className="input__error-message">{currentError}</p>
+                        )}
+                    </div>
                 )}
             </div>
         </div>

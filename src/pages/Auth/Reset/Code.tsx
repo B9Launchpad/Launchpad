@@ -3,6 +3,9 @@ import { useTranslation } from "react-i18next"
 import Button from "../../../components/common/Button";
 import InputSmall, {InputSmallRef} from "../../../components/common/Input/SmallInput";
 import { useReset } from "../../../functions/Auth/ResetContext";
+import FormComponent from "../../../components/common/Input/Form";
+import { NavLink } from "react-router-dom";
+import maskEmail from "../../../functions/Auth/maskEmail";
 
 const ResetCodePage = () => {
     const { t } = useTranslation('auth');
@@ -41,12 +44,16 @@ const ResetCodePage = () => {
         }
     }, [data])
 
+    const handleReturn = () => {
+        data.emailValid = null;
+    }
+
     return (
-        <form onSubmit={validateCode}>
+        <FormComponent onSubmit={validateCode}>
             <div className="hero__content">
                 <div>
                     <h1>{t('reset.challengeMailTitle')}</h1>
-                    <small>{t('reset.challengeMailInstructions')}</small>
+                    <small>{t('reset.challengeMailInstructions', {email: maskEmail(data.email)})}</small>
                 </div>
                 <InputSmall 
                     id="otp"
@@ -54,14 +61,15 @@ const ResetCodePage = () => {
                     autoComplete="one-time-code"
                     label={t('reset.resetCode')}
                     ref={inputRef}
-                />
+                >
+                    <small>{t('reset.wrongEmail')}{' '}
+                        <NavLink onClick={handleReturn} to={'#'}>
+                            {t('reset.goBack')}
+                        </NavLink>
+                    </small>
+                </InputSmall>
             </div>
-            <div className="hero__content">
-                <Button type="submit">
-                    { t('submit', {ns: 'general'}) }
-                </Button>
-            </div>
-        </form>
+        </FormComponent>
     )
 }
 

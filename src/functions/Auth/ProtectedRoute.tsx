@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import makeFetchRequest from "../../utils/fetch/makeFetchRequest";
-import LoginProcessingPage from "../../pages/Auth/Login/Processing";
+import LoginProcessingPage from "../../pages_old/Auth/Login/Processing";
 
 interface ProtectedRouteProps {
     children: React.ReactNode;

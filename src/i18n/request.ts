@@ -36,6 +36,11 @@ export function loadMessages(locale: string) {
   return messages
 }
 
+export async function changeLocale(locale: string) {
+    const cookieStore = await cookies();
+    cookieStore.set("i18next", locale)
+}
+
 export default getRequestConfig(async () => {
   const locale = await detectLocale()
   const messages = loadMessages(locale)

@@ -1,14 +1,14 @@
 import { useEffect, useRef } from "react";
-import { useTranslation } from "react-i18next"
-import Button from "../../../components/common/Button";
 import InputSmall, {InputSmallRef} from "../../../components/common/Input/SmallInput";
 import { useReset } from "../../../functions/Auth/ResetContext";
 import FormComponent from "../../../components/common/Input/Form";
-import { NavLink } from "react-router-dom";
 import maskEmail from "../../../functions/Auth/maskEmail";
+import { useTranslations } from "next-intl";
+import Link from "next/link";
 
 const ResetCodePage = () => {
-    const { t } = useTranslation('auth');
+    const t = useTranslations('auth');
+    const tg = useTranslations('general');
     const { data, handleCode } = useReset();
     const inputRef = useRef<InputSmallRef>(null);
 
@@ -36,9 +36,9 @@ const ResetCodePage = () => {
         if(!inputRef.current) return;
         const input = inputRef.current;
         if(data.fetchError === true) {
-            input.error(t('errors.fetch', { ns: "general" }))
+            input.error(tg('errors.fetch'))
         } else if (data.codeValid === false) {
-            input.error(t('reset.codeError'))
+            input.error(tg('reset.codeError'))
         } else {
             input.error("");
         }
@@ -63,9 +63,9 @@ const ResetCodePage = () => {
                     ref={inputRef}
                 >
                     <small>{t('reset.wrongEmail')}{' '}
-                        <NavLink onClick={handleReturn} to={'#'}>
+                        <Link onClick={handleReturn} href={""}>
                             {t('reset.goBack')}
-                        </NavLink>
+                        </Link>
                     </small>
                 </InputSmall>
             </div>

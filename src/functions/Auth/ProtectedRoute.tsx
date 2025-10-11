@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Navigate } from "react-router-dom";
 import makeFetchRequest from "../../utils/fetch/makeFetchRequest";
-import LoginProcessingPage from "../../pages_old/Auth/Login/Processing";
+import { useRouter } from "next/navigation";
+import LoginProcessingPage from "@/app/login/Processing";
 
 interface ProtectedRouteProps {
     children: React.ReactNode;
@@ -9,6 +9,7 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({children}) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null) // null = loading, true/false = ready
+    const router = useRouter();
 
     // TODO: Change token verification via backend :\
 
@@ -45,9 +46,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({children}) => {
     }, [])
 
     if(isAuthenticated === null) return <LoginProcessingPage/>
-    if(!isAuthenticated) return <Navigate to="/login" replace />
+    if(!isAuthenticated) return () => {
+        router.push('/login')
+    }
 
-    return <>{children}</>; // isAuthenticated === true return
+    return children; // isAuthenticated === true return
 }
 
 export default ProtectedRoute;

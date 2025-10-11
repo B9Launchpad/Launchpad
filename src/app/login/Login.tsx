@@ -5,7 +5,7 @@ import PasskeyIcon from "@components/icons/Passkey"
 import GoogleLogo from "@/components/icons/Logos/GoogleLogo"
 import MicrosoftLogo from "@/components/icons/Logos/MicrosoftLogo"
 import GithubLogo from "@components/icons/Logos/GithubLogo"
-import { useTranslation } from "react-i18next"
+import { useTranslations } from 'next-intl'
 import { useSpring, animated } from "react-spring"
 import { loginCredentials, useLogin } from "@functions/Auth/LoginContext"
 import SpringConfig from "@utils/SpringConfig"
@@ -21,7 +21,8 @@ const errorsInit = {
 
 
 const LoginPromptPage: React.FC = () => {
-    const { t } = useTranslation('auth');
+    const t = useTranslations('auth');
+    const tg = useTranslations('general');
     const [additionalOAuthHeight, setAdditionalOAuthHeight] = useState(0);
     const [expandedOAuthOptions, setExpandOAuthOptions] = useState<Boolean>(false);
     const additionalOAuthRef = useRef<HTMLDivElement>(null);
@@ -111,9 +112,9 @@ const LoginPromptPage: React.FC = () => {
                     <Button icon={<GithubLogo/>} variant='tertiary'>{t('OAuthContinue', {method: 'GitHub'})}</Button>
                 </animated.div>
                 { expandedOAuthOptions ? (
-                    <a onClick={() => { setExpandOAuthOptions(!expandedOAuthOptions) }} className="access">{t('showLess', { ns: 'general' })}</a> 
+                    <a onClick={() => { setExpandOAuthOptions(!expandedOAuthOptions) }} className="access">{tg('showLess')}</a> 
                 ) : (
-                    <a onClick={() => { setExpandOAuthOptions(!expandedOAuthOptions) }} className="access">{t('showMore', { ns: 'general' })}</a> 
+                    <a onClick={() => { setExpandOAuthOptions(!expandedOAuthOptions) }} className="access">{tg('showMore')}</a> 
                 )}
             </div>
         </form>

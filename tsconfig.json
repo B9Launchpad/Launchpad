@@ -30,7 +30,8 @@
       "@/*": ["src/*"],
       "@components/*": ["src/components/*"],
       "@functions/*": ["src/functions/*"],
-      "@utils/*": ["src/utils/*"]
+      "@utils/*": ["src/utils/*"],
+      "@i18n": ["src/i18n/index.ts"]
     }
   },
   "include": [

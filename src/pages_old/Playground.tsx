@@ -1,12 +1,9 @@
-import '../styles/main.css';
-import '../styles/variables.css';
 import Button from '../components/common/Button';
 import SettingsIcon from '../components/icons/Settings';
 import SidebarItem from '../components/layout/sidebar/SidebarItem';
 import InputString from '../components/common/Input/StringInput';
-import InputSearch, { searchQuery } from '../components/common/Input/SearchInput';
+import InputSearch from '../components/common/Input/SearchInput';
 import Profile from '../components/common/Profile';
-import PadSelect from '../components/misc/intro/PadSelect';
 import FileUpload from '../components/common/Input/FileUpload/FileUpload';
 import InputCheckbox, { CheckboxOption } from '../components/common/Input/Checkbox';
 import NewPassword from '../components/common/Input/NewPassword';
@@ -14,17 +11,14 @@ import InputRadio from '../components/common/Input/Radio';
 import InputChips from '../components/common/Input/Chips';
 import validateEmail from '../functions/validateEmail';
 import SmallTable, { Column, SmallTableRef } from '../components/common/Table/Table';
-import { useContext, useRef, useState } from 'react';
-import SearchContext, { SearchProvider } from '../functions/SearchContext';
-import axios from 'axios';
-import { useCookie } from '../functions/useCookie';
+import { useRef } from 'react';
+import { SearchProvider } from '../functions/SearchContext';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 
 
 function PlaygroundPage() {
   const smallTableRef = useRef<SmallTableRef<ReceiptItem>>(null);
-  const { getCookie } = useCookie();
   const navigate = useNavigate();
   const { t } = useTranslation("auth");
 

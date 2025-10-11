@@ -1,6 +1,6 @@
 import { createContext, useContext, useState } from "react";
 import securityConfig from "../../config/security.json"
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 // TO DO: Implement securityConfig (contemplate whether on backend or frontend)
 
@@ -19,7 +19,7 @@ const LoginContext = createContext<LoginContextProps | undefined>(undefined);
 export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
     const [loginStatus, setLoginStatus] = useState<LoginStatus>("isIdle")
     const [credentials, setCredentials] = useState<loginCredentials>(null);
-    const navigate = useNavigate()
+    const router = useRouter()
 
     const handleRequest = async (credentials: loginCredentials) => {
         setCredentials(credentials)
@@ -38,7 +38,7 @@ export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
             const status = response.status;
 
             if(status === 202) {
-                navigate("/onboarding/playground");
+                router.push('/onboarding/playground') // navigate to /dashboard
             } else if (status === 401) {
                 setLoginStatus("isUnauthorised");
             }

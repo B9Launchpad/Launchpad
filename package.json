@@ -12,6 +12,7 @@
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "axios": "^1.11.0",
+    "cookies-next": "^6.1.0",
     "i18next": "^21.8.0",
     "i18next-browser-languagedetector": "^8.1.0",
     "i18next-http-backend": "^3.0.2",

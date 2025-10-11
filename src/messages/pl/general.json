@@ -4,7 +4,7 @@
     "privacyPolicy": "Polityka prywatności",
     "termsOfUse": "Warunki użytkowania",
     "copyrightNote": "wszelkie prawa zastrzeżone",
-    "greeting": "Witamy, {{name}}!",
+    "greeting": "Witamy, {name}!",
     "submit": "Podtwierdź",
     "tryAgain": "Spróbuj ponownie",
     "continue": "Dalej",

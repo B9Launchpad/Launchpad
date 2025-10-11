@@ -35,7 +35,7 @@
         "2FA": {
             "title": "Twój kod z aplikacji uwierzytelniającej",
             "instructions": "Pobierz lub otwórz aplikację uwierzytelniającą, np. Google Authenticator, Microsoft Authenticator itd., i zeskanuj kod",
-            "notScannable": "Jeśli nie możesz zeskanować tego kodu QR, wpisz ten tajny kod ręcznie w swojej aplikacji uwierzytelniającej: <1>{{code}}</1>",
+            "notScannable": "Jeśli nie możesz zeskanować tego kodu QR, wpisz ten tajny kod ręcznie w swojej aplikacji uwierzytelniającej: <1>{code}</1>",
             "6digitCode": "6-cyfrowy kod",
             "6digitCodeInstructions": "Wpisz 6-cyfrowy kod wyświetlany w Twojej aplikacji uwierzytelniającej"
         }

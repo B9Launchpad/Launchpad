@@ -1,17 +1,17 @@
 import { useEffect, useRef } from "react"
-import { useTranslation } from "react-i18next";
-import NewPassword, {NewPasswordRef} from "../../../components/common/Input/NewPassword";
-import Button from "../../../components/common/Button";
-import { useReset } from "../../../functions/Auth/ResetContext";
-import { useNavigate } from "react-router-dom";
-import FormComponent from "../../../components/common/Input/Form";
+import NewPassword, {NewPasswordRef} from "@components/common/Input/NewPassword";
+import { useReset } from "@functions/Auth/ResetContext";
+import FormComponent from "@components/common/Input/Form";
+import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 
 const ResetNewPasswordPage = () => {
     const newPasswordRef = useRef<NewPasswordRef>(null);
-    const { t } = useTranslation('auth');
+    const t = useTranslations('auth');
+    const tg = useTranslations('general');
     const { data, handleReset } = useReset();
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -27,7 +27,7 @@ const ResetNewPasswordPage = () => {
 
     useEffect(() => {
         if(data.changeAccepted === true) {
-            navigate("/login")
+            router.push("/login")
         }
     }, [data.changeAccepted]);
 
@@ -35,7 +35,7 @@ const ResetNewPasswordPage = () => {
         <FormComponent onSubmit={handleSubmit}>
             <div className="hero__content">
                 <div>
-                    <em>{t('greeting', {name: 'Tatiana', ns: 'general'})}</em>
+                    <em>{tg('greeting', {name: 'Tatiana'})}</em>
                     <h1>{t('reset.title')}</h1>
                     <small>
                         {t('reset.passwordResetInstructions')} {/*t('passwordRequirements')*/}

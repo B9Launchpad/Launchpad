@@ -1,6 +1,6 @@
-import ProtectedRoute from "../../../functions/Auth/ProtectedRoute";
-import { useReset } from "../../../functions/Auth/ResetContext";
-import LoginProcessingPage from "../Login/Processing";
+import ProtectedRoute from "@functions/Auth/ProtectedRoute";
+import { useReset } from "@functions/Auth/ResetContext";
+import LoginProcessingPage from "../Processing";
 import ResetCodePage from "./Code";
 import ResetEmailPage from "./Email";
 import ResetNewPasswordPage from "./NewPassword";

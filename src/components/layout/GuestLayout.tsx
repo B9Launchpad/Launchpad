@@ -1,5 +1,5 @@
+import { useTranslations } from "next-intl";
 import Logo from "../common/Logo";
-import { useTranslation } from 'react-i18next';
 import Link from "next/link";
 
 interface GuestLayoutProps {
@@ -14,7 +14,7 @@ const getCurrentYear = () => {
 }
 
 const GuestLayout: React.FC<GuestLayoutProps> = ({ children, backgroundURL = '/static/guest-spacious.webp' }) => {
-    const { t } = useTranslation('general');
+    const t = useTranslations('general');
 
     return (
         <div className="guest__layout" style={{backgroundImage: `url(${backgroundURL})`}}>

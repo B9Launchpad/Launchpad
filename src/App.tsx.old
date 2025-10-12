@@ -1,0 +1,20 @@
+// App.tsx
+import './i18n';
+// import AppRoutes from './routes/Routes';
+import { ThemeProvider } from './functions/ThemeContext';
+
+function App() {
+  /* return (
+    <>
+      <ThemeProvider>
+        <AppRoutes/>
+      </ThemeProvider>
+    </>
+  ); */
+
+  return (
+    <p>HELLO WORLD!</p>
+  )
+}
+
+export default App;

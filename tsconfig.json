@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es6",
+    "target": "esnext",
     "lib": [
       "dom",
       "dom.iterable",
@@ -18,9 +18,28 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
-    },
+    "jsx": "preserve",
+    "incremental": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@functions/*": ["src/functions/*"],
+      "@utils/*": ["src/utils/*"],
+      "@i18n": ["src/i18n/index.ts"],
+      "@locales": ["public/locales/*"]
+    }
+  },
   "include": [
-    "src"
+    "src",
+    "build/types/**/*.ts"
+  , "src/app"  ],
+  "exclude": [
+    "node_modules"
   ]
 }

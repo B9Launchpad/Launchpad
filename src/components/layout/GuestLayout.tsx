@@ -1,7 +1,6 @@
-import { NavLink } from "react-router-dom";
 import Logo from "../common/Logo";
-import { useTranslation } from 'react-i18next';
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 interface GuestLayoutProps {
     children: React.ReactNode;
@@ -16,7 +15,7 @@ const getCurrentYear = () => {
 
 const GuestLayout: React.FC<GuestLayoutProps> = ({ children, backgroundURL = '/static/guest-spacious.webp' }) => {
     const { t } = useTranslation('general');
-
+    
     return (
         <div className="guest__layout" style={{backgroundImage: `url(${backgroundURL})`}}>
             <div className="guest__layout--wrap">
@@ -26,8 +25,8 @@ const GuestLayout: React.FC<GuestLayoutProps> = ({ children, backgroundURL = '/s
                 </main>
                 <footer>
                     <small className="flex flex-col">
-                        <NavLink to={"/privacy-policy"}>{t('privacyPolicy')}</NavLink>
-                        <NavLink to={"/terms-of-use"}>{t('termsOfUse')}</NavLink>
+                        <Link href={"/privacy-policy"}>{t('privacyPolicy')}</Link>
+                        <Link href={"/terms-of-use"}>{t('termsOfUse')}</Link>
                         © {getCurrentYear()}, B9 Creators, {t('copyrightNote')}.
                     </small>
                 </footer>

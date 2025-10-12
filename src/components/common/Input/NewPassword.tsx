@@ -4,8 +4,8 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import InputString, { InputStringRef } from "./StringInput";
 import { useSpring, animated } from "react-spring";
-import { useTranslation } from "react-i18next";
 import SpringConfig from "../../../utils/SpringConfig";
+import { useTranslation } from "react-i18next";
 
 export type NewPasswordRef = {
     validate: () => false | string;

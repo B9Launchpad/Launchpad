@@ -2,13 +2,9 @@
 // THIS IS TO BE ADAPTED FOR USE WITH SERVER-SIDE-RENDERING. 
 // IF YOU MAKE ANY FURTHER CHANGES PLEASE MAKE SURE THEY ARE SSR-COMPATIBLE.
 
+'use client'
+
 import React, { createContext, useEffect, useState, ReactNode } from 'react';
-const storedTheme = localStorage.getItem('theme');
-const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const initialTheme = storedTheme === 'auto' || !storedTheme
-  ? (systemPrefersDark ? 'dark' : 'light')
-  : storedTheme;
-  document.documentElement.classList.add(initialTheme);
 
 export type Theme = 'light' | 'dark' | 'auto';
 const ThemeContext = createContext<{
@@ -17,28 +13,37 @@ const ThemeContext = createContext<{
 }>({ theme: 'light', setTheme: () => {} });
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    return (localStorage.getItem('theme') as Theme) || 'auto';
-  });
+  const [theme, setThemeState] = useState<Theme>('auto');
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem('theme') as Theme | null;
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+    const initial = storedTheme === 'auto' || !storedTheme
+      ? (systemPrefersDark ? 'dark' : 'light')
+      : storedTheme;
+
+    setThemeState(initial);
+    document.documentElement.classList.add(initial);
+  }, []);
 
   useEffect(() => {
     const apply = (t: Theme) => {
-      const resolved = t === 'auto' 
-        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') 
+      const resolved = t === 'auto'
+        ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
         : t;
       document.documentElement.classList.remove('light', 'dark');
-      document.documentElement.classList.add(`${resolved}`);
+      document.documentElement.classList.add(resolved);
     };
 
     apply(theme);
     localStorage.setItem('theme', theme);
 
     if (theme === 'auto') {
-      const listener = (e: MediaQueryListEvent) => {
-        apply('auto');
-      };
-      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', listener);
-      return () => window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', listener);
+      const listener = (e: MediaQueryListEvent) => apply('auto');
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      mediaQuery.addEventListener('change', listener);
+      return () => mediaQuery.removeEventListener('change', listener);
     }
   }, [theme]);
 

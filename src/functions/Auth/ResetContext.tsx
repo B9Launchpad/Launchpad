@@ -1,8 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import securityConfig from "../../config/security.json"
-import { useNavigate } from "react-router-dom";
 import makeFetchRequest from "../../utils/fetch/makeFetchRequest";
-import { useFetchStatus } from "../../utils/fetch/useFetchStatus";
 
 export type loginCredentials = { email: string} | null
 export type ResetData = 
@@ -37,7 +35,7 @@ export const ResetProvider = ({ children }: {children: React.ReactNode}) => {
             isAwaitingResponse: false
         }
     )
-    const navigate = useNavigate()
+
 
     const setFetchError = (value: boolean) => {
         setData((prev) => ({ ...prev, fetchError: value }))

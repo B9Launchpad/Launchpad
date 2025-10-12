@@ -1,6 +1,7 @@
 import { fetchStatus } from "./fetchStatus";
 
-const API_URL = process.env.REACT_APP_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const HOST_URL = process.env.NEXT_PUBLIC_HOST_URL;
 
 interface FetchOptions {
     url: string;
@@ -12,7 +13,10 @@ interface FetchOptions {
 // TO DO: Report if makeFetchRequest is currently awaiting response;
 
 const makeFetchRequest = async ({ url, method = 'POST', body, includeCredentials = false }: FetchOptions) => {
-    if(!url.includes('://')) {
+    if (url.startsWith("host//", 0)) {
+        url = HOST_URL + url.replace("host//", "/");   
+    }
+    else if(!url.includes('://')) {
         url = API_URL + url;
     }
 

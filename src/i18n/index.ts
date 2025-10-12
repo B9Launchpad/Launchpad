@@ -1,26 +1,13 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import LanguageDetector from 'i18next-browser-languagedetector';
-import I18NextHttpBackend from 'i18next-http-backend';
+import i18n from 'i18next'
 
-i18n
-  .use(LanguageDetector) // Automatically detects browser langauge
-  .use(initReactI18next)
-  .use(I18NextHttpBackend)
-  .init({
-    fallbackLng: 'en',
-    supportedLngs: ['en', 'pl', 'de', 'ru'],
-    ns: ['general', 'countries', 'intro', 'auth', 'components'],
-    interpolation: {
-      escapeValue: false 
-    },
-    backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json'
-    },
-    detection: {
-      order: ['localStorage', 'cookie', 'navigator'],
-      caches: ['localStorage', 'cookie']
-    }
-  });
+// DO NOT INITIALISE AT CREATION!
+export const i18nInstance = i18n.createInstance()
 
-export default i18n;
+// General configuration
+export const commonConfig = {
+  fallbackLng: 'en',
+  supportedLngs: ['en', 'pl', 'de', 'ru'],
+  ns: ['general', 'countries', 'intro', 'auth', 'components'],
+  defaultNS: 'general',
+  interpolation: { escapeValue: false }
+}

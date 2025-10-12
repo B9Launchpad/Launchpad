@@ -4,7 +4,7 @@
     "privacyPolicy": "Datenschutzrichtlinie",
     "termsOfUse": "Nutzungsbedingungen",
     "copyrightNote": "alle rechte vorbehalten",
-    "greeting": "Hallo, {name}!",
+    "greeting": "Hallo, {{name}}!",
     "submit": "Bestätigen",
     "tryAgain": "Erneut versuchen",
     "continue": "Weiter",

@@ -1,11 +1,10 @@
 import Button from "@components/common/Button"
 import { useLogin } from "@functions/Auth/LoginContext";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 const LoginErrorPage: React.FC = () => {
-    const t = useTranslations('auth');
-    const tg = useTranslations('general');
+    const { t } = useTranslation('auth');
     const { setLoginStatus, handleRetry } = useLogin();
 
     return (
@@ -18,7 +17,7 @@ const LoginErrorPage: React.FC = () => {
             </div>
             <div className="secondary__content">
                 <Button onClick={handleRetry} type="submit">
-                    {tg('tryAgain')}
+                    {t('tryAgain', {ns: "general"})}
                 </Button>
                 <small>{t('processing.stillNotWorking')} <Link onClick={() => setLoginStatus("isIdle")} href={''}>{t('processing.tryAnotherWay')}</Link></small>
             </div>

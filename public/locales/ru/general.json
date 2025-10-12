@@ -4,7 +4,7 @@
     "privacyPolicy": "Политика конфиденциальности",
     "termsOfUse": "Условия пользования",
     "copyrightNote": "все права защищены",
-    "greeting": "Здравствуйте, {name}!",
+    "greeting": "Здравствуйте, {{name}}!",
     "submit": "Ок",
     "tryAgain": "Попробовать снова",
     "continue": "Далее",

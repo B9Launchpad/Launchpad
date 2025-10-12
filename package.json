@@ -20,7 +20,6 @@
     "i18next-resources-to-backend": "^1.2.1",
     "mime-db": "^1.54.0",
     "next": "^15.5.4",
-    "next-intl": "^4.3.12",
     "ni18n": "^1.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",

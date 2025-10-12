@@ -3,13 +3,12 @@ import NewPassword, {NewPasswordRef} from "@components/common/Input/NewPassword"
 import { useReset } from "@functions/Auth/ResetContext";
 import FormComponent from "@components/common/Input/Form";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 
 const ResetNewPasswordPage = () => {
     const newPasswordRef = useRef<NewPasswordRef>(null);
-    const t = useTranslations('auth');
-    const tg = useTranslations('general');
+    const { t } = useTranslation('auth');
     const { data, handleReset } = useReset();
     const router = useRouter();
 
@@ -35,7 +34,7 @@ const ResetNewPasswordPage = () => {
         <FormComponent onSubmit={handleSubmit}>
             <div className="hero__content">
                 <div>
-                    <em>{tg('greeting', {name: 'Tatiana'})}</em>
+                    <em>{t('greeting', {ns: "general", name: 'Tatiana'})}</em>
                     <h1>{t('reset.title')}</h1>
                     <small>
                         {t('reset.passwordResetInstructions')} {/*t('passwordRequirements')*/}

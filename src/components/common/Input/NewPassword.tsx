@@ -5,7 +5,7 @@ import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "re
 import InputString, { InputStringRef } from "./StringInput";
 import { useSpring, animated } from "react-spring";
 import SpringConfig from "../../../utils/SpringConfig";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 export type NewPasswordRef = {
     validate: () => false | string;
@@ -22,7 +22,7 @@ const NewPassword = forwardRef<NewPasswordRef>((_props, ref) => {
     const [newPassword, setNewPassword] = useState<string>('');
     const [repeatPassword, setRepeatPassword] = useState<string>('');
     const [passwordError, setPasswordError] = useState<string | null>(null);
-    const t = useTranslations('components');
+    const { t } = useTranslation('components');
 
     const [contentHeight, setContentHeight] = useState(0);
     const [expanded, setExpanded] = useState<boolean>(false);

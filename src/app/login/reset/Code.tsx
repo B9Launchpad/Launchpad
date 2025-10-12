@@ -3,12 +3,11 @@ import InputSmall, {InputSmallRef} from "../../../components/common/Input/SmallI
 import { useReset } from "../../../functions/Auth/ResetContext";
 import FormComponent from "../../../components/common/Input/Form";
 import maskEmail from "../../../functions/Auth/maskEmail";
-import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 const ResetCodePage = () => {
-    const t = useTranslations('auth');
-    const tg = useTranslations('general');
+    const { t } = useTranslation('auth');
     const { data, handleCode } = useReset();
     const inputRef = useRef<InputSmallRef>(null);
 
@@ -36,9 +35,9 @@ const ResetCodePage = () => {
         if(!inputRef.current) return;
         const input = inputRef.current;
         if(data.fetchError === true) {
-            input.error(tg('errors.fetch'))
+            input.error(t('errors.fetch', {ns: "general"}))
         } else if (data.codeValid === false) {
-            input.error(tg('reset.codeError'))
+            input.error(t('reset.codeError', {ns: "general"}))
         } else {
             input.error("");
         }

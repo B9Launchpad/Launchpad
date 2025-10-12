@@ -1,9 +1,9 @@
-import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
 
 
 const LoginProcessingPage: React.FC = () => {
-    const t = useTranslations("auth");
+    const { t }= useTranslation("auth");
 
     return (
         <>

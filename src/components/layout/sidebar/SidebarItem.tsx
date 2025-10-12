@@ -1,8 +1,9 @@
 import React, { useState, useRef, useLayoutEffect, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
 import DropdownIcon from '../../icons/Dropdown';
 import { useSpring, animated } from '@react-spring/web';
 import SpringConfig from '../../../utils/SpringConfig';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 /* ===== TO DO =====
 
@@ -29,6 +30,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ children, icon, url, type = '
   const contentRef = useRef<HTMLUListElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState(0);
+  const pathname = usePathname()
+  const isActive = pathname === url
 
 {/* Konfiguration für Animation des zusammneklappbares Elements */}
  
@@ -54,13 +57,13 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ children, icon, url, type = '
         onClick={() => isExpandable ? setExpanded(!expanded) : undefined}
       >
         <div className="sidebar__item-link-group">
-          <NavLink
-            to={url || '#'}
-            className={({ isActive }) => `sidebar__item-content ${isActive ? 'font-semibold' : ''}`}
+          <Link
+            href={url || '#'}
+            className={`sidebar__item-content ${isActive ? 'font-semibold' : ''}`}
           >
             <span className='sidebar__item-icon'>{icon}</span>
             <span className={`sidebar__item-label ${type}`}>{children}</span>
-          </NavLink>
+          </Link>
           {isExpandable && (
             <span className={`sidebar__item-expandable_label ${expanded ? 'active' : ''}`}><DropdownIcon/></span>
           )}
@@ -77,12 +80,12 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ children, icon, url, type = '
           <ul ref={contentRef} className="sidebar__item-subitems">
             {items.map((item) => (
               <li key={item.label}>
-                <NavLink
-                  to={item.url}
+                <Link
+                  href={item.url}
                   className="sidebar__item--subitem-link"
                 >
                   {item.label}
-                </NavLink>
+                </Link>
               </li>
             ))}
           </ul>

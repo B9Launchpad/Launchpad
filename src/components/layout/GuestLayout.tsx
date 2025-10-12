@@ -1,4 +1,3 @@
-import { useTranslations } from "next-intl";
 import Logo from "../common/Logo";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";

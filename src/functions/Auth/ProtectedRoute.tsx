@@ -7,50 +7,43 @@ interface ProtectedRouteProps {
     children: React.ReactNode;
 }
 
-const ProtectedRoute: React.FC<ProtectedRouteProps> = ({children}) => {
-    const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null) // null = loading, true/false = ready
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
+    const [authStatus, setAuthStatus] = useState<'loading' | 'authenticated' | 'unauthenticated'>('loading');
     const router = useRouter();
 
-    // TODO: Change token verification via backend :\
+    useEffect(() => {
+        const verifyToken = async () => {
+            try {
+                const res = await makeFetchRequest({
+                    method: "GET",
+                    url: '/verify',
+                    includeCredentials: true,
+                });
 
-    const verifyToken = async() => {
-        
-        try {
-            //const response = await fetch('http://localhost:8080/verify', {
-            //    method: 'POST',
-            //    headers: {
-            //        'Content-Type': 'application/json',
-            //        'Accept': 'application/json',
-            //    },
-            //    mode: 'cors', // явно указываем CORS режим
-            //    credentials: "include"
-            //});
+                setAuthStatus(res.status === 200 ? 'authenticated' : 'unauthenticated');
+            } catch (error) {
+                setAuthStatus('unauthenticated');
+            }
+        };
 
-            const res = await makeFetchRequest({
-                method: "GET",
-                url: '/verify',
-                includeCredentials: true,
-            })
-
-            const { status } = res;
-
-            if(status === 200) setIsAuthenticated(true);
-
-        } catch (error: any) {
-            setIsAuthenticated(false);
-        }
-    }
+        verifyToken();
+    }, []);
 
     useEffect(() => {
-        verifyToken();
-    }, [])
+        if (authStatus === 'unauthenticated') {
+            router.push('/login');
+        }
+    }, [authStatus, router]);
 
-    if(isAuthenticated === null) return <LoginProcessingPage/>
-    if(!isAuthenticated) return () => {
-        router.push('/login')
+    if (authStatus === 'loading') {
+        return <LoginProcessingPage />;
     }
 
-    return children; // isAuthenticated === true return
-}
+    if (authStatus === 'authenticated') {
+        return <>{children}</>;
+    }
+
+    return null;
+};
 
 export default ProtectedRoute;

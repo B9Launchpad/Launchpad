@@ -5,7 +5,6 @@ import PasskeyIcon from "@components/icons/Passkey"
 import GoogleLogo from "@/components/icons/Logos/GoogleLogo"
 import MicrosoftLogo from "@/components/icons/Logos/MicrosoftLogo"
 import GithubLogo from "@components/icons/Logos/GithubLogo"
-import { useTranslations } from 'next-intl'
 import { useSpring, animated } from "react-spring"
 import { loginCredentials, useLogin } from "@functions/Auth/LoginContext"
 import SpringConfig from "@utils/SpringConfig"
@@ -97,8 +96,8 @@ const LoginPromptPage: React.FC = () => {
                 <InputSmall ref={loginRef} value={credentials?.email} label={t('loginPrompt')}/>
                 {/* Password */}
                 <InputSmall ref={passwordRef} type="password" label={t('passwordPrompt')}>
-                    <small>{t('forgotPassword')} 
-                        <Link href={'/login/reset'}>{t('resetPrompt')}</Link>
+                    <small>{t('forgotPassword')}
+                        <Link href={'/login/reset'}> {t('resetPrompt')}</Link>
                     </small>
                 </InputSmall>
             </div>

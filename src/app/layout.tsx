@@ -5,6 +5,7 @@ import './styles/global.css'
 import { ThemeProvider } from '@/functions/ThemeContext'
 import { getLocaleFromCookies, getLocaleFromHeaders } from '@/i18n/getLocale'
 import { Montserrat } from "next/font/google";
+import { cookies } from 'next/headers'
 
 // Динамический импорт I18nProvider, чтобы не грузить i18n в момент сборки
 const I18nProvider = (await import('@/i18n/I18nProvider')).default

@@ -4,7 +4,7 @@
     "privacyPolicy": "Privacy Policy",
     "termsOfUse": "Terms of Use",
     "copyrightNote": "all rights reserved",
-    "greeting": "Hi, {name}!",
+    "greeting": "Hi, {{name}}!",
     "submit": "Submit",
     "tryAgain": "Try again",
     "Launchpad": "Launchpad",

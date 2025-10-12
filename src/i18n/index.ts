@@ -1,9 +1,9 @@
 import i18n from 'i18next'
 
-// Создаем инстансу но НЕ инициализируем
+// DO NOT INITIALISE AT CREATION!
 export const i18nInstance = i18n.createInstance()
 
-// Общая конфигурация
+// General configuration
 export const commonConfig = {
   fallbackLng: 'en',
   supportedLngs: ['en', 'pl', 'de', 'ru'],

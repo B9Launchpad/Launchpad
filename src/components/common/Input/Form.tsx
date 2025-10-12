@@ -1,7 +1,6 @@
 import { useTranslation } from "react-i18next";
 import Button from "../Button";
 import { useFetchStatus } from "../../../utils/fetch/useFetchStatus";
-import { useTranslations } from "next-intl";
 
 interface FormComponentProps {
     children: React.ReactNode;
@@ -10,7 +9,7 @@ interface FormComponentProps {
 }
 
 const FormComponent: React.FC<FormComponentProps> = ({ children, onSubmit, submitText }) => {
-    const t = useTranslations('general');
+    const { t } = useTranslation('general');
     const fetchStatus = useFetchStatus();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

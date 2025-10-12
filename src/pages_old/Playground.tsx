@@ -13,13 +13,13 @@ import validateEmail from '../functions/validateEmail';
 import SmallTable, { Column, SmallTableRef } from '../components/common/Table/Table';
 import { useRef } from 'react';
 import { SearchProvider } from '../functions/SearchContext';
-import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/navigation';
 
 
 function PlaygroundPage() {
   const smallTableRef = useRef<SmallTableRef<ReceiptItem>>(null);
-  const navigate = useNavigate();
+  const router = useRouter();
   const { t } = useTranslation("auth");
 
   const AxiosPost = async () => {
@@ -30,7 +30,7 @@ function PlaygroundPage() {
 
     const status = response.status;
     if(status < 300) {
-      navigate("/login")
+      router.push("/login")
     }
   }
 

@@ -35,7 +35,7 @@
         "2FA": {
             "title": "Ihre Authentifizierungs-App-Code",
             "instructions": "Laden Sie eine Authentifizierungs-Apps, z.B.: Google Authenticator, Microsoft Authenticator, usw. herunter oder öffnen Sie sie, und scannen",
-            "notScannable": "Falls Sie diesen QR-Code nicht scannen können, geben Sie diesen Geheimcode bitte manuell in Ihre Authentifizierungs-App ein: <1>{code}</1>",
+            "notScannable": "Falls Sie diesen QR-Code nicht scannen können, geben Sie diesen Geheimcode bitte manuell in Ihre Authentifizierungs-App ein: <1>{{code}}</1>",
             "6digitCode": "6-stelliger Code",
             "6digitCodeInstructions": "Bitte geben Sie den 6-stelligen Passcode ein, der in Ihrer Authentifizierungs-App angezeigt wird"
         }

@@ -4,13 +4,12 @@ import { useReset } from "../../../functions/Auth/ResetContext";
 import validateEmail from "../../../functions/validateEmail";
 import FormComponent from "../../../components/common/Input/Form";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useTranslation } from "react-i18next";
 
 
 const ResetEmailPage = () => {
     const { handleEmail, data } = useReset();
-    const t = useTranslations('auth')
-    const tg = useTranslations('general');
+    const { t } = useTranslation('auth')
     const emailRef = useRef<InputSmallRef>(null);
 
 
@@ -31,7 +30,7 @@ const ResetEmailPage = () => {
     useEffect(() => {
         if(!emailRef.current) return;
         if(data.fetchError === true) {
-            emailRef.current.error(tg('errors.fetch'))
+            emailRef.current.error(t('errors.fetch', {ns: "general"}))
         } else if (data.emailValid === false) {
             emailRef.current.error(t('reset.emailNotFoundError'))
         } else {

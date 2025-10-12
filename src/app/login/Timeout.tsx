@@ -1,9 +1,9 @@
+import { useTranslation } from 'react-i18next';
 import Button from '../../components/common/Button';
 import { useRouter } from 'next/router';
-import { useTranslations } from 'next-intl';
 
 const SessionTimeoutPage: React.FC = () => {
-    const t = useTranslations("auth");
+    const { t } = useTranslation("auth");
     const router = useRouter();
 
     return (

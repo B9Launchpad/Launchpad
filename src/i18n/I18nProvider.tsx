@@ -15,12 +15,9 @@ function SSRInitializer({
   locale: string 
 }) {
   useSSR(initialI18nStore, locale)
-  
-  useEffect(() => {
-    if (i18n.language !== locale) {
-      i18n.changeLanguage(locale)
-    }
-  }, [locale])
+  if (i18n.language !== locale) {
+    i18n.changeLanguage(locale)
+  }
 
   return children
 }

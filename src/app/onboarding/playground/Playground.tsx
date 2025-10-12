@@ -1,4 +1,4 @@
-import Button from '@/components/common/Button';
+import Button from '@components/common/Button';
 import SettingsIcon from '@components/icons/Settings';
 import SidebarItem from '@components/layout/sidebar/SidebarItem';
 import InputString from '@components/common/Input/StringInput';
@@ -13,13 +13,14 @@ import validateEmail from '@functions/validateEmail';
 import SmallTable, { Column, SmallTableRef } from '@components/common/Table/Table';
 import { useRef } from 'react';
 import { SearchProvider } from '@functions/SearchContext';
-import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/router';
+import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/navigation';
 
 
 function PlaygroundPage() {
   const smallTableRef = useRef<SmallTableRef<ReceiptItem>>(null);
-  const t = useTranslations("auth");
+  const router = useRouter();
+  const { t } = useTranslation("auth");
 
   const AxiosPost = async () => {
     const response = await fetch("http://localhost:8080/logout", {
@@ -29,7 +30,7 @@ function PlaygroundPage() {
 
     const status = response.status;
     if(status < 300) {
-      useRouter().push('/login')
+      router.push("/login")
     }
   }
 

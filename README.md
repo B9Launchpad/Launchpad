@@ -32,10 +32,10 @@ For localisation, **i18n** method and the [corresponding library](https://www.i1
 
 Currently, there are 4 languages supported: Standard German, British English, Russian and Polish. Their localisation files may be found here:
 ```
-/src/i18n/en.json
-/src/i18n/de.json
-/src/i18n/pl.json
-/src/i18n/ru.json
+/public/locales/en/*.json
+/public/locales/de/*.json
+/public/locales/pl/*.json
+/public/locales/ru/*.json
 ```
 
 Configuration for i18n is at ``src/i18n/index.ts``.

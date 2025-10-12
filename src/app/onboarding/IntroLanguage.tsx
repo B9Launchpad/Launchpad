@@ -4,11 +4,9 @@ import { supportedCountries } from "../../functions/SupportedCountries";
 import Button from "../../components/common/Button";
 import { OnboardingDataType } from "./Index";
 import { useState } from "react";
-import { useCookie } from "@/functions/useCookie";
 import makeFetchRequest from "@/utils/fetch/makeFetchRequest";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
-import { useServerTranslation } from "@/i18n/useServerTranslation";
 
 interface OnboardingProps {
     onNext: (addSteps: number, data: OnboardingDataType) => void;
@@ -16,8 +14,7 @@ interface OnboardingProps {
 }
 
 const OnboardingLanguage: React.FC<OnboardingProps> = ({onNext, data}) => {
-    const { t, i18n } = useServerTranslation('intro');
-    const { getCookie } = useCookie()
+    const { t, i18n } = useTranslation('intro');
     const router = useRouter()
     
     const currentLanguage = i18n.language;
@@ -27,12 +24,13 @@ const OnboardingLanguage: React.FC<OnboardingProps> = ({onNext, data}) => {
     const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         let newLocale = e.currentTarget.value;
         setPreferredLanguage(newLocale);
-        i18n.changeLanguage(newLocale);
+        await i18n.changeLanguage(newLocale);
         await makeFetchRequest({
             url: '/locale',
             body: {locale: newLocale},
             includeCredentials: true,
         })
+        router.refresh();
     }
 
     const handleRegionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

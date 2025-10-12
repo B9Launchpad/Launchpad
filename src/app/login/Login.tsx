@@ -12,6 +12,7 @@ import SpringConfig from "@utils/SpringConfig"
 
 import { InputSmallRef } from "@components/common/Input/SmallInput"
 import Link from "next/link"
+import { useTranslation } from "react-i18next"
 
 type loginErrors = { username: string; password: string };
 const errorsInit = {
@@ -21,8 +22,7 @@ const errorsInit = {
 
 
 const LoginPromptPage: React.FC = () => {
-    const t = useTranslations('auth');
-    const tg = useTranslations('general');
+    const { t } = useTranslation('auth');
     const [additionalOAuthHeight, setAdditionalOAuthHeight] = useState(0);
     const [expandedOAuthOptions, setExpandOAuthOptions] = useState<Boolean>(false);
     const additionalOAuthRef = useRef<HTMLDivElement>(null);
@@ -90,7 +90,7 @@ const LoginPromptPage: React.FC = () => {
         <form onSubmit={handleClick}>
             <div className="hero__content">
                 <div>
-                    <h1>{t('welcome', { ns: 'auth' })}</h1>
+                    <h1>{t('welcome')}</h1>
                     <small>{t('instructions')}</small>
                 </div>
                 {/* Login */}
@@ -112,9 +112,9 @@ const LoginPromptPage: React.FC = () => {
                     <Button icon={<GithubLogo/>} variant='tertiary'>{t('OAuthContinue', {method: 'GitHub'})}</Button>
                 </animated.div>
                 { expandedOAuthOptions ? (
-                    <a onClick={() => { setExpandOAuthOptions(!expandedOAuthOptions) }} className="access">{tg('showLess')}</a> 
+                    <a onClick={() => { setExpandOAuthOptions(!expandedOAuthOptions) }} className="access">{t('showLess', {ns: "general"})}</a> 
                 ) : (
-                    <a onClick={() => { setExpandOAuthOptions(!expandedOAuthOptions) }} className="access">{tg('showMore')}</a> 
+                    <a onClick={() => { setExpandOAuthOptions(!expandedOAuthOptions) }} className="access">{t('showMore', {ns: "general"})}</a> 
                 )}
             </div>
         </form>

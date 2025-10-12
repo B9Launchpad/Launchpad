@@ -3,11 +3,12 @@ import IntroLayout from "../../components/layout/IntroLayout";
 import { supportedCountries } from "../../functions/SupportedCountries";
 import Button from "../../components/common/Button";
 import { OnboardingDataType } from "./Index";
-import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useState } from "react";
 import { useCookie } from "@/functions/useCookie";
 import makeFetchRequest from "@/utils/fetch/makeFetchRequest";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
+import { useServerTranslation } from "@/i18n/useServerTranslation";
 
 interface OnboardingProps {
     onNext: (addSteps: number, data: OnboardingDataType) => void;
@@ -15,24 +16,23 @@ interface OnboardingProps {
 }
 
 const OnboardingLanguage: React.FC<OnboardingProps> = ({onNext, data}) => {
-    const t = useTranslations('intro')
-    const tc = useTranslations('countries')
-    const tg = useTranslations('general')
+    const { t, i18n } = useServerTranslation('intro');
     const { getCookie } = useCookie()
     const router = useRouter()
-
-    const [preferredLanguage, setPreferredLanguage] = useState<string>(getCookie("i18next") as string);
+    
+    const currentLanguage = i18n.language;
+    const [preferredLanguage, setPreferredLanguage] = useState<string>(currentLanguage);
     const [currentRegion, setCurrentRegion] = useState<string>("US");
 
     const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
         let newLocale = e.currentTarget.value;
         setPreferredLanguage(newLocale);
+        i18n.changeLanguage(newLocale);
         await makeFetchRequest({
             url: '/locale',
             body: {locale: newLocale},
             includeCredentials: true,
         })
-        router.refresh();
     }
 
     const handleRegionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -62,7 +62,7 @@ const OnboardingLanguage: React.FC<OnboardingProps> = ({onNext, data}) => {
                     {
                         supportedCountries.map((country: string) => ({
                             key: country,
-                            label: tc(country)
+                            label: t(country, {ns: "countries"})
                         }))
                         .sort((a, b) => a.label.localeCompare(b.label))
                         .map(({key, label}) => (
@@ -70,7 +70,7 @@ const OnboardingLanguage: React.FC<OnboardingProps> = ({onNext, data}) => {
                         ))
                     }
                 </InputSelect>
-                <Button onClick={handleSubmit}>{tg("continue")}</Button>
+                <Button onClick={handleSubmit}>{t("continue", {ns: "general"})}</Button>
             </div>
             <p>Some shits here</p>
         </IntroLayout>

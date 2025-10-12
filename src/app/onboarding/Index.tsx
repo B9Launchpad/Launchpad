@@ -56,7 +56,7 @@ export type OnboardingDataType = {
 
 
 const OnboardingStage: React.FC = () => {
-    const [step, setStep] = useState<number>(/*"video"*/ 0)
+    const [step, setStep] = useState<number>(/*"video"*/ 1)
     const { setTheme } = useContext(ThemeContext)
     const [invitedUsers, setInvitedUsers] = useState<string[]>([]);
 

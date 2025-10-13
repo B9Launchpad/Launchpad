@@ -1,15 +1,14 @@
 'use client'
 
-import { useEffect } from 'react'
 import { I18nextProvider, useSSR } from 'react-i18next'
 import i18n from '@/i18n/client'
 
-// Внутренний компонент который использует useSSR
+// Internal useSSR component
 function SSRInitializer({ 
   children, 
   initialI18nStore, 
   locale 
-}: { 
+}: {
   children: React.ReactNode
   initialI18nStore: any
   locale: string 
@@ -19,7 +18,7 @@ function SSRInitializer({
     i18n.changeLanguage(locale)
   }
 
-  return children
+  return children;
 }
 
 export default function I18nProvider({

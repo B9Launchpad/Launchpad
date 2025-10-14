@@ -23,7 +23,7 @@
     /* Secondary Type */
     --background-secondary: #CBCBCB;
     --hover-background-secondary: #5C5E66;
-    --hover-text-secondary: #FFFFFF;
+    --hover-font-secondary: #FFFFFF;
     /* Access Type Button */
     --background-access: #DEE1FE;
     --hover-background-access: #5865F2;
@@ -67,22 +67,22 @@
 
     /* Standard font combination declaration */
 
-    --text-title-large:
+    --font-title-large:
         var(--font-weight-bold)
         var(--font-size-large)
         var(--font-family);
 
-    --text-title-header:
+    --font-title-header:
         var(--font-weight-bold)
         var(--font-size-header)
         var(--font-family);
 
-    --text-subtitle: 
+    --font-subtitle: 
         var(--font-weight-regular)
         var(--font-size-title)
         var(--font-family);
     
-    --text-primary-bold:
+    --font-primary-bold:
         var(--font-weight-bold)
         var(--font-size-primary)
         var(--font-family);
@@ -92,12 +92,12 @@
         var(--font-size-primary)
         var(--font-family);
         
-    --text-secondary:
+    --font-secondary:
         var(--font-weight-regular)
         var(--font-size-secondary)
         var(--font-family);
 
-    --text-tertiary:
+    --font-tertiary:
         var(--font-weight-regular)
         var(--font-size-tertiary)
         var(--font-family);
@@ -137,16 +137,20 @@
     --radius-small: 8px;
     --radius: 12px;
     --radius-large: 24px;
+
     --gap-large: 24px;
     --gap-medium: 16px;
     --gap-standard: 12px;
     --gap-small: 6px;
+
     --transition: 150ms ease-in-out;
     --border-thin: solid 1px;
 
     --padding-outer-border: 3px;
+    --padding-small: 4px;
     --padding-standard: 8px;
     --padding-medium: 12px;
+    --padding-large: 24px;
 
     --transition: 150ms ease-out;
 

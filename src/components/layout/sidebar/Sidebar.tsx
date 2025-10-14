@@ -6,6 +6,8 @@ import { useSearch } from "@/functions/SearchContext";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import SettingsIcon from "@/components/icons/Settings";
+import IconLogout from "@/components/icons/Logout";
+import { useView } from "@/functions/ViewContext";
 
 interface SidebarComponentProps {
     items?: SidebarItems;
@@ -17,6 +19,7 @@ export type SidebarItems = SidebarItemProps[]
 const SidebarComponent: React.FC<SidebarComponentProps> = ({ items, profile }) => {
     const { query } = useSearch();
     const { t } = useTranslation('main')
+    const { setShowSettings } = useView();
 
     const filteredItems = useMemo(() => {
         if (!items) return [];
@@ -51,8 +54,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ items, profile }) =
                 }
             </div>
             <div className="sidebar__items--low">
-                <SidebarItem label={t('modules.settings')} type="secondary" icon={<SettingsIcon/>} url={"/settings"}/>
-                <SidebarItem critical={true} label={t('logout.logout', {ns: "auth"})} type="secondary" icon={<SettingsIcon/>} url={"http://localhost:8080/logout"}/>
+                <SidebarItem onClick={() => {setShowSettings(true)}} label={t('modules.settings')} type="secondary" icon={<SettingsIcon/>}/>
             </div>
             <Profile name={profile.name} email={profile.email} picture={profile.picture}/>
         </nav>

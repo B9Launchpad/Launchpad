@@ -138,13 +138,15 @@
     --radius: 12px;
     --radius-large: 24px;
     --gap-large: 24px;
+    --gap-medium: 16px;
     --gap-standard: 12px;
     --gap-small: 6px;
     --transition: 150ms ease-in-out;
     --border-thin: solid 1px;
 
     --padding-outer-border: 3px;
-    --padding: 8px;
+    --padding-standard: 8px;
+    --padding-medium: 12px;
 
     --transition: 150ms ease-out;
 

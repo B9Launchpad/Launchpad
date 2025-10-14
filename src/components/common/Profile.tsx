@@ -1,5 +1,6 @@
 // Configuring interface for propos to be used within the button
-interface ProfileProps {
+
+export interface ProfileProps {
     onClick?: () => void;
     name: [string, string];
     email: string;

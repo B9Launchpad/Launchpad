@@ -7,7 +7,7 @@ export const i18nInstance = i18n.createInstance()
 export const commonConfig = {
   fallbackLng: 'en',
   supportedLngs: ['en', 'pl', 'de', 'ru'],
-  ns: ['general', 'countries', 'intro', 'auth', 'components'],
+  ns: ['general', 'main', 'countries', 'intro', 'auth', 'components'],
   defaultNS: 'general',
   interpolation: { escapeValue: false }
 }

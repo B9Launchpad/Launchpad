@@ -17,15 +17,15 @@ interface Item {
   url: string;
 }
 
-interface SidebarItemProps {
-  children: React.ReactNode;
+export interface SidebarItemProps {
+  label: string;
   type?: 'primary' | 'secondary';
   icon: React.ReactNode;
   url?: string;
   items?: Item[];
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ children, icon, url, type = 'primary', items }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({ label, icon, url, type = 'primary', items }) => {
   const [expanded, setExpanded] = useState(false);
   const contentRef = useRef<HTMLUListElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -62,7 +62,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ children, icon, url, type = '
             className={`sidebar__item-content ${isActive ? 'font-semibold' : ''}`}
           >
             <span className='sidebar__item-icon'>{icon}</span>
-            <span className={`sidebar__item-label ${type}`}>{children}</span>
+            <span className={`sidebar__item-label ${type}`}>{label}</span>
           </Link>
           {isExpandable && (
             <span className={`sidebar__item-expandable_label ${expanded ? 'active' : ''}`}><DropdownIcon/></span>

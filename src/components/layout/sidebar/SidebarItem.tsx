@@ -20,13 +20,14 @@ interface Item {
 export interface SidebarItemProps {
   label: string;
   type?: 'primary' | 'secondary';
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   url?: string;
   items?: Item[];
   critical?: boolean;
+  onClick?: () => void;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ label, critical = false, icon, url, type = 'primary', items }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({ label, critical = false, icon, url, type = 'primary', items, onClick }) => {
   const [expanded, setExpanded] = useState(false);
   const contentRef = useRef<HTMLUListElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -35,7 +36,11 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ label, critical = false, icon
   const isActive = pathname === url
 
 {/* Konfiguration für Animation des zusammneklappbares Elements */}
- 
+  
+  if(onClick && url) {
+    throw new Error("SidebarItem.tsx: Sidebar item must not have both url and onClick properties")
+  }
+
   useEffect(() => {
     if (contentRef.current) {
       setContentHeight(contentRef.current.scrollHeight);
@@ -51,18 +56,27 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ label, critical = false, icon
 
   const isExpandable = items && items.length > 0;
 
+  if(onClick && isExpandable) {
+    throw new Error("SidebarItem.tsx: onClick is not supported with expandable sidebar items.")  
+  }
+
+  const handleClick = () => {
+    isExpandable ? setExpanded(!expanded) : undefined;
+    if(onClick) onClick();
+  }
+
   return (
     <div className='sidebar__item'>
       <div
         className="sidebar__item-wrap"
-        onClick={() => isExpandable ? setExpanded(!expanded) : undefined}
+        onClick={handleClick}
       >
         <div className="sidebar__item-link-group">
           <Link
             href={url || '#'}
             className={`sidebar__item-content ${isActive ? 'font-semibold' : ''}${critical === true ? ' critical' : ''}`}
           >
-            <span className='sidebar__item-icon'>{icon}</span>
+            {icon && <span className='sidebar__item-icon'>{icon}</span>}
             <span className={`sidebar__item-label ${type}`}>{label}</span>
           </Link>
           {isExpandable && (

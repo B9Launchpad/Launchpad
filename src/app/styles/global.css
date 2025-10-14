@@ -6,13 +6,13 @@ please create a separate stylesheet file.
 For example, if your element only appears once and needs a lot of styling (e.g. over 100 lines), create a separate file for it. */
 
 h1 {
-    font: var(--text-title-header);
+    font: var(--font-title-header);
     margin: 0;
     color: var(--text);
 }
 
 h2 {
-    font: var(--text-subtitle);
+    font: var(--font-subtitle);
     margin: 0;
     color: var(--text);
 }

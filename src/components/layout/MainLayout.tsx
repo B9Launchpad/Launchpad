@@ -1,14 +1,18 @@
 import { SearchProvider } from "@/functions/SearchContext";
+import { ViewProvider, useView } from "@functions/ViewContext";
 import { ProfileProps } from "../common/Profile";
 import IconSecurity from "../icons/Security";
 import SettingsIcon from "../icons/Settings";
 import SidebarComponent, { SidebarItems } from "./sidebar/Sidebar";
+import LayoutSettings from "./SettingsLayout";
 
 interface MainLayoutProps {
     children: React.ReactNode;
 }
 
-const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+// Inner component that uses the hook
+function MainLayoutContent({ children }: MainLayoutProps) {
+    const { showSettings } = useView();
 
     const profile = {
         name: ["Tatiana", "Yakovleva"],
@@ -32,13 +36,30 @@ const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     ] satisfies SidebarItems;
 
     return (
-        <SearchProvider>
-            <SidebarComponent
-                items={SidebarItems} 
-                profile={profile}
-            />
-        </SearchProvider>
+        <div className="main-layout__wrap">
+            <div className={"main-layout__layer"} aria-hidden={showSettings} aria-modal={!showSettings} data-layer={"base"}>
+                <SearchProvider>
+                    <SidebarComponent
+                        items={SidebarItems} 
+                        profile={profile}
+                    />
+                </SearchProvider>
+                {children}
+            </div>
+            {showSettings && (
+                <LayoutSettings>children</LayoutSettings>
+            )}
+        </div>
     )
+}
+
+// Outer provider wrapper
+const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+    return (
+        <ViewProvider>
+            <MainLayoutContent>{children}</MainLayoutContent>
+        </ViewProvider>
+    );
 }
 
 export default MainLayout;

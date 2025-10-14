@@ -1,3 +1,5 @@
+'use client'
+
 import { useLogin } from '@functions/Auth/LoginContext'
 import LoginErrorPage from './Error'
 import LoginPromptPage from './Login'

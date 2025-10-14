@@ -38,7 +38,7 @@ export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
             const status = response.status;
 
             if(status === 202) {
-                router.push('/onboarding/playground') // navigate to /dashboard
+                router.push('/') // navigate to /dashboard
             } else if (status === 401) {
                 setLoginStatus("isUnauthorised");
             }

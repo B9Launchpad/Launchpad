@@ -23,9 +23,10 @@ export interface SidebarItemProps {
   icon: React.ReactNode;
   url?: string;
   items?: Item[];
+  critical?: boolean;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ label, icon, url, type = 'primary', items }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({ label, critical = false, icon, url, type = 'primary', items }) => {
   const [expanded, setExpanded] = useState(false);
   const contentRef = useRef<HTMLUListElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -59,7 +60,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ label, icon, url, type = 'pri
         <div className="sidebar__item-link-group">
           <Link
             href={url || '#'}
-            className={`sidebar__item-content ${isActive ? 'font-semibold' : ''}`}
+            className={`sidebar__item-content ${isActive ? 'font-semibold' : ''}${critical === true ? ' critical' : ''}`}
           >
             <span className='sidebar__item-icon'>{icon}</span>
             <span className={`sidebar__item-label ${type}`}>{label}</span>

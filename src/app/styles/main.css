@@ -326,6 +326,10 @@ nav {
     color: var(--text);
 }
 
+.sidebar__item-content.critical * {
+    color: var(--critical);
+}
+
 .sidebar__item-wrap {
     /*display: grid;
     grid-template-columns: auto 1fr;

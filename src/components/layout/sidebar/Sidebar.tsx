@@ -52,6 +52,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ items, profile }) =
             </div>
             <div className="sidebar__items--low">
                 <SidebarItem label={t('modules.settings')} type="secondary" icon={<SettingsIcon/>} url={"/settings"}/>
+                <SidebarItem critical={true} label={t('logout.logout', {ns: "auth"})} type="secondary" icon={<SettingsIcon/>} url={"http://localhost:8080/logout"}/>
             </div>
             <Profile name={profile.name} email={profile.email} picture={profile.picture}/>
         </nav>

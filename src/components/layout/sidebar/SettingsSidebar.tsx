@@ -12,6 +12,8 @@ export type SettingsSidebarItems = {
     misc: SidebarItems
 }
 
+type SidebarBlocks = Array<{ title?: string, items: SidebarItems }>
+
 interface SettingsSidedebarProps {
     items: SettingsSidebarItems;
 }
@@ -21,10 +23,10 @@ const SettingsSidebar: React.FC<SettingsSidedebarProps> = ({ items }) => {
     const { t } = useTranslation('main')
 
     const SidebarBlocks = [
-        { title: "User", items: items.user },
-        { title: "Panel", items: items.panel },
-        { title: "Misc", items: items.misc },
-    ] as const;
+        { title: "User Settings", items: items.user },
+        { title: "Panel Settings", items: items.panel },
+        { items: items.misc },
+    ] satisfies SidebarBlocks;
 
     const filteredBlocks = useMemo(() => {
         if (!query.trim()) {
@@ -51,14 +53,14 @@ const SettingsSidebar: React.FC<SettingsSidedebarProps> = ({ items }) => {
                     <p className="sidebar__no-results">Nothing found (BEAUTIFY!)</p>
                 ) : (
                     filteredBlocks.map((block, blockIndex) => (
-                        <div key={block.title} className="sidebar-block sidebar__items--wrap">
-                            <h3 className="sidebar-block__title">{block.title}</h3>
+                        <div key={blockIndex} className="sidebar-block sidebar__items--wrap">
+                            {block.title && (<h3 className="sidebar-block__title">{block.title}</h3>)}
                             {block.items.map((item, itemIndex) => (
                                 <SidebarItem 
-                                    key={`${block.title}-${itemIndex}`}
+                                    key={`${blockIndex}-${itemIndex}`}
                                     label={item.label} 
                                     icon={item?.icon} 
-                                    type={item?.type}
+                                    type={item.critical === true ? 'primary' : 'secondary'}
                                     url={item?.url}
                                     onClick={item?.onClick}
                                     critical={item.critical}

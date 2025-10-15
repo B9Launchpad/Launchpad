@@ -39,21 +39,33 @@ body {
     inset: 0;
 }
 
-/* Settings Layout settings */
-
-.settings__main {
-    background-color: var(--background);
-    display: grid;
-    grid-template-columns: calc(100vw / 3) calc(100vw - (100vw / 3));
-    grid-template-rows: auto;
-}
-
-.settings__nav--wrap {
-    background-color: var(--background-content);
+.path__wrap {
     display: flex;
-    justify-content: space-between;
-    padding: var(--padding-large) var(--padding-standard);
+    flex-direction: row;
+    gap: var(--gap-small);
+    align-items: center;
 }
+
+.path__item, .path__item--root {
+    color: var(--muted);
+    fill: var(--muted);
+    font: var(--font-primary);
+    display: flex;
+    gap: var(--gap-tiny);
+    align-items: center;
+}
+
+.path__item:last-child {
+    color: var(--access);
+}
+
+    /* Sections */
+
+    .section__block {
+        gap: var(--gap-standard);
+        width: 100%;
+    }
+
 
 /* Guest layout settings */
 
@@ -226,8 +238,8 @@ button {
         background-color: var(--background-secondary);
     }
     button.secondary:not(:disabled):hover {
-        color: var(--hover-font-secondary);
-        fill: var(--hover-font-secondary);
+        color: var(--hover-text-secondary);
+        fill: var(--hover-text-secondary);
         background-color: var(--hover-background-secondary);
     }
     button.access {
@@ -468,9 +480,13 @@ nav {
 .input__wrap {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-standard);
+    gap: var(--gap-tiny);
     max-width: 674px;
     width: 100%;
+}
+
+.input__wrap.expand, .input__main.expand {
+    max-width: none;
 }
 
 .disabled {
@@ -516,7 +532,7 @@ nav {
 .input__main, .input__search--content {
     background-color: transparent;
     font: var(--input-content);
-    height: 42px;
+    height: 38px;
     align-self: stretch;
     border: 1px solid var(--muted);
     color: var(--text);
@@ -965,6 +981,13 @@ Please consider alternatives before removing */
     border-radius: var(--radius);
 }
 
+.content__window--action {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: var(--gap-standard);
+}
+
 .content-window__label {
     font: var(--font-section-title)
 }
@@ -982,6 +1005,14 @@ Please consider alternatives before removing */
     .input__main {
         max-width: 674px;
     }
+}
+
+/* Icons */
+
+.icon-small {
+    width: 16px;
+    height: 16px;
+    fill: var(--muted)
 }
 
 /* Accessibility */

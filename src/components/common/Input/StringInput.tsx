@@ -17,6 +17,7 @@ interface SmallInputProps {
     disabled?: boolean;
     isMandatory: boolean;
     description?: string;
+    expand?: boolean;
 }
 
 export type InputStringRef = HTMLInputElement & {
@@ -25,7 +26,7 @@ export type InputStringRef = HTMLInputElement & {
   error: (message: string) => void;
 };
 
-const InputString = forwardRef<InputStringRef, SmallInputProps>(({ title, placeholder, id, autofocus, onChange, type = 'text', children, error = "", value = "", maxLength, autoComplete = 'off', name, disabled = false, isMandatory, description}, ref) => {
+const InputString = forwardRef<InputStringRef, SmallInputProps>(({ title, placeholder, id, autofocus, onChange, type = 'text', children, error = "", value = "", maxLength, autoComplete = 'off', name, disabled = false, isMandatory, description, expand = false}, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [inputValue, setInputValue] = useState<string>(value);
     const [charCount, setCharCount] = useState(value?.length);
@@ -80,7 +81,7 @@ const InputString = forwardRef<InputStringRef, SmallInputProps>(({ title, placeh
     }
 
     return (
-        <div className={`input__wrap`}>
+        <div className={`input__wrap ${expand ? 'expand' : ''}`}>
             <div className={`input__content ${disabled === true ? 'disabled' : ''}`}>
                 <span className="input__title-content">
                     <p className="input__title">{title}</p>
@@ -89,7 +90,7 @@ const InputString = forwardRef<InputStringRef, SmallInputProps>(({ title, placeh
                 {description && (<p className="input__description">{description}</p>)}
             </div>
             <div className={`input__field`}>
-                <input onFocus={handleFocus} onBlur={handleBlur} disabled={disabled} maxLength={maxLength} id={id} autoFocus={autofocus} autoComplete={autoComplete} name={name} onChange={handleChange} onClick={disableError} value={inputValue} type={type} className={`input__main ${currentError ? 'input__main--error' : ''} ${disabled == true ? 'disabled' : ''}`} ref={inputRef} placeholder={placeholder}></input>
+                <input onFocus={handleFocus} onBlur={handleBlur} disabled={disabled} maxLength={maxLength} id={id} autoFocus={autofocus} autoComplete={autoComplete} name={name} onChange={handleChange} onClick={disableError} value={inputValue} type={type} className={`input__main ${expand ? 'expand' : ''} ${currentError ? 'input__main--error' : ''} ${disabled == true ? 'disabled' : ''}`} ref={inputRef} placeholder={placeholder}></input>
                 {(maxLength || currentError || children) && (
                     <div className="input__sub-content">
                         {children}

@@ -19,7 +19,6 @@ interface SettingsModule {
     };
 }
 
-// Import the manifest
 import settingsManifest from '@/components/settings/settings-manifest.json';
 
 export class SettingsScanner {
@@ -36,18 +35,15 @@ export class SettingsScanner {
     }
 
     async scanAndRegister(registerFunction: (page: any) => void): Promise<void> {
-        if (this.registered) return;
+        //if (this.registered) return;
 
         try {
-            // Use the manifest to dynamically import all modules
             for (const manifestItem of settingsManifest) {
                 try {
-                    // Dynamic import based on the path from manifest
                     const module: SettingsModule = await import(
                         /* @vite-ignore */ `@components/settings/${manifestItem.path}`
                     );
                     
-                    // Support both default export and named export
                     const settingsConfig = module.default || module.settings;
                     
                     if (settingsConfig && settingsConfig.id && settingsConfig.component) {

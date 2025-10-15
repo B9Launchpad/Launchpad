@@ -5,6 +5,16 @@ please create a separate stylesheet file.
 
 For example, if your element only appears once and needs a lot of styling (e.g. over 100 lines), create a separate file for it. */
 
+*:disabled {
+    cursor: not-allowed;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-small);
+}
+
 h1 {
     font: var(--font-title-header);
     margin: 0;

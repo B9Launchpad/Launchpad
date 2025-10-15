@@ -1,14 +1,38 @@
+/* Settings Layout settings */
+
+.settings__main {
+    background-color: var(--background);
+    display: grid;
+    grid-template-columns: calc(100vw / 3) calc(100vw - (100vw / 3));
+    grid-template-rows: 100%;
+}
+
+.settings__nav--wrap {
+    background-color: var(--background-content);
+    display: flex;
+    justify-content: space-between;
+    padding: var(--padding-large) var(--padding-standard);
+}
+
 .settings__content--wrap {
     width: 50vw;
     overflow-x: hidden;
+    overflow-y: hidden;
     padding: var(--padding-large) 0 var(--padding-large) var(--padding-large);
     display: flex;
     flex-direction: column;
-    gap: var(--gap-standard)
+    gap: var(--gap-standard);
+    box-sizing: border-box;
 }
 
-.settings__header {
+.settings__content {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-small);
+    gap: var(--gap-large);
+}
+
+.settings__content-frame {
+    overflow-y: auto;
+    height: 100%;
+    min-height: 0;
 }

@@ -8,6 +8,7 @@ import SpringConfig from "@/utils/SpringConfig";
 import { useState, useEffect, useRef } from "react";
 import { useSettingsRegistry } from "@contexts/SettingsRegistryContext";
 import '@styles/settings.css'
+import PageHeader from "./header/PageHeader";
 
 interface LayoutSettingsProps {
     children?: React.ReactNode;
@@ -62,18 +63,13 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = ({ children }) => {
             panel: [
                 ...panelPages.map(page => ({
                     label: page.label,
-                    type: page.type || 'secondary' as const,
-                    icon: page.icon,
                     onClick: () => setActivePageId(page.id)
                 }))
             ],
             misc: [
                 ...miscPages.map(page => ({
                     label: page.label,
-                    type: page.type || 'secondary' as const,
-                    icon: page.icon,
-                    critical: page.critical,
-                    onClick: page.critical ? undefined : () => setActivePageId(page.id)
+                    onClick: () => setActivePageId(page.id)
                 })),
                 
                 // STATICS
@@ -102,10 +98,14 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = ({ children }) => {
         const PageComponent = activePage.component;
         return (
             <div className="settings__content--wrap">
-                <header className="settings__header">
-                    <h1>{activePage.label}</h1>
-                </header>
-                <PageComponent />
+                <PageHeader 
+                    title={activePage.label} 
+                    settingsPath={true} 
+                    path={[{slug: activePage.label}]}
+                />
+                <div className="settings__content">
+                    <PageComponent />
+                </div>
             </div>
         );
     };
@@ -168,7 +168,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = ({ children }) => {
                     <SettingsSidebar items={sidebarItems}/>
                 </SearchProvider>
             </div>
-            <div className="settings__content">
+            <div className="settings__content-frame">
                 {renderActivePage()}
             </div>
         </animated.div>

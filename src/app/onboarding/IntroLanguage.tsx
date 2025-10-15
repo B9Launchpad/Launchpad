@@ -46,27 +46,39 @@ const OnboardingLanguage: React.FC<OnboardingProps> = ({onNext, data}) => {
         // TO DO: Region variable only updates when actually selected. Consider automatic region detection, etc.
     }
 
+    const regionOptions = 
+    supportedCountries.map((country: string) => ({
+        value: country,
+        label: t(country, {ns: "countries"})
+    }))
+    .sort((a, b) => a.label.localeCompare(b.label))
+
+    const languageOptions = [
+        {
+            value: "en",
+            label: "English",
+        },
+        {
+            value: "de",
+            label: "Deutsch"
+        },
+        {
+            label: "русский",
+            value: "ru"
+        },
+        {
+            label: "polski",
+            value: "pl"
+        }
+    ]
+
     return (
         <IntroLayout>
             <div className="intro__content">
                 <h1>{t('greeting')}</h1>
-                <InputSelect value={preferredLanguage} onChange={handleChange} title={t('chooseYourLanguage')}>
-                    <option value="en">English</option>
-                    <option value="de">Deutsch</option>
-                    <option value="pl">polski</option>
-                    <option value="ru">русский</option>
+                <InputSelect options={languageOptions} value={preferredLanguage} onChange={handleChange} title={t('chooseYourLanguage')}>
                 </InputSelect>
-                <InputSelect onChange={handleRegionChange} title={t('chooseYourRegion')}>
-                    {
-                        supportedCountries.map((country: string) => ({
-                            key: country,
-                            label: t(country, {ns: "countries"})
-                        }))
-                        .sort((a, b) => a.label.localeCompare(b.label))
-                        .map(({key, label}) => (
-                            <option value={key} key={key}>{label}</option>
-                        ))
-                    }
+                <InputSelect options={regionOptions} onChange={handleRegionChange} title={t('chooseYourRegion')}>
                 </InputSelect>
                 <Button onClick={handleSubmit}>{t("continue", {ns: "general"})}</Button>
             </div>

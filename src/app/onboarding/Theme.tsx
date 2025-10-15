@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import Button from "../../components/common/Button";
 import PadSelect from "../../components/misc/intro/PadSelect";
 import { useContext } from "react";
-import ThemeContext from "../../functions/ThemeContext";
-import type { Theme } from "../../functions/ThemeContext";
+import ThemeContext from "../../contexts/ThemeContext";
+import type { Theme } from "../../contexts/ThemeContext";
 
 interface OnboardingProps {
     onNext: () => void;

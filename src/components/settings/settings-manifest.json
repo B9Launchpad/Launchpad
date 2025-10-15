@@ -1,0 +1,14 @@
+[
+  {
+    "path": "about/index.tsx",
+    "name": "about"
+  },
+  {
+    "path": "account/index.tsx",
+    "name": "account"
+  },
+  {
+    "path": "modules/index.tsx",
+    "name": "modules"
+  }
+]

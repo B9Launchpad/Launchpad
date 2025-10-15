@@ -4,7 +4,7 @@ import InputCheckbox, {
   CheckboxSelected,
   CheckboxState
 } from "../Input/Checkbox";
-import { useSearch } from "../../../functions/SearchContext";
+import { useSearch } from "../../../contexts/SearchContext";
 
 export interface Column<T> {
   header: string;

@@ -12,7 +12,7 @@ import InputChips from '@components/common/Input/Chips';
 import validateEmail from '@functions/validateEmail';
 import SmallTable, { Column, SmallTableRef } from '@components/common/Table/Table';
 import { useRef } from 'react';
-import { SearchProvider } from '@functions/SearchContext';
+import { SearchProvider } from '@/contexts/SearchContext';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 

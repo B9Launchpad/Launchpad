@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import InputCheckbox, { CheckboxOption, CheckboxSelected, CheckboxState } from "../Input/Checkbox";
-import { useSearch } from "../../../functions/SearchContext";
+import { useSearch } from "../../../contexts/SearchContext";
 
 export interface Column<T> {
     header: string;

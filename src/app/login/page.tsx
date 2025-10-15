@@ -1,9 +1,9 @@
 'use client'
 
-import { LoginProvider } from '@functions/Auth/LoginContext'
+import { LoginProvider } from '@/contexts/LoginContext'
 import LoginFlow from './Index'
 import GuestLayout from '@/components/layout/GuestLayout'
-import useIsDarkTheme from '@/functions/useIsDarkTheme'
+import useIsDarkTheme from '@/contexts/useIsDarkTheme'
 
 export default function Page() {
   const isDarkTheme = useIsDarkTheme();

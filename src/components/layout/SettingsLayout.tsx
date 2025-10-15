@@ -1,11 +1,13 @@
-import { useView } from "@/functions/ViewContext";
+import { useView } from "@/contexts/ViewContext";
 import Button from "../common/Button";
 import SettingsSidebar, { SettingsSidebarItems } from "./sidebar/SettingsSidebar";
-import { SearchProvider } from "@/functions/SearchContext";
+import { SearchProvider } from "@/contexts/SearchContext";
 import IconLogout from "../icons/Logout";
 import { useSpring, animated } from "react-spring";
 import SpringConfig from "@/utils/SpringConfig";
 import { useState, useEffect, useRef } from "react";
+import { useSettingsRegistry } from "@contexts/SettingsRegistryContext";
+import '@styles/settings.css'
 
 interface LayoutSettingsProps {
     children?: React.ReactNode;
@@ -14,92 +16,99 @@ interface LayoutSettingsProps {
 const LayoutSettings: React.FC<LayoutSettingsProps> = ({ children }) => {
     const { showSettings, setShowSettings } = useView();
     const [isVisible, setIsVisible] = useState(false);
+    const [activePageId, setActivePageId] = useState<string | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
+    
+    const { registeredPages, getPagesByCategory } = useSettingsRegistry();
 
-    // Control visibility based on showSettings
+    // showSettings visibility control
     useEffect(() => {
         if (showSettings) {
             setIsVisible(true);
+            if (!activePageId && registeredPages.length > 0) {
+                setActivePageId(registeredPages[0].id);
+            }
         }
-    }, [showSettings]);
+    }, [showSettings, registeredPages]);
 
-    // Focus the container when it becomes visible
+    // !! This focuses on the container when it becomes visible GIVES AN ARIA COMPATIBILITY WARNING WHEN UNMOUNTED !!
     useEffect(() => {
         if (isVisible && containerRef.current) {
             containerRef.current.focus();
         }
+
+        return () => {
+            if(containerRef.current) {
+                containerRef.current.blur()
+            } // fix idea for above?
+        }
     }, [isVisible]);
 
-    const SidebarItems = {
-        user: [
-            {
-                label: "Account",
-                type: 'secondary',
-                url: '/'
-            },
-            {
-                label: "Personalisation",
-                type: 'secondary',
-                url: '/'
-            },
-            {
-                label: "Language",
-                type: 'secondary',
-                url: '/'
-            }
-        ],
-        panel: [
-            {
-                label: "General",
-                type: 'secondary',
-                url: '/'
-            },
-            {
-                label: "Accounts",
-                type: 'secondary',
-                url: '/'
-            },
-            {
-                label: "Teams",
-                type: 'secondary',
-                url: '/'
-            },
-            {
-                label: "Modules",
-                type: 'secondary',
-                url: '/'
-            },
-            {
-                label: "Databases",
-                type: 'secondary',
-                url: '/'
-            },
-            {
-                label: "APIs",
-                type: 'secondary',
-                url: '/'
-            },
-            {
-                label: "Panel Update",
-                type: 'secondary',
-                url: '/'
-            }
-        ],
-        misc: [
-            {
-                label: "About",
-                type: 'secondary',
-                url: '/'
-            },
-            {
-                label: "Log out",
-                icon: <IconLogout/>,
-                type: 'primary',
-                critical: true,
-                url: '/api/logout'
-            }
-        ],
-    } satisfies SettingsSidebarItems;
+    const getSidebarItems = (): SettingsSidebarItems => {
+        const userPages = getPagesByCategory('user');
+        const panelPages = getPagesByCategory('panel');
+        const miscPages = getPagesByCategory('misc');
+
+        console.log(panelPages)
+        return {
+            user: [
+                ...userPages.map(page => ({
+                    label: page.label,
+                    type: page.type || 'secondary' as const,
+                    icon: page.icon,
+                    onClick: () => setActivePageId(page.id)
+                }))
+            ],
+            panel: [
+                ...panelPages.map(page => ({
+                    label: page.label,
+                    type: page.type || 'secondary' as const,
+                    icon: page.icon,
+                    onClick: () => setActivePageId(page.id)
+                }))
+            ],
+            misc: [
+                ...miscPages.map(page => ({
+                    label: page.label,
+                    type: page.type || 'secondary' as const,
+                    icon: page.icon,
+                    critical: page.critical,
+                    onClick: page.critical ? undefined : () => setActivePageId(page.id)
+                })),
+                
+                // STATICS
+
+                {
+                    label: "Log out",
+                    icon: <IconLogout/>,
+                    type: 'primary' as const,
+                    critical: true,
+                    url: '/api/logout'
+                }
+            ],
+        };
+    };
+
+    const renderActivePage = () => {
+        if (!activePageId) {
+            return <div>Select a setting from the sidebar</div>;
+        }
+
+        const activePage = registeredPages.find(page => page.id === activePageId);
+        if (!activePage) {
+            return <div>Settings page not found</div>;
+        }
+
+        const PageComponent = activePage.component;
+        return (
+            <div className="settings__content--wrap">
+                <header className="settings__header">
+                    <h1>{activePage.label}</h1>
+                </header>
+                <PageComponent />
+            </div>
+        );
+    };
 
     const style = useSpring({
         from: { 
@@ -132,10 +141,11 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = ({ children }) => {
         }
     }
 
-    // Don't render if not showing and not animating out
     if (!showSettings && !isVisible) {
         return null;
     }
+
+    const sidebarItems = getSidebarItems();
 
     return (
         <animated.div 
@@ -149,17 +159,17 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = ({ children }) => {
             className="main-layout__layer settings__main" 
             data-layer={"settings"} 
             role={"dialog"}
-            tabIndex={-1} // KEEP WITHOUT TAB ORDER
+            tabIndex={-1}
             onKeyDown={handleKeyDown}
         >
             <div className="settings__nav--wrap">
                 <Button onClick={handleClose}>OUT!</Button>
                 <SearchProvider>
-                    <SettingsSidebar items={SidebarItems}/>
+                    <SettingsSidebar items={sidebarItems}/>
                 </SearchProvider>
             </div>
             <div className="settings__content">
-                content{/* To be rendered without explicitly providing component name or url*/}
+                {renderActivePage()}
             </div>
         </animated.div>
     )

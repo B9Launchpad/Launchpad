@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react"
 import NewPassword, {NewPasswordRef} from "@components/common/Input/NewPassword";
-import { useReset } from "@functions/Auth/ResetContext";
+import { useReset } from "@/contexts/ResetContext";
 import FormComponent from "@components/common/Input/Form";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";

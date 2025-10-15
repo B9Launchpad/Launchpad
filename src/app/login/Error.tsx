@@ -1,5 +1,5 @@
 import Button from "@components/common/Button"
-import { useLogin } from "@functions/Auth/LoginContext";
+import { useLogin } from "@/contexts/LoginContext";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 

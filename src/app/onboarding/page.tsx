@@ -1,6 +1,6 @@
 'use client'
 
-import { LoginProvider } from '@functions/Auth/LoginContext'
+import { LoginProvider } from '@/contexts/LoginContext'
 import IntroLayout from '@/components/layout/IntroLayout'
 import OnboardingStage from './Index';
 

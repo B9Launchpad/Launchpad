@@ -6,7 +6,7 @@ import GoogleLogo from "@/components/icons/Logos/GoogleLogo"
 import MicrosoftLogo from "@/components/icons/Logos/MicrosoftLogo"
 import GithubLogo from "@components/icons/Logos/GithubLogo"
 import { useSpring, animated } from "react-spring"
-import { loginCredentials, useLogin } from "@functions/Auth/LoginContext"
+import { loginCredentials, useLogin } from "@/contexts/LoginContext"
 import SpringConfig from "@utils/SpringConfig"
 
 import { InputSmallRef } from "@components/common/Input/SmallInput"

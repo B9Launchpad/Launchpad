@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import securityConfig from "../../config/security.json"
-import makeFetchRequest from "../../utils/fetch/makeFetchRequest";
+import securityConfig from "../config/security.json"
+import makeFetchRequest from "../utils/fetch/makeFetchRequest";
 
 export type loginCredentials = { email: string} | null
 export type ResetData = 

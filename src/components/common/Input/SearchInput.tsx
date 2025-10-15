@@ -1,7 +1,7 @@
 import { JSX, useEffect, useRef, useState } from "react";
 import SearchIcon from "../../icons/Search";
 import useLastInteractionKeyboard from "../../../functions/useLastInteractionKeyboard";
-import { useSearch } from "../../../functions/SearchContext";
+import { useSearch } from "../../../contexts/SearchContext";
 
 interface SearchInputProps {
     label?: string;

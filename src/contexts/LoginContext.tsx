@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import securityConfig from "../../config/security.json"
+import securityConfig from "../config/security.json"
 import { useRouter } from "next/navigation";
 
 // TO DO: Implement securityConfig (contemplate whether on backend or frontend)

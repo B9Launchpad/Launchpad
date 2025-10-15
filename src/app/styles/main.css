@@ -954,6 +954,28 @@ Please consider alternatives before removing */
     color: var(--muted)
 }
 
+/* Common and short */
+
+.content-window {
+    padding: var(--padding-medium);
+    background-color: var(--background-content);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-window);
+    border-radius: var(--radius);
+}
+
+.content-window__label {
+    font: var(--font-section-title)
+}
+
+.app__logo {
+    min-width: 72px;
+    min-height: 72px;
+    max-height: 72px;
+    max-width: 72px;
+}
+
 /* Groundwork for mobile/smaller screen layout for input*/
 
 @media screen and (min-width: 1280px) {

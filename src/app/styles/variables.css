@@ -77,6 +77,11 @@
         var(--font-size-header)
         var(--font-family);
 
+    --font-section-title:
+        var(--font-weight-bold)
+        var(--font-size-title)
+        var(--font-family);
+
     --font-subtitle: 
         var(--font-weight-regular)
         var(--font-size-title)
@@ -138,6 +143,7 @@
     --radius: 12px;
     --radius-large: 24px;
 
+    --gap-window: 32px;
     --gap-large: 24px;
     --gap-medium: 16px;
     --gap-standard: 12px;
@@ -213,4 +219,16 @@ a {
 
 p {
     margin: 0;
+}
+
+.flex-col, .flex-row {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
 }

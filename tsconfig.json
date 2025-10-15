@@ -32,7 +32,11 @@
       "@functions/*": ["src/functions/*"],
       "@utils/*": ["src/utils/*"],
       "@i18n": ["src/i18n/index.ts"],
-      "@locales": ["public/locales/*"]
+      "@locales/*": ["public/locales/*"],
+      "@contexts/*": ["src/contexts/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@icons/*": ["src/components/icons/*"],
+      "@styles/*": ["src/app/styles/*"]
     }
   },
   "include": [

@@ -1,0 +1,14 @@
+.settings__content--wrap {
+    width: 50vw;
+    overflow-x: hidden;
+    padding: var(--padding-large) 0 var(--padding-large) var(--padding-large);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-standard)
+}
+
+.settings__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-small);
+}

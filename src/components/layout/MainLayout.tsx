@@ -1,10 +1,11 @@
-import { SearchProvider } from "@/functions/SearchContext";
-import { ViewProvider, useView } from "@functions/ViewContext";
+import { SearchProvider } from "@/contexts/SearchContext";
+import { ViewProvider, useView } from "@/contexts/ViewContext";
 import { ProfileProps } from "../common/Profile";
 import IconSecurity from "../icons/Security";
 import SettingsIcon from "../icons/Settings";
 import SidebarComponent, { SidebarItems } from "./sidebar/Sidebar";
 import LayoutSettings from "./SettingsLayout";
+import { SettingsRegistryProvider } from "@/contexts/SettingsRegistryContext";
 
 interface MainLayoutProps {
     children: React.ReactNode;
@@ -46,9 +47,11 @@ function MainLayoutContent({ children }: MainLayoutProps) {
                 </SearchProvider>
                 {children}
             </div>
-            {showSettings && (
-                <LayoutSettings>children</LayoutSettings>
-            )}
+            <SettingsRegistryProvider>
+                {showSettings && (
+                    <LayoutSettings>children</LayoutSettings>
+                )}
+            </SettingsRegistryProvider>
         </div>
     )
 }

@@ -2,7 +2,7 @@
 
 import ResetFlow from './Index'
 import GuestLayout from '@/components/layout/GuestLayout'
-import { ResetProvider } from '@/functions/Auth/ResetContext'
+import { ResetProvider } from '@/contexts/ResetContext'
 
 export default function Page() {
   return (

@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import './styles/variables.css'
 import './styles/main.css'
 import './styles/global.css'
-import { ThemeProvider } from '@/functions/ThemeContext'
+import { ThemeProvider } from '@/contexts/ThemeContext'
 import { getLocaleFromCookies, getLocaleFromHeaders } from '@/i18n/getLocale'
 import { Montserrat } from "next/font/google";
 import { getServerTheme } from '@/utils/server-theme'

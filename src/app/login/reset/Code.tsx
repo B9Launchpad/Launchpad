@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import InputSmall, {InputSmallRef} from "../../../components/common/Input/SmallInput";
-import { useReset } from "../../../functions/Auth/ResetContext";
+import { useReset } from "../../../contexts/ResetContext";
 import FormComponent from "../../../components/common/Input/Form";
 import maskEmail from "../../../functions/Auth/maskEmail";
 import Link from "next/link";

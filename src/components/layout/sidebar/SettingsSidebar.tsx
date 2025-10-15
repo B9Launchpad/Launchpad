@@ -1,10 +1,10 @@
 import InputSearch from "@/components/common/Input/SearchInput";
 import { SidebarItems } from "./Sidebar"
 import SidebarItem from "./SidebarItem";
-import { useSearch } from "@/functions/SearchContext";
+import { useSearch } from "@contexts/SearchContext";
 import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
-import IconLogout from "@/components/icons/Logout";
+import IconLogout from "@components/icons/Logout";
 
 export type SettingsSidebarItems = {
     user: SidebarItems,
@@ -59,7 +59,8 @@ const SettingsSidebar: React.FC<SettingsSidedebarProps> = ({ items }) => {
                                     label={item.label} 
                                     icon={item?.icon} 
                                     type={item?.type}
-                                    url={item.url}
+                                    url={item?.url}
+                                    onClick={item?.onClick}
                                     critical={item.critical}
                                 />
                             ))}

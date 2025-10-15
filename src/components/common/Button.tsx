@@ -3,7 +3,7 @@ import useLastInteractionKeyboard from "../../functions/useLastInteractionKeyboa
 import { useFetchStatus } from "../../utils/fetch/useFetchStatus";
 
 // Configuring interface for propos to be used within the button
-interface ButtonProps {
+export interface ButtonProps {
     variant?: 'primary' | 'secondary' | 'access' | 'critical' | 'tertiary';
     icon?: React.ReactNode;
     onClick?: () => void;

@@ -21,7 +21,7 @@ const SettingsAbout: React.FC = () => {
                     <small>
                         © 2022-2025 B9 Creators. All rights reserved.
                         <br/><br/>
-                        B9 Creators and Launchpad, and the B9 Creators and Launchpad logo are either registereed trademarks of B9 Creators in the United Kingdom and/or other countries. All other trademarks are property of their respective owners.
+                        B9 Creators and Launchpad, and the B9 Creators and Launchpad logo are either registered trademarks of B9 Creators in the United Kingdom and/or other countries. All other trademarks are property of their respective owners.
                     </small>
                 </div>
             </div>

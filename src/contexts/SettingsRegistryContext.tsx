@@ -6,9 +6,6 @@ export interface SettingsPage {
   label: string;
   category: 'user' | 'panel' | 'misc' | string;
   component: React.ComponentType;
-  icon?: ReactNode;
-  type?: 'primary' | 'secondary';
-  critical?: boolean;
 }
 
 interface SettingsRegistryContextType {

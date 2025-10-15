@@ -18,12 +18,12 @@
     /* Buttons, tags, etc. Backgrounds */
     /* Primary Type */
     --background-primary: #000000;
-    --hover-background-primary: #AAAAAA;
-    --hover-text-primary: #000000;
+    --hover-background-primary: #666666;
+    --hover-text-primary: #FFFFFF;
     /* Secondary Type */
     --background-secondary: #CBCBCB;
-    --hover-background-secondary: #5C5E66;
-    --hover-font-secondary: #FFFFFF;
+    --hover-background-secondary: #A1A1A1;
+    --hover-text-secondary: #000000;
     /* Access Type Button */
     --background-access: #DEE1FE;
     --hover-background-access: #5865F2;
@@ -148,6 +148,7 @@
     --gap-medium: 16px;
     --gap-standard: 12px;
     --gap-small: 6px;
+    --gap-tiny: 4px;
 
     --transition: 150ms ease-in-out;
     --border-thin: solid 1px;
@@ -181,12 +182,22 @@
     --background: #0D0D0D;
     --background-content: #1D1D1B;
     --background-login: #0D0D0DCC;
+    
     /* Buttons, tags, etc. Backgrounds */
+    /* Primary Type */
     --background-primary: #FFFFFF;
+    --hover-background-primary: #ACACAC;
+    --hover-text-primary: #000000;
+    /* Secondary Type */
     --background-secondary: #393939;
-    --background-warning: #FFF1D4;
+    --hover-background-secondary: #515151;
+    --hover-text-secondary: #FFFFFF;
+    /* Access Type Button */
     --background-access: #DEE1FE;
+    /* Critical Type */
     --background-critical: #F1C5C1;
+
+    --background-warning: #FFF1D4;
     --background-tag: #E2E2E2;
     /* Table */
     --background-table-hero: #2C2C2C;

@@ -8,6 +8,10 @@
     "name": "account"
   },
   {
+    "path": "accounts/index.tsx",
+    "name": "accounts"
+  },
+  {
     "path": "modules/index.tsx",
     "name": "modules"
   }

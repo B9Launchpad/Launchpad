@@ -1,11 +1,10 @@
+import React, { useState, useEffect, useRef } from "react";
 import { useView } from "@/contexts/ViewContext";
 import Button from "../common/Button";
 import SettingsSidebar, { SettingsSidebarItems } from "./sidebar/SettingsSidebar";
 import { SearchProvider } from "@/contexts/SearchContext";
 import IconLogout from "../icons/Logout";
 import { useSpring, animated } from "react-spring";
-import SpringConfig from "@/utils/SpringConfig";
-import { useState, useEffect, useRef } from "react";
 import { useSettingsRegistry } from "@contexts/SettingsRegistryContext";
 import '@styles/settings.css'
 import PageHeader from "./header/PageHeader";
@@ -14,13 +13,38 @@ interface LayoutSettingsProps {
     children?: React.ReactNode;
 }
 
-const LayoutSettings: React.FC<LayoutSettingsProps> = ({ children }) => {
+const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
     const { showSettings, setShowSettings } = useView();
     const [isVisible, setIsVisible] = useState(false);
     const [activePageId, setActivePageId] = useState<string | null>(null);
+    const [activeComponent, setActiveComponent] = useState<React.ComponentType | null>(null);
+    const [isLoading, setIsLoading] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     
-    const { registeredPages, getPagesByCategory } = useSettingsRegistry();
+    const { registeredPages, getPagesByCategory, loadComponent, loadedComponents } = useSettingsRegistry();
+
+    // Load component when active page changes
+    useEffect(() => {
+        const loadActiveComponent = async () => {
+            if (!activePageId) {
+                setActiveComponent(null);
+                return;
+            }
+
+            setIsLoading(!loadedComponents.has(activePageId))
+            try {
+                const component = await loadComponent(activePageId);
+                setActiveComponent(() => component); // Apparently helps ensure this is a component and not a module.
+            } catch (error) {
+                console.error(`Failed to load component for ${activePageId}:`, error);
+                setActiveComponent(null);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        loadActiveComponent();
+    }, [activePageId, loadComponent]);
 
     // showSettings visibility control
     useEffect(() => {
@@ -32,7 +56,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = ({ children }) => {
         }
     }, [showSettings, registeredPages]);
 
-    // !! This focuses on the container when it becomes visible GIVES AN ARIA COMPATIBILITY WARNING WHEN UNMOUNTED !!
+    // Focus management (causes issues with ARIA with hidden properties being blocked due to focus)
     useEffect(() => {
         if (isVisible && containerRef.current) {
             containerRef.current.focus();
@@ -40,8 +64,8 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = ({ children }) => {
 
         return () => {
             if(containerRef.current) {
-                containerRef.current.blur()
-            } // fix idea for above?
+                containerRef.current.blur();
+            }
         }
     }, [isVisible]);
 
@@ -50,13 +74,10 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = ({ children }) => {
         const panelPages = getPagesByCategory('panel');
         const miscPages = getPagesByCategory('misc');
 
-        console.log(panelPages)
         return {
             user: [
                 ...userPages.map(page => ({
                     label: page.label,
-                    type: page.type || 'secondary' as const,
-                    icon: page.icon,
                     onClick: () => setActivePageId(page.id)
                 }))
             ],
@@ -73,7 +94,6 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = ({ children }) => {
                 })),
                 
                 // STATICS
-
                 {
                     label: "Log out",
                     icon: <IconLogout/>,
@@ -90,24 +110,33 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = ({ children }) => {
             return <div>Select a setting from the sidebar</div>;
         }
 
+        if (isLoading) {
+            return <div className="settings__loading">Loading...</div>;
+        }
+
         const activePage = registeredPages.find(page => page.id === activePageId);
         if (!activePage) {
             return <div>Settings page not found</div>;
         }
 
-        const PageComponent = activePage.component;
-        return (
-            <div className="settings__content--wrap">
-                <PageHeader 
-                    title={activePage.label} 
-                    settingsPath={true} 
-                    path={[{slug: activePage.label}]}
-                />
-                <div className="settings__content">
-                    <PageComponent />
+        // Render dynamic components as imported by settingsScanner.ts
+        if (activeComponent) {
+            const PageComponent = activeComponent;
+            return (
+                <div className="settings__content--wrap">
+                    <PageHeader 
+                        title={activePage.label} 
+                        settingsPath={true} 
+                        path={[{slug: activePage.label}]}
+                    />
+                    <div className="settings__content">
+                        <PageComponent />
+                    </div>
                 </div>
-            </div>
-        );
+            );
+        }
+
+        return <div>Failed to load settings page</div>;
     };
 
     const style = useSpring({
@@ -127,6 +156,9 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = ({ children }) => {
         onRest: () => {
             if (!isVisible) {
                 setShowSettings(false);
+                // Reset active page when closing
+                setActivePageId(null);
+                setActiveComponent(null);
             }
         }
     });

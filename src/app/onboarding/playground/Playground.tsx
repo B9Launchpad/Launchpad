@@ -107,8 +107,8 @@ const handleGet = () => {
         <Button icon={<SettingsIcon/>}  variant='critical'>Hello world!</Button>
         <Button variant='critical' disabled={true}>Hello world!</Button>
       </div>
-      <SidebarItem url='www.google.com' icon={<SettingsIcon/>}>Settings</SidebarItem>
-      <SidebarItem type={"secondary"} items={[{label: 'Hello world!', url: '/hello-world'}, {label: 'Hello world!', url: '/hello-world'}, {label: 'Hello world!', url: '/hello-world'}]} icon={<SettingsIcon/>}>Settings</SidebarItem>
+      <SidebarItem label={"Settings"} url='www.google.com' icon={<SettingsIcon/>}></SidebarItem>
+      <SidebarItem label={"Settings"} type={"secondary"} items={[{label: 'Hello world!', url: '/hello-world'}, {label: 'Hello world!', url: '/hello-world'}, {label: 'Hello world!', url: '/hello-world'}]} icon={<SettingsIcon/>}></SidebarItem>
 
       <Profile name={["Tatiana", "Yakovleva"]} email="tyakovleva@b9creators.co.uk" picture="/storage/d70ee478ead2fef85d9a86575b6d0315.webp"></Profile>
       <InputString isMandatory={true} title={'Hello world!'} description={'This is where you type something'} type={'string'}/>

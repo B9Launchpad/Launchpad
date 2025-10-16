@@ -34,7 +34,6 @@ const aboutSettings: SettingsPage = {
     label: 'About',
     category: 'misc',
     component: SettingsAbout,
-    type: 'secondary'
 };
 
 export default aboutSettings;

@@ -21,7 +21,6 @@ const modulesSettings: SettingsPage = {
     label: 'Modules',
     category: 'panel',
     component: ModulesSettings,
-    type: 'secondary'
 };
 
 export default modulesSettings;

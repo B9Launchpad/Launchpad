@@ -1,13 +1,14 @@
 import React from 'react';
 import useIsDarkTheme from '../../contexts/useIsDarkTheme';
 import { SVGProps } from "react"
+import Image from 'next/image';
 
 const Logo: React.FC = () => {
   const isDarkTheme = useIsDarkTheme()
 
   return (
     <div className="logo">
-      <img src={`/Logo${isDarkTheme == true ? '-dark' : ''}.png`} alt="Launchpad Logo" />
+      <Image width={294} height={71} src={`/static/Logo${isDarkTheme == true ? '-dark' : ''}.webp`} alt="Launchpad Logo" />
     </div>
   );
 };
@@ -21,9 +22,9 @@ export const LaunchpadLogo = (props: SVGProps<SVGSVGElement>) => (
     x="0px"
     y="0px"
     viewBox="0 0 1024 1024"
-    style={{
-      enableBackground: "new 0 0 1024 1024",
-    }}
+    //style={{
+    //  enableBackground: "new 0 0 1024 1024",
+    //}}
     xmlSpace="preserve"
     {...props}
   >

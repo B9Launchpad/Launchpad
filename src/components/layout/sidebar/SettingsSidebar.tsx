@@ -4,7 +4,6 @@ import SidebarItem from "./SidebarItem";
 import { useSearch } from "@contexts/SearchContext";
 import { useTranslation } from "react-i18next";
 import { useMemo } from "react";
-import IconLogout from "@components/icons/Logout";
 
 export type SettingsSidebarItems = {
     user: SidebarItems,

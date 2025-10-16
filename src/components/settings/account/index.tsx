@@ -1,12 +1,11 @@
 // src/components/settings/modules/index.tsx
 import React from 'react';
-import { SettingsPage } from '@/contexts/SettingsRegistryContext';
 import WindowComponent from '@/components/common/Window';
 import InputString from '@/components/common/Input/StringInput';
 import WindowBlock from '@/components/modules/FormBlock';
 import InputSelect from '@/components/common/Input/SelectInput';
 
-const AccountSettings: React.FC = () => {
+const SettingsAccount: React.FC = () => {
     return (
         <>
             <WindowComponent 
@@ -57,11 +56,4 @@ const AccountSettings: React.FC = () => {
     );
 };
 
-const accountSettings: SettingsPage = {
-    id: 'account',
-    label: 'Account',
-    category: 'user',
-    component: AccountSettings,
-};
-
-export default accountSettings;
+export default SettingsAccount;

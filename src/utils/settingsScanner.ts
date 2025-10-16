@@ -11,8 +11,14 @@ interface SettingsModule {
         category: string;
         component: React.ComponentType;
     };
-    // Handle the case where the default export is the component itself
+    // Handle the case where the default export is the component itself (clumsy devs)
     defaultComponent?: React.ComponentType;
+}
+
+export interface SettingsMetadata {
+    id: string;
+    label: string;
+    category: 'user' | 'panel' | 'misc';
 }
 
 import settingsManifest from '@/components/settings/settings-manifest.json';
@@ -39,15 +45,15 @@ export class SettingsScanner {
         try {
             for (const manifestItem of settingsManifest) {
                 try {
-                    /* Sort of contradicts lazy loading as it is already importing the whole component
-                    *  Consider a different approach with exporting metadata separately to ensure the whole component isn't loaded.
+                    /* Resolve metadata first.
+                    *  
                     */
-                    const module = await import(
-                        /* @vite-ignore */ `@components/settings/${manifestItem.path}`
+                    const metadata = await import(
+                        /* @vite-ignore */ `@components/settings/${manifestItem.name}/metadata.ts`
                     );
                     
                     // Handle clumsy developers who have exported more default.
-                    const settingsConfig = module.default || module.settings;
+                    const settingsConfig = metadata.default || metadata.settings;
                     
                     if (settingsConfig && settingsConfig.id) {
                         // In relation to above imports, this is where the actual component is meant to be imported.
@@ -58,7 +64,7 @@ export class SettingsScanner {
                             }
                             
                             try {
-                                // If not, import the actual component (metadata approach mentioned)
+                                // No cache
                                 const lazyModule = await import(
                                     /* @vite-ignore */ `@components/settings/${manifestItem.path}`
                                 );
@@ -66,7 +72,7 @@ export class SettingsScanner {
                                 const lazyConfig = lazyModule.default || lazyModule.settings;
                                 let component: React.ComponentType;
                                 
-                                // Handle different export patterns
+                                // Export patterns for clumsy devs
                                 if (lazyConfig?.component) {
                                     // Case 1: { default: { component: Component, ... } }
                                     component = lazyConfig.component;
@@ -89,7 +95,7 @@ export class SettingsScanner {
                             }
                         };
 
-                        // Register metadata + loader instead of actual component
+                        // Register metadata + way to load (SUPPORTS LAZY!!!)
                         registerFunction({
                             id: settingsConfig.id,
                             label: settingsConfig.label,
@@ -111,15 +117,15 @@ export class SettingsScanner {
         }
     }
 
-    // Method to load a specific component by ID
+    // Load a component by ID method.
     async loadComponent(id: string, pages: Array<SettingsPage | LazySettingsPage>): Promise<React.ComponentType | null> {
-        // Check if it's already a loaded component
+        // Check cached.
         const existingPage = pages.find(page => page.id === id) as SettingsPage;
         if (existingPage && 'component' in existingPage) {
             return existingPage.component;
         }
 
-        // Find the lazy page and load it
+        // Find page
         const lazyPage = pages.find(page => page.id === id) as LazySettingsPage;
         if (lazyPage && 'loader' in lazyPage) {
             try {

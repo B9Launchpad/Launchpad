@@ -15,6 +15,11 @@ function generateManifest() {
       if (isDirectory) {
         const indexPath = join(fullPath, 'index.tsx');
         try {
+          statSync(join(fullPath, 'metadata.ts')).isFile()
+        } catch {
+          throw new Error(`metadata.ts not found for settings module "${item}" in ${fullPath}`)
+        }
+        try {
           if (statSync(indexPath).isFile()) {
             const importPath = `${item}/index.tsx`;
             manifest.push({
@@ -23,7 +28,7 @@ function generateManifest() {
             });
           }
         } catch {
-          // index.tsx doesn't exist
+          throw new Error(`index.tsx not found for settings module ${item} in ${fullPath}`)
         }
         scanDirectory(fullPath);
       }

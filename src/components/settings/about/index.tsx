@@ -29,11 +29,4 @@ const SettingsAbout: React.FC = () => {
     );
 };
 
-const aboutSettings: SettingsPage = {
-    id: 'about',
-    label: 'About',
-    category: 'misc',
-    component: SettingsAbout,
-};
-
-export default aboutSettings;
+export default SettingsAbout;

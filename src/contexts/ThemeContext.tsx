@@ -10,7 +10,8 @@ export type Theme = 'light' | 'dark' | 'auto';
 const ThemeContext = createContext<{
   theme: Theme;
   setTheme: (t: Theme) => void;
-}>({ theme: 'light', setTheme: () => {} });
+  inferredTheme: Theme;
+}>({ theme: 'light', setTheme: () => {}, inferredTheme: 'auto' });
 
 // Cookie utility functions
 const setThemeCookies = (theme: Theme, inferredTheme?: 'light' | 'dark') => {
@@ -46,8 +47,8 @@ const getInferredThemeCookie = (): 'light' | 'dark' | null => {
   return null;
 };
 
-export const ThemeProvider = ({ children }: { children: ReactNode }) => {
-  const [theme, setThemeState] = useState<Theme>('auto');
+export const ThemeProvider = ({ children, inferredTheme = 'auto' }: { children: ReactNode, inferredTheme: Theme }) => {
+  const [theme, setThemeState] = useState<Theme>(inferredTheme);
   const [isMounted, setIsMounted] = useState(false);
 
   // Initialize theme after mount (SSR compatibility)
@@ -100,14 +101,14 @@ export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   // Prevent flash of unstyled content by not rendering until mounted
   if (!isMounted) {
     return (
-      <ThemeContext.Provider value={{ theme: 'light', setTheme: setThemeState }}>
+      <ThemeContext.Provider value={{ theme: 'light', setTheme: setThemeState, inferredTheme: inferredTheme }}>
         {children}
       </ThemeContext.Provider>
     );
   }
 
   return (
-    <ThemeContext.Provider value={{ theme, setTheme: setThemeState }}>
+    <ThemeContext.Provider value={{ theme, setTheme: setThemeState, inferredTheme: inferredTheme }}>
       {children}
     </ThemeContext.Provider>
   );

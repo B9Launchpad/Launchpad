@@ -1,10 +1,11 @@
-import React from 'react';
-import useIsDarkTheme from '../../contexts/useIsDarkTheme';
+import React, { useContext } from 'react';
 import { SVGProps } from "react"
 import Image from 'next/image';
+import ThemeContext from '@/contexts/ThemeContext';
 
 const Logo: React.FC = () => {
-  const isDarkTheme = useIsDarkTheme()
+  const { inferredTheme } = useContext(ThemeContext)
+  const isDarkTheme = inferredTheme === 'dark';
 
   return (
     <div className="logo">

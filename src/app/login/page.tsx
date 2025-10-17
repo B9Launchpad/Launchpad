@@ -3,10 +3,12 @@
 import { LoginProvider } from '@/contexts/LoginContext'
 import LoginFlow from './Index'
 import GuestLayout from '@/components/layout/GuestLayout'
-import useIsDarkTheme from '@/contexts/useIsDarkTheme'
+import { useContext } from 'react'
+import ThemeContext from '@/contexts/ThemeContext'
 
 export default function Page() {
-  const isDarkTheme = useIsDarkTheme();
+  const { inferredTheme } = useContext(ThemeContext);
+  const isDarkTheme = inferredTheme === 'dark';
 
   return (
     <LoginProvider>

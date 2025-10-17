@@ -54,7 +54,7 @@ export default async function RootLayout({
         <noscript>You need to enable JavaScript to run this app.</noscript>
         <div id="root">
           <I18nProvider locale={locale} initialI18nStore={initialStore}>
-            <ThemeProvider>{children}</ThemeProvider>
+            <ThemeProvider inferredTheme={resolvedTheme}>{children}</ThemeProvider>
           </I18nProvider>
         </div>
       </body>

@@ -7,7 +7,8 @@ export interface ButtonProps {
     variant?: 'primary' | 'secondary' | 'access' | 'critical' | 'tertiary';
     icon?: React.ReactNode;
     onClick?: () => void;
-    children: React.ReactNode;
+    children?: React.ReactNode;
+    label?: string | React.ReactNode;
     disabled?: boolean;
     className?: string;
     type?: "submit" | "reset" | "button" | undefined;
@@ -15,11 +16,14 @@ export interface ButtonProps {
 }
 
 // Declaration of Button component with its configured props and styles
-const Button: React.FC<ButtonProps> = ({ variant='primary', tabIndex = 0, icon, onClick, children, disabled = false, className, type}) => {
+const Button: React.FC<ButtonProps> = ({ children, label = children, variant='primary', tabIndex = 0, icon, onClick, disabled = false, className, type}) => {
     const lastInteractionWasKeyboard = useLastInteractionKeyboard();
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [isDisabled, setIsDisabled] = useState<boolean>(disabled);
     const [isLoading, setIsLoading] = useState<boolean>(false);
+
+    if(!label && !children) throw new Error("Missing required prop: 'label' or 'children' must be provided, but received 'undefined'");
+    // if(typeof label !== undefined && typeof children !== undefined) throw new Error("Invalid prop combination: 'label' and 'children' provided, but expected either 'label' or 'children'");
     // CONSIDER CLEANUP!
     const fetchStatus = useFetchStatus();
 
@@ -68,7 +72,7 @@ const Button: React.FC<ButtonProps> = ({ variant='primary', tabIndex = 0, icon, 
 
             onClick={handleClick} disabled={isDisabled}>
             {icon && <span className="button__icon-container">{icon}</span>}
-            {children}
+            {label}
         </button>
     );
 };

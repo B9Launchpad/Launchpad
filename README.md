@@ -20,6 +20,8 @@ useEffect(() => {
 For more information on this topic, there is a [very helpful article](https://stephencook.dev/blog/using-window-in-react-ssr/) about this.
 
 ## Technologies used
+This project had been migrated to **NextJS** from CRA to avoid security issues in connection with deprecated CRA framework. Please note some of the features are still in their further compatbility enhancement stage and this documentation might not perfectly reflect the nature of working with NextJS.
+
 Frontend makes use of **TSX (React Typescript)** by default. Please make sure to avoid using standard or incompatible JavaScript code and/or libraries.
 
 For styling, the **standard CSS** option is currently the enforced one. This means you must avoid using TailWind, SCSS, etc. as it will be incompatible with the Launchpad. If you have any suggestions on improving stylesheet coding, please create a ticket in the **Issues** section of this repository.
@@ -64,40 +66,44 @@ There is a file hierarchy with components:
 ```
 
 ## Pages Structure and Router
-Pages **must** all be located in ``/src/pages``. Pages must be structured by module, or for miscellaneous pages that do no appear in modules please use the ``misc`` folder.
+Base pages **must** all be located in ``/src/app/[route]``. Pages must be structured by module, or for miscellaneous pages that do no appear in modules please use the ``misc`` folder (consider another approach after NextJS app router implementation).
 
-Router must be structured into separate folders for each microservice/module, with ``App.tsx`` only referring to the top-level routes that guide into route folders. Here is an example of a possible route structure **(please do not use this without further ponder about appropriateness. THIS IS AN EXAMPLE)** 
+Router must be structured into separate folders for each microservice/module. Please note I will be implementing support for plug-in modules as part of my plan to make this app accessible for developers with little experience with Launchpad, those plug-in modules shall not appear in the router.  
 
 ``` plaintext
-src/
-├── App.tsx                # Main router + layout shell
-├── routes/                # Top-level routes, each pointing to a microservice module
-│   ├── AuthRoutes.tsx
-│   ├── DashboardRoutes.tsx
-│   └── BillingRoutes.tsx
-├── services/              # API clients grouped by service
-│   ├── auth/
-│   ├── billing/
+src/          
+├── app/                   # App router, + layout each pointing to a microservice module/page.
+│   ├── login/
+│   ├── listings/
+│   └── layout.tsx 	   # layout shell
+├── components/            # Components used in the application.
+│   ├── common/
+│   ├── icons/
+│   ├── layout/
 │   └── ...
-└── features/              # Each feature is a slice
-    ├── auth/
-    │   ├── pages/
-    │   ├── components/
-    │   └── AuthRoutes.tsx
-    ├── dashboard/
-    └── billing/
+├── config/                # Application configurations (WIP).
+├── contexts/              # React contexts.
+├── functions/             # hooks (e.g. use...) and one-off utilities (to be migrated).
+├── hooks/             	   # hooks (e.g. use...)
+├── i18n/             	   # i18next + react-i18next localisation configs
+├── tests/
+└── utils/		   # Utility functions
 ```
 
+## Backend caveat
+Currently, the app relies on a separate C++ backend framework serving as an API endpoint for the frontend to communicate with. This means that this repository contains merely the frontend with hard-coded fetch functions, meaning this app will not work completely on its own as it does not make a connection to databases, etc.
+
+We have not yet found an accessible solution to this problem to support plug-in modules by third-party developers as planned in the future. 
 
 # How to run:
 
-As of right now, frontend isn't Docker-supported. However, it can be run and tested locally using the commands below
+**Docker note:** As of right now, frontend isn't Docker-supported. However, it can be run and tested locally using the commands below
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm run dev`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
@@ -105,7 +111,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
 
-### `npm test`
+### `npm test` (work in progress to re-implement)
 
 Launches the test runner in the interactive watch mode.\
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
@@ -118,16 +124,8 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### `npm run start`
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+After your application is built using `npm run build` command as listed above, it can be started using `npm run start`. This will deploy a [localhost:3000](http://localhost:3000) frontend server to render the application from the `build` directory.
 
 # Happy coding!

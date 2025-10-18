@@ -66,6 +66,10 @@ em {
     fill: var(--icon)
 }
 
+.system-font {
+    font-family: "system-ui", sans-serif;
+}
+
 .flex {
     display: flex;
 }

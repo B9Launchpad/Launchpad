@@ -1,29 +1,48 @@
 import keyMap from './keycap-map.json';
 
 type KeyEntry = {
-    windows: number,
-    macos: number
-};
+    windows: string,
+    macos: string,
+} | string;
 
-// Lookup table construction
-const nameToMacCode: Record<string, number> = {};
-const nameToWindowsCode: Record<string, number> = {}
-//const codeToName: Record<string, string[]> = {};
+
+const nameToMacCode: Record<string, string> = {};
+const nameToWindowsCode: Record<string, string> = {}
 
 for (const [keyName, code] of Object.entries(keyMap) as [string, KeyEntry][]) {
-    if (code.windows && code.macos) {
-        nameToMacCode[keyName] = code.macos;
-        nameToWindowsCode[keyName] = code.windows;
+    if (typeof code === 'string') {
+        nameToMacCode[keyName] = code;
+        nameToWindowsCode[keyName] = code;
+    } else {
+        if (code.windows) {
+            nameToWindowsCode[keyName] = code.windows;
+        }
+        if (code.macos) {
+            nameToMacCode[keyName] = code.macos;
+        }
     }
 }
 
-// Lookup function export
-export function getCodeForKeyName(keyName: string, map: 'windows' | 'macos'): number | undefined {
+type KeyReturn = {
+    name: string | undefined,
+    systemFont: boolean
+}
+
+export default function getNameForKeyValue(keyName: string, map: 'Windows' | 'MacOS' | string = 'Windows'): KeyReturn {
+    if(!nameToMacCode[keyName]) return { name: keyName, systemFont: false };
+
     switch(map) {
-        case 'windows':
-            return nameToWindowsCode[keyName];
-        case 'macos':
-            return nameToMacCode[keyName]
+        case 'MacOS':
+            const isSymbol: boolean = !/[a-zA-Z]/.test(nameToMacCode[keyName])
+            return {
+                name: nameToMacCode[keyName],
+                systemFont: isSymbol,
+            }
+        default:
+            return {
+                name: nameToWindowsCode[keyName],
+                systemFont: false
+            }
     }
 }
 

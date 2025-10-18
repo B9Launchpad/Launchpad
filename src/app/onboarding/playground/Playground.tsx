@@ -15,6 +15,7 @@ import { useRef } from 'react';
 import { SearchProvider } from '@/contexts/SearchContext';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
+import KeyCap from '@/components/misc/KeyCap';
 
 
 function PlaygroundPage() {
@@ -75,6 +76,8 @@ const handleGet = () => {
 
   return (
     <section style={{backgroundColor: "var(--background-content)"}}>
+
+      <KeyCap keyName={'Escape'}/>
     
     <Button variant='critical' onClick={AxiosPost}>{t('logout.logout')}</Button>
 

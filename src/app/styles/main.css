@@ -329,7 +329,6 @@ nav {
     width: 300px;
     max-height: 100vh;
     position: sticky;
-    overflow: hidden;
     padding: var(--padding-medium);
     display: flex;
     flex-direction: column;
@@ -337,14 +336,14 @@ nav {
     left: 0;
     top: 0;
     background-color: var(--background-content);
+    overflow-x: visible;
+    overflow-y: hidden;
 }
 
 .sidebar__items--wrap {
     display: flex;
     flex-direction: column;
     gap: var(--gap-standard);
-    overflow-x: hidden;
-    overflow-y: hidden;
 }
 
 .sidebar__items--wrap:not(.sidebar-block) {
@@ -1055,6 +1054,11 @@ button.focused, input.focused, .input__search--content.focused {
         border-radius: var(--radius-tiny);
         transition: all 100ms ease-out;
         height: fit-content;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        box-sizing: border-box;
+        text-align: center;
     }
 
     .keycap--wrap.clickable {
@@ -1067,7 +1071,7 @@ button.focused, input.focused, .input__search--content.focused {
     }
 
     .keycap--display {
-        font: var(--font-small);
-        font-weight: var(--font-weight-bold);
+        font: var(--font-primary);
+        min-width: 2ch;
         color: var(--contrast)
     }

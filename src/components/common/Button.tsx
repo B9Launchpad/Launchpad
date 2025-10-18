@@ -56,12 +56,13 @@ const Button: React.FC<ButtonProps> = ({ children, label = children, variant='pr
     }, [fetchStatus])
 
     return (
-        <button className={[
+        <button 
+            data-icon={icon ? true : false}
+            className={[
             className, // optional external classes
             variant,   // 'primary', 'secondary', etc.
-            icon && 'icon', // if icon exists, add 'icon' class
-            isLoading && "loading"
-            ].filter(Boolean).join(' ')}
+            isLoading && "loading",
+        ].filter(Boolean).join(' ')}
             onFocus={handleFocus} 
             onBlur={handleBlur}
             type={type}

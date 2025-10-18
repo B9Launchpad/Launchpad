@@ -19,13 +19,37 @@ body {
     margin: 0;
 }
 
+.loader__screen {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gap-large)
+}
+
+.loader__text {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 500ms ease-out;
+}
+.loader__text.visible {
+    visibility: visible;
+    opacity: 1;
+}
+
 /* Main Layout settings */
 
 .main-layout__wrap {
     display: flex;
     position: relative;
     overflow: hidden;
-    flex: 1 1 0;
     height: 100vh;
     width: 100vw;
     min-width: 0;
@@ -37,6 +61,13 @@ body {
     overflow: hidden;
     position: absolute;
     inset: 0;
+    display: grid;
+    grid-template-columns: var(--main-sidebar-width) calc(100% - var(--main-sidebar-width));
+}
+
+main.main-layout__content {
+    width: 100%;
+    height: 100%;
 }
 
 .path__wrap {
@@ -215,7 +246,7 @@ button {
 
 
 /* Conditional Styles */
-    button.icon {
+    button[data-icon=true] {
         padding: 10px 6px;
     }
     button:disabled{
@@ -325,8 +356,8 @@ section {
 /* Sidebar Styles & Sidebar Item */
 
 nav {
-    height: calc(100vh - var(--padding-medium) * 2);
-    width: 300px;
+    height: 100vh;
+    width: var(--main-sidebar-width);
     max-height: 100vh;
     position: sticky;
     padding: var(--padding-medium);
@@ -336,8 +367,9 @@ nav {
     left: 0;
     top: 0;
     background-color: var(--background-content);
-    overflow-x: visible;
+    overflow-x: clip;
     overflow-y: hidden;
+    box-sizing: border-box;
 }
 
 .sidebar__items--wrap {
@@ -1059,6 +1091,7 @@ button.focused, input.focused, .input__search--content.focused {
         user-select: none;
         box-sizing: border-box;
         text-align: center;
+        vertical-align: middle;
     }
 
     .keycap--wrap.clickable {

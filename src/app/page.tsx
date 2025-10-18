@@ -4,10 +4,10 @@ import ProtectedRoute from '@/functions/Auth/ProtectedRoute';
 export default function Page() {
 
   return (
-      <MainLayout>
-        <ProtectedRoute>
-            <></>
-        </ProtectedRoute>
-      </MainLayout>
+      <ProtectedRoute>
+        <MainLayout>
+              <></>
+        </MainLayout>
+      </ProtectedRoute>
   )
 }

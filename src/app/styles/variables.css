@@ -139,6 +139,7 @@
 
     /* Miscelanneous */
 
+    --radius-tiny: 4px;
     --radius-small: 8px;
     --radius: 12px;
     --radius-large: 24px;

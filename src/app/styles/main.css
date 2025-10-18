@@ -1042,3 +1042,32 @@ button.focused, input.focused, .input__search--content.focused {
   z-index: 1000;
   pointer-events: none; /* optional: prevent mouse interaction */
 }
+
+    /* Keycaps */
+
+    .keycap--wrap {
+        background: var(--icon);
+        box-shadow:
+            var(--padding-small) var(--padding-small) 0 var(--muted),
+            var(--padding-small) 0 0 var(--muted),
+            0 var(--padding-small) 0 var(--muted);
+        padding: var(--padding-small);
+        border-radius: var(--radius-tiny);
+        transition: all 100ms ease-out;
+        height: fit-content;
+    }
+
+    .keycap--wrap.clickable {
+        cursor: pointer;
+    }
+
+    .keycap--wrap.active {
+        transform: translate(var(--padding-small), var(--padding-small));
+        box-shadow: none;
+    }
+
+    .keycap--display {
+        font: var(--font-small);
+        font-weight: var(--font-weight-bold);
+        color: var(--contrast)
+    }

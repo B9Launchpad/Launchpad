@@ -8,6 +8,9 @@ import { useSpring, animated } from "react-spring";
 import { useSettingsRegistry } from "@contexts/SettingsRegistryContext";
 import '@styles/settings.css'
 import PageHeader from "./header/PageHeader";
+import os from "node:os"
+import KeyCap from "../misc/KeyCap";
+import IconBack from "../icons/Input/Back";
 
 interface LayoutSettingsProps {
     children?: React.ReactNode;
@@ -55,19 +58,6 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             }
         }
     }, [showSettings, registeredPages]);
-
-    // Focus management (causes issues with ARIA with hidden properties being blocked due to focus)
-    useEffect(() => {
-        if (isVisible && containerRef.current) {
-            containerRef.current.focus();
-        }
-
-        return () => {
-            if(containerRef.current) {
-                containerRef.current.blur();
-            }
-        }
-    }, [isVisible]);
 
     const getSidebarItems = (): SettingsSidebarItems => {
         const userPages = getPagesByCategory('user');
@@ -167,12 +157,6 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
         setIsVisible(false);
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
-        if (e.key === "Escape") {
-            handleClose();
-        }
-    }
-
     if (!showSettings && !isVisible) {
         return null;
     }
@@ -191,11 +175,12 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             className="main-layout__layer settings__main" 
             data-layer={"settings"} 
             role={"dialog"}
-            tabIndex={-1}
-            onKeyDown={handleKeyDown}
         >
             <div className="settings__nav--wrap">
-                <Button onClick={handleClose}>OUT!</Button>
+                <div onClick={handleClose} className="setting__nav--controls">
+                    <IconBack className="icon"/>
+                    <KeyCap keyName="Escape" onKeyPress={handleClose}/>
+                </div>
                 <SearchProvider>
                     <SettingsSidebar items={sidebarItems}/>
                 </SearchProvider>

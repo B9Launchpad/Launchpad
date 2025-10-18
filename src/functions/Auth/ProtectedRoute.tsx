@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from "react";
 import makeFetchRequest from "../../utils/fetch/makeFetchRequest";
 import { useRouter } from "next/navigation";

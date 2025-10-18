@@ -36,3 +36,12 @@
     height: 100%;
     min-height: 0;
 }
+
+.setting__nav--controls {
+    display: flex;
+    flex-direction: row;
+    gap: var(--gap-standard);
+    cursor: pointer;
+    height: fit-content;
+    width: fit-content;
+}

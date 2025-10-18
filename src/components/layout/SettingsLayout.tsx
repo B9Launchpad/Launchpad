@@ -11,6 +11,7 @@ import PageHeader from "./header/PageHeader";
 import os from "node:os"
 import KeyCap from "../misc/KeyCap";
 import IconBack from "../icons/Input/Back";
+import SuspenseLoader from "../common/Loader";
 
 interface LayoutSettingsProps {
     children?: React.ReactNode;
@@ -101,7 +102,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
         }
 
         if (isLoading) {
-            return <div className="settings__loading">Loading...</div>;
+            return <SuspenseLoader/>;
         }
 
         const activePage = registeredPages.find(page => page.id === activePageId);
@@ -172,7 +173,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             }} 
             aria-hidden={!isVisible} 
             aria-modal={isVisible} 
-            className="main-layout__layer settings__main" 
+            className="settings__main" 
             data-layer={"settings"} 
             role={"dialog"}
         >

@@ -3,10 +3,6 @@
         "windows": "Backspace",
         "macos": "⌫"
     },
-    "Tab": {
-        "windows": "Tab",
-        "macos": "⇥"
-    },
     "Enter": "↩",
     "Shift": {
         "windows": "shift",

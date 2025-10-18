@@ -8,7 +8,6 @@ import { useContext, useEffect, useRef } from "react";
 
 type KeyName =   
     | "Backspace"
-    | "Tab"
     | "Enter"
     | "Shift"
     | "Control"
@@ -44,10 +43,10 @@ type KeyName =
     | "]" | "}"
     | "\\" | "|"
     | ";" | ":"
-    | "'" | "\""
+    | "'" | '\"'
     | "," | "<"
     | "." | ">"
-    | "/" | "?"
+    | "/" | "?";
 
 interface KeyCapProps {
     keyName: KeyName;

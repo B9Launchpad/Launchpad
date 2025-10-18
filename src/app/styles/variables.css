@@ -60,7 +60,7 @@
 
     --font-size-primary: 20px;
     --font-size-secondary: 16px;
-    --font-size-tertiary: 14px;
+    --font-size-tertiary: 12px;
     --font-size-title: 24px;
     --font-size-header: 32px;
     --font-size-large: 48px;
@@ -165,6 +165,8 @@
     --focus-outline: 2px solid var(--access);
 
     --checkbox-radio-size: 20px;
+
+    --main-sidebar-width: 300px;
 }
 
 /* Dark Mode Variable Declarations */

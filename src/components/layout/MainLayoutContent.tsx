@@ -45,11 +45,13 @@ export default function MainLayoutContent({ children }: MainLayoutProps) {
                             profile={profile}
                         />
                     </SearchProvider>
-                    {children}
+                    <main className="main-layout__content">
+                        {children}
+                    </main>
                 </div>
                 <SettingsRegistryProvider>
                     {showSettings && (
-                        <LayoutSettings>children</LayoutSettings>
+                        <LayoutSettings></LayoutSettings>
                     )}
                 </SettingsRegistryProvider>
             </div>

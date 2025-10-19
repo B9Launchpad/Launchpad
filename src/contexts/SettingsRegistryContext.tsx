@@ -63,7 +63,8 @@ export const SettingsRegistryProvider: React.FC<{ children: ReactNode }> = ({ ch
     };
 
     const loadComponent = async (id: string, sectionId: string): Promise<React.ComponentType | null> => {
-        const cacheId = `${id}-${sectionId}`
+        const cacheId = `${id}-${sectionId}`;
+
         if (loadedComponents.has(cacheId)) {
             return loadedComponents.get(cacheId)!;
         }
@@ -73,8 +74,32 @@ export const SettingsRegistryProvider: React.FC<{ children: ReactNode }> = ({ ch
 
         if (component) {
             setLoadedComponents(prev => new Map(prev).set(cacheId, component));
+
+            setRegisteredPages(prev => 
+                prev.map(page => {
+                    if (page.id !== id) return page;
+
+                    // Section finder
+                    const sections = (page as any).sections || [];
+                    const updatedSections = sections.map((s: any) => 
+                        s.id === sectionId 
+                            ? { ...s, component } 
+                            : s
+                    );
+
+                    // Cache bundle
+                    const newPage: SettingsPage = {
+                        id: page.id,
+                        label: page.label,
+                        category: page.category,
+                        sections: updatedSections as CachedSettingsPageSection[]
+                    };
+
+                    return newPage;
+                })
+            );
         }
-        
+
         return component;
     };
 

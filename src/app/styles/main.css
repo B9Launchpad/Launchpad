@@ -44,6 +44,20 @@ body {
     opacity: 1;
 }
 
+.loader__trace {
+    fill: none;
+    stroke: var(--text);
+}
+
+.loader__circle {
+    fill: var(--text);
+}
+
+.loader__image {
+    width: 300px;
+    height: 150px;
+}
+
 /* Main Layout settings */
 
 .main-layout__wrap {
@@ -90,13 +104,24 @@ main.main-layout__content {
     color: var(--access);
 }
 
+.header__section-browser {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-small);
+}
+
+.header__section-browser--items {
+    display: flex;
+    flex-direction: row;
+    gap: var(--gap-small);
+}
+
     /* Sections */
 
     .section__block {
         gap: var(--gap-standard);
         width: 100%;
     }
-
 
 /* Guest layout settings */
 
@@ -818,7 +843,7 @@ nav {
     gap: var(--gap-small);
     border-radius: var(--radius-small);
     width: fit-content;
-    font: var(--font-secondary);
+    font: var(--font-primary);
     background-color: var(--background-secondary);
     color: var(--text);
     fill: var(--text);
@@ -834,11 +859,66 @@ nav {
     cursor: pointer;
 }
 
-.tag__wrap.access {
-    background-color: var(--background-access);
-    color: var(--access);
-    fill: var(--access);
-}
+    /* Tag colours */
+
+    .tag__wrap.access {
+        background-color: var(--background-access);
+        color: var(--access);
+        fill: var(--access);
+    }
+
+    .tag__wrap.critical {
+        background-color: var(--background-critical);
+        color: var(--critical);
+        fill: var(--critical);
+    }
+
+    .tag__wrap.warning {
+        background-color: var(--background-warning);
+        color: var(--warning);
+        fill: var(--warning);
+    }
+
+    .tag__wrap.success {
+        background-color: var(--background-success);
+        color: var(--success);
+        fill: var(--success);
+    }
+
+    .tag__wrap.purple {
+        background-color: var(--background-purple);
+        color: var(--purple);
+        fill: var(--purple);
+    }
+
+    .tag__wrap.pink {
+        background-color: var(--background-pink);
+        color: var(--pink);
+        fill: var(--pink);
+    }
+
+    .tag__wrap.orange {
+        background-color: var(--background-orange);
+        color: var(--orange);
+        fill: var(--orange);
+    }
+
+    .tag__wrap.blue {
+        background-color: var(--background-blue);
+        color: var(--blue);
+        fill: var(--blue);
+    }
+
+    .tag__wrap.brown {
+        background-color: var(--background-brown);
+        color: var(--brown);
+        fill: var(--brown);
+    }
+
+    .tag__wrap.transparent {
+        background-color: transparent;
+        color: var(--text);
+    }
 
 /* Tables */
 

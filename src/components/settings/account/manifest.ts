@@ -10,6 +10,12 @@ const metadata: SettingsManifest = {
             label: 'Account',
             default: true,
             fileName: "account.tsx"
+        },
+        {
+            id: 'about',
+            label: 'About',
+            default: false,
+            fileName: "about.tsx"
         }
     ]
 };

@@ -16,6 +16,7 @@ import { SearchProvider } from '@/contexts/SearchContext';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 import KeyCap from '@/components/misc/KeyCap';
+import Tag from '@/components/common/Tag';
 
 
 function PlaygroundPage() {
@@ -74,10 +75,10 @@ const handleGet = () => {
   console.log(smallTableRef.current?.getSelected())
 }
 
+  const tagColours = ["access", "warning", "critical", "success", "pink", "purple", "orange", "blue", "brown", "primary", "secondary", "muted", "transparent"]
+
   return (
     <section style={{backgroundColor: "var(--background-content)"}}>
-
-      <KeyCap keyName={'Escape'}/>
     
     <Button variant='critical' onClick={AxiosPost}>{t('logout.logout')}</Button>
 
@@ -89,7 +90,13 @@ const handleGet = () => {
       </Button>
     </SearchProvider>
 
-
+      <div className='playground'>
+        {tagColours.map((colour, index) => {
+          console.log(colour);
+          return (
+          <Tag label='Hello world!' color={tagColours[index]} key={index}></Tag>
+        )})}
+      </div>
       <div className='playground'>
         <Button>Hello world!</Button>
         <Button icon={<SettingsIcon/>}>Hello world!</Button>

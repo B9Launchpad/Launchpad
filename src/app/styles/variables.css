@@ -33,6 +33,7 @@
     --hover-background-critical: #F23F42;
     --hover-text-critical: #F1C5C1;
 
+    --background-success: #D4F2DF;
     --background-warning: #FFF1D4;
     --background-tag: #D9D9D9;
     /* Table */
@@ -176,7 +177,7 @@
     --muted: #868686;
     --warning: #F0B132;
     --success: #3BA561;
-    --access: #5865F2;
+    --access: #727df7;
     --critical: #E14636;
     --contrast: #000000;
     --icon: #F8F8F8;
@@ -196,11 +197,12 @@
     --hover-background-secondary: #515151;
     --hover-text-secondary: #FFFFFF;
     /* Access Type Button */
-    --background-access: #DEE1FE;
+    --background-access: #182ef836;
     /* Critical Type */
-    --background-critical: #F1C5C1;
+    --background-critical: #C7170740;
 
-    --background-warning: #FFF1D4;
+    --background-success: #28BE5F33;
+    --background-warning: #FFB92833;
     --background-tag: #E2E2E2;
     /* Table */
     --background-table-hero: #2C2C2C;
@@ -209,14 +211,14 @@
     --purple: #9747FF;
     --pink: #DC6BA6;
     --orange: #E84F13;
-    --blue: #2A3D8F;
-    --brown: #A75616;
+    --blue: #909CD1; /* Consdier changing back to #2A3D8F */
+    --brown: #cc7430; /* Consider changing back to #A75616 */
     /* Other Backgrounds */
-    --background-purple: #E3CDFF;
-    --background-pink: #FFE2F1;
-    --background-orange: #FFDDD0;
-    --background-blue: #CDD6FF;
-    --background-brown: #E4B997;
+    --background-purple: #7305FF33;
+    --background-pink: #FF178F20;
+    --background-orange: #FF551433;
+    --background-blue: #0532FF33; /* Consider changing back to #CDD6FF for legibility with access scheme*/
+    --background-brown: #7e553580; /* Consider changing back to #E4B997 (legibility) */
 }
 
 /* Bringing standard styles down to desired Launchpad Identity */

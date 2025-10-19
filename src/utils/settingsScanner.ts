@@ -1,28 +1,26 @@
-interface SettingsModule {
-    default?: {
-        id: string;
-        label: string;
-        category: string;
-        component: React.ComponentType;
-    };
-    settings?: {
-        id: string;
-        label: string;
-        category: string;
-        component: React.ComponentType;
-    };
-    // Handle the case where the default export is the component itself (clumsy devs)
-    defaultComponent?: React.ComponentType;
+interface SettingsManifestPageSection {
+    id: string;
+    label: string;
+    default?: boolean;
+    fileName: string;
 }
 
-export interface SettingsMetadata {
+export interface SettingsPageSection {
+    id: string;
+    label: string;
+    default?: boolean;
+    loader: () => Promise<React.ComponentType>;
+}
+
+export interface SettingsManifest {
     id: string;
     label: string;
     category: 'user' | 'panel' | 'misc';
+    sections: SettingsManifestPageSection[];
 }
 
 import settingsManifest from '@/components/settings/settings-manifest.json';
-import { LazySettingsPage, SettingsPage } from '@/contexts/SettingsRegistryContext';
+import { CachedSettingsPageSection, LazySettingsPage, SettingsPage } from '@/contexts/SettingsRegistryContext';
 import React from 'react';
 
 export class SettingsScanner {
@@ -39,7 +37,17 @@ export class SettingsScanner {
         return SettingsScanner.instance;
     }
 
-    async scanAndRegister(registerFunction: (page: Omit<SettingsPage, 'component'> & { loader: () => Promise<React.ComponentType> }) => void): Promise<void> {
+    async scanAndRegister(
+        registerFunction: (
+            page: Omit<SettingsPage, 'sections'> & {
+                sections: (
+                    Omit<CachedSettingsPageSection, 'component'> & {
+                      loader: () => Promise<React.ComponentType>;
+                    }
+                )[];
+            }
+        ) => void
+    ): Promise<void> {
         if (this.registered) return;
 
         try {
@@ -48,62 +56,57 @@ export class SettingsScanner {
                     /* Resolve metadata first.
                     *  
                     */
-                    const metadata = await import(
-                        /* @vite-ignore */ `@components/settings/${manifestItem.name}/metadata.ts`
+                    const manifest = await import(
+                        /* @vite-ignore */ `@components/settings/${manifestItem.path}`
                     );
                     
                     // Handle clumsy developers who have exported more default.
-                    const settingsConfig = metadata.default || metadata.settings;
+                    const settingsConfig: SettingsManifest = manifest.default || manifest.settings;
                     
-                    if (settingsConfig && settingsConfig.id) {
-                        // In relation to above imports, this is where the actual component is meant to be imported.
-                        const loader = async (): Promise<React.ComponentType> => {
-                            // Check cache
-                            if (this.componentCache.has(manifestItem.path)) {
-                                return this.componentCache.get(manifestItem.path)!;
-                            }
-                            
-                            try {
-                                // No cache
-                                const lazyModule = await import(
-                                    /* @vite-ignore */ `@components/settings/${manifestItem.path}`
-                                );
-                                
-                                const lazyConfig = lazyModule.default || lazyModule.settings;
-                                let component: React.ComponentType;
-                                
-                                // Export patterns for clumsy devs
-                                if (lazyConfig?.component) {
-                                    // Case 1: { default: { component: Component, ... } }
-                                    component = lazyConfig.component;
-                                } else if (lazyModule.default && typeof lazyModule.default === 'function') {
-                                    // Case 2: default export is the component itself
-                                    component = lazyModule.default;
-                                } else if (lazyModule.default?.default && typeof lazyModule.default.default === 'function') {
-                                    // Case 3: Nested default export
-                                    component = lazyModule.default.default;
-                                } else {
-                                    throw new Error(`No valid component found for ${manifestItem.path}`);
-                                }
-                                
-                                this.componentCache.set(manifestItem.path, component);
-                                return component;
-                            } catch (error) {
-                                console.error(`Failed to load component for ${manifestItem.path}:`, error);
-                                // Fallback
-                                return () => React.createElement('div', null, `Failed to load: ${manifestItem.path}`);
-                            }
-                        };
+                    const pageSections: SettingsPageSection[] = []
 
-                        // Register metadata + way to load (SUPPORTS LAZY!!!)
+                    if (settingsConfig && settingsConfig.id) {
+                        for(const section of settingsConfig.sections) {
+                            const loader = async (): Promise<React.ComponentType> => {
+                                const cacheKey = `${manifestItem.name}-${section.id}`;
+                                // Check cache
+                                if (this.componentCache.has(cacheKey)) {
+                                    return this.componentCache.get(cacheKey)!;
+                                }
+
+                                // if no cache then...
+                                try {
+                                    const lazyModule = await import(
+                                        /* @vite-ignore */ `@components/settings/${manifestItem.name}/${section.fileName}`
+                                    );
+
+                                    const lazyConfig = lazyModule.default;
+                                    let component: React.ComponentType;
+
+                                    try {
+                                        component = lazyConfig;
+                                    } catch {
+                                        throw new Error(`No valid component found for ${manifestItem.path}`);
+                                    }
+
+                                    this.componentCache.set(cacheKey, component);
+                                    return component;
+                                } catch (error) {
+                                    console.error(`Failed to load component for ${manifestItem.path}:`, error);
+                                    // Fallback
+                                    return () => React.createElement('div', null, `Failed to load module from: ${manifestItem.path}`);
+                                }
+                            };
+                            pageSections.push({id: section.id, label: section.label, default: section?.default, loader: loader})
+                        }
                         registerFunction({
                             id: settingsConfig.id,
                             label: settingsConfig.label,
                             category: settingsConfig.category,
-                            loader
+                            sections: pageSections
                         });
                         console.log(`Registered settings page metadata: ${settingsConfig.label}`);
-                    } else {
+                    } /**/ else {
                         console.warn(`Invalid settings module at ${manifestItem.path}: missing id or component`);
                     }
                 } catch (error) {
@@ -118,18 +121,22 @@ export class SettingsScanner {
     }
 
     // Load a component by ID method.
-    async loadComponent(id: string, pages: Array<SettingsPage | LazySettingsPage>): Promise<React.ComponentType | null> {
+    async loadComponent(id: string, sectionId: string, pages: Array<SettingsPage | LazySettingsPage>): Promise<React.ComponentType | null> {
         // Check cached.
-        const existingPage = pages.find(page => page.id === id) as SettingsPage;
-        if (existingPage && 'component' in existingPage) {
-            return existingPage.component;
+        const page = pages.find(page => page.id === id) as SettingsPage;
+        if(page && 'sections' in page) {
+            const section = page.sections.find(s => s.id === sectionId);
+            if(section && 'component' in section) {
+                return section.component;
+            }
         }
 
-        // Find page
+        // Find page if not in cache:
         const lazyPage = pages.find(page => page.id === id) as LazySettingsPage;
-        if (lazyPage && 'loader' in lazyPage) {
+        const lazySection = lazyPage.sections.find(s => s.id === sectionId);
+        if (lazySection && 'loader' in lazySection) {
             try {
-                const component = await lazyPage.loader();
+                const component = await lazySection.loader();
                 return component;
             } catch (error) {
                 console.error(`Failed to load component for ${id}:`, error);

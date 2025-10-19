@@ -5,10 +5,9 @@ import SettingsSidebar, { SettingsSidebarItems } from "./sidebar/SettingsSidebar
 import { SearchProvider } from "@/contexts/SearchContext";
 import IconLogout from "../icons/Logout";
 import { useSpring, animated } from "react-spring";
-import { useSettingsRegistry } from "@contexts/SettingsRegistryContext";
+import { LazySettingsPage, SettingsPage, useSettingsRegistry } from "@contexts/SettingsRegistryContext";
 import '@styles/settings.css'
 import PageHeader from "./header/PageHeader";
-import os from "node:os"
 import KeyCap from "../misc/KeyCap";
 import IconBack from "../icons/Input/Back";
 import SuspenseLoader from "../common/Loader";
@@ -20,7 +19,8 @@ interface LayoutSettingsProps {
 const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
     const { showSettings, setShowSettings } = useView();
     const [isVisible, setIsVisible] = useState(false);
-    const [activePageId, setActivePageId] = useState<string | null>(null);
+    const [activePage, setActivePage] = useState<SettingsPage | LazySettingsPage | null>(null);
+    const [activeSectionId, setActiveSectionId] = useState<string | null>(null);
     const [activeComponent, setActiveComponent] = useState<React.ComponentType | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -30,17 +30,24 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
     // Load component when active page changes
     useEffect(() => {
         const loadActiveComponent = async () => {
-            if (!activePageId) {
+            if (!activePage) {
                 setActiveComponent(null);
                 return;
             }
 
-            setIsLoading(!loadedComponents.has(activePageId))
+            let targetSectionId = activeSectionId;
+            setIsLoading(!loadedComponents.has(`${activePage.id}-${targetSectionId}`))
+            if(!targetSectionId) {
+                const defaultSection = activePage.sections.find(s => s.default === true);
+                if(!defaultSection) throw new Error(`Default section not found for page id ${activePage.id}`)
+                targetSectionId = defaultSection.id;
+            }
+
             try {
-                const component = await loadComponent(activePageId);
+                const component = await loadComponent(activePage.id, targetSectionId);
                 setActiveComponent(() => component); // Apparently helps ensure this is a component and not a module.
             } catch (error) {
-                console.error(`Failed to load component for ${activePageId}:`, error);
+                console.error(`Failed to load component for ${activePage.id}:`, error);
                 setActiveComponent(null);
             } finally {
                 setIsLoading(false);
@@ -48,14 +55,14 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
         };
 
         loadActiveComponent();
-    }, [activePageId, loadComponent]);
+    }, [activePage, activeSectionId, loadComponent]);
 
     // showSettings visibility control
     useEffect(() => {
         if (showSettings) {
             setIsVisible(true);
-            if (!activePageId && registeredPages.length > 0) {
-                setActivePageId(registeredPages[0].id);
+            if (!activePage && registeredPages.length > 0) {
+                setActivePage(registeredPages[0]);
             }
         }
     }, [showSettings, registeredPages]);
@@ -69,19 +76,19 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             user: [
                 ...userPages.map(page => ({
                     label: page.label,
-                    onClick: () => setActivePageId(page.id)
+                    onClick: () => setActivePage(page)
                 }))
             ],
             panel: [
                 ...panelPages.map(page => ({
                     label: page.label,
-                    onClick: () => setActivePageId(page.id)
+                    onClick: () => setActivePage(page)
                 }))
             ],
             misc: [
                 ...miscPages.map(page => ({
                     label: page.label,
-                    onClick: () => setActivePageId(page.id)
+                    onClick: () => setActivePage(page)
                 })),
                 
                 // STATICS
@@ -97,16 +104,11 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
     };
 
     const renderActivePage = () => {
-        if (!activePageId) {
+        if (!activePage) {
             return <div>Select a setting from the sidebar</div>;
         }
 
-        if (isLoading) {
-            return <SuspenseLoader/>;
-        }
-
-        const activePage = registeredPages.find(page => page.id === activePageId);
-        if (!activePage) {
+        if (!activePage.id) {
             return <div>Settings page not found</div>;
         }
 
@@ -120,9 +122,19 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
                         settingsPath={true} 
                         path={[{slug: activePage.label}]}
                     />
-                    <div className="settings__content">
-                        <PageComponent />
-                    </div>
+                    {activePage.sections.length > 1 && activePage.sections.map((section, index) => {
+                        return (
+                            <Button key={index} onClick={() => { setActiveSectionId(section.id) }}>
+                                {section.label}
+                            </Button>
+                        )
+                    })}
+                    {isLoading ? ( <SuspenseLoader/>)
+                    : (
+                        <div className="settings__content">
+                            <PageComponent />
+                        </div>
+                    )}
                 </div>
             );
         }
@@ -148,7 +160,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             if (!isVisible) {
                 setShowSettings(false);
                 // Reset active page when closing
-                setActivePageId(null);
+                setActivePage(null);
                 setActiveComponent(null);
             }
         }

@@ -1,18 +1,10 @@
 [
   {
-    "path": "about/index.tsx",
+    "path": "about/manifest.ts",
     "name": "about"
   },
   {
-    "path": "account/index.tsx",
+    "path": "account/manifest.ts",
     "name": "account"
-  },
-  {
-    "path": "accounts/index.tsx",
-    "name": "accounts"
-  },
-  {
-    "path": "modules/index.tsx",
-    "name": "modules"
   }
 ]

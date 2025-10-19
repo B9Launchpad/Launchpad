@@ -13,15 +13,15 @@ function generateManifest() {
       const isDirectory = statSync(fullPath).isDirectory();
       
       if (isDirectory) {
-        const indexPath = join(fullPath, 'index.tsx');
+        const indexPath = join(fullPath, 'manifest.ts');
         try {
-          statSync(join(fullPath, 'metadata.ts')).isFile()
+          statSync(join(fullPath, 'manifest.ts')).isFile()
         } catch {
-          throw new Error(`metadata.ts not found for settings module "${item}" in ${fullPath}`)
+          throw new Error(`mannifest.ts not found for settings module "${item}" in ${fullPath}`)
         }
         try {
           if (statSync(indexPath).isFile()) {
-            const importPath = `${item}/index.tsx`;
+            const importPath = `${item}/manifest.ts`;
             manifest.push({
               path: importPath,
               name: item

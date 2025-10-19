@@ -17,63 +17,39 @@ interface LayoutSettingsProps {
     children?: React.ReactNode;
 }
 
-interface ActivePageState {
-    page: SettingsPage | LazySettingsPage | null;
-    sectionId: string | null;
-}
-
 const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
     const { showSettings, setShowSettings } = useView();
     const [isVisible, setIsVisible] = useState(false);
-    const [activePageState, setActivePageState] = useState<ActivePageState>({ 
-        page: null, 
-        sectionId: null 
-    });
+    const [activePage, setActivePage] = useState<SettingsPage | LazySettingsPage | null>(null);
+    const [activeSectionId, setActiveSectionId] = useState<string | null>(null);
     const [activeComponent, setActiveComponent] = useState<React.ComponentType | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
     
+    
     const { registeredPages, getPagesByCategory, loadComponent, loadedComponents } = useSettingsRegistry();
-
-    // Helper functions to update state
-    const setActivePage = (page: SettingsPage | LazySettingsPage | null) => {
-        setActivePageState({ 
-            page, 
-            sectionId: null // Reset section when page changes
-        });
-    };
-
-    const setActiveSectionId = (sectionId: string | null) => {
-        setActivePageState(prev => ({
-            ...prev,
-            sectionId
-        }));
-    };
 
     // Load component when active page changes
     useEffect(() => {
         const loadActiveComponent = async () => {
-            if (!activePageState.page) {
+            if (!activePage) {
                 setActiveComponent(null);
                 return;
             }
 
-            let targetSectionId = activePageState.sectionId;
-            setIsLoading(!loadedComponents.has(`${activePageState.page.id}-${targetSectionId}`))
-            
+            let targetSectionId = activeSectionId;
+            setIsLoading(!loadedComponents.has(`${activePage.id}-${targetSectionId}`))
             if(!targetSectionId) {
-                const defaultSection = activePageState.page.sections.find(s => s.default === true);
-                if(!defaultSection) throw new Error(`Default section not found for page id ${activePageState.page.id}`)
+                const defaultSection = activePage.sections.find(s => s.default === true);
+                if(!defaultSection) throw new Error(`Default section not found for page id ${activePage.id}`)
                 targetSectionId = defaultSection.id;
-                setActiveSectionId(targetSectionId); // This will trigger another effect run
-                return; // Wait for the state update
             }
 
             try {
-                const component = await loadComponent(activePageState.page.id, targetSectionId);
-                setActiveComponent(() => component);
+                const component = await loadComponent(activePage.id, targetSectionId);
+                setActiveComponent(() => component); // Apparently helps ensure this is a component and not a module.
             } catch (error) {
-                console.error(`Failed to load component for ${activePageState.page.id}:`, error);
+                console.error(`Failed to load component for ${activePage.id}:`, error);
                 setActiveComponent(null);
             } finally {
                 setIsLoading(false);
@@ -81,13 +57,13 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
         };
 
         loadActiveComponent();
-    }, [activePageState, loadComponent, loadedComponents]); // activePageState changes trigger this
+    }, [activePage, activeSectionId, loadComponent]);
 
     // showSettings visibility control
     useEffect(() => {
         if (showSettings) {
             setIsVisible(true);
-            if (!activePageState.page && registeredPages.length > 0) {
+            if (!activePage && registeredPages.length > 0) {
                 setActivePage(registeredPages[0]);
             }
         }
@@ -130,12 +106,12 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
     };
 
     const renderActivePage = () => {
-        if (!activePageState.page) {
+        if (!activePage) {
             return <div>Select a setting from the sidebar</div>;
         }
 
-        if(isLoading && !activeComponent) {
-            return <SuspenseLoader></SuspenseLoader>
+        if (!activePage.id) {
+            return <div>Settings page not found</div>;
         }
 
         // Render dynamic components as imported by settingsScanner.ts
@@ -144,13 +120,13 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             return (
                 <div className="settings__content--wrap">
                     <PageHeader 
-                        title={activePageState.page.label} 
+                        title={activePage.label} 
                         settingsPath={true} 
-                        path={[{slug: activePageState.page.label}]}
+                        path={[{slug: activePage.label}]}
                     />
-                    {activePageState.page.sections.length > 1 && (
-                        <HeaderSectionBrowser currentId={activePageState.sectionId || undefined} items={
-                            activePageState.page.sections.map(section => ({
+                    {activePage.sections.length > 1 && (
+                        <HeaderSectionBrowser currentId={activeSectionId || undefined} items={
+                            activePage.sections.map(section => ({
                                 label: section.label,
                                 id: section.id,
                                 onClick: () => setActiveSectionId(section.id)
@@ -188,7 +164,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             if (!isVisible) {
                 setShowSettings(false);
                 // Reset active page when closing
-                setActivePageState({ page: null, sectionId: null });
+                setActivePage(null);
                 setActiveComponent(null);
             }
         }

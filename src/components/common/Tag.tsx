@@ -19,6 +19,7 @@ const Tag: React.FC<TagProps> = ({ children, label, color = "secondary", onClick
             onClick={handleClick}
             className={`tag__wrap ${color} 
             ${onClick ? "clickable" : ""}`}
+            tabIndex={onClick ? 0 : -1}
         >
             {(!iconAfterText && icon) && icon}
             {children}{label}

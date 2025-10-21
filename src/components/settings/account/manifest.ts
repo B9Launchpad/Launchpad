@@ -12,8 +12,8 @@ const metadata: SettingsManifest = {
             fileName: "account.tsx"
         },
         {
-            id: 'about',
-            label: 'About',
+            id: 'teams',
+            label: 'Teams',
             default: false,
             fileName: "about.tsx"
         }

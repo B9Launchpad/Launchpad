@@ -5,6 +5,7 @@ import { useFetchStatus } from "../../utils/fetch/useFetchStatus";
 // Configuring interface for propos to be used within the button
 export interface ButtonProps {
     variant?: 'primary' | 'secondary' | 'access' | 'critical' | 'tertiary';
+    inline?: boolean;
     icon?: React.ReactNode;
     onClick?: () => void;
     children?: React.ReactNode;
@@ -16,7 +17,7 @@ export interface ButtonProps {
 }
 
 // Declaration of Button component with its configured props and styles
-const Button: React.FC<ButtonProps> = ({ children, label = children, variant='primary', tabIndex = 0, icon, onClick, disabled = false, className, type}) => {
+const Button: React.FC<ButtonProps> = ({ children, inline = false, label = children, variant='primary', tabIndex = 0, icon, onClick, disabled = false, className, type}) => {
     const lastInteractionWasKeyboard = useLastInteractionKeyboard();
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [isDisabled, setIsDisabled] = useState<boolean>(disabled);
@@ -62,6 +63,7 @@ const Button: React.FC<ButtonProps> = ({ children, label = children, variant='pr
             className, // optional external classes
             variant,   // 'primary', 'secondary', etc.
             isLoading && "loading",
+            inline && "button--inline"
         ].filter(Boolean).join(' ')}
             onFocus={handleFocus} 
             onBlur={handleBlur}

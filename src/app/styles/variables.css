@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /* General & Light Theme Variable Declarations */
 :root { 
     /* Text and Basic Variables */
@@ -247,4 +249,24 @@ p {
 
 .flex-row {
     flex-direction: row;
+}
+
+.gap-xs {
+    gap: var(--gap-tiny);
+}
+
+.gap-sm {
+    gap: var(--gap-small);
+}
+
+.gap {
+    gap: var(--gap-standard)
+}
+
+.gap-md {
+    gap: var(--gap-medium) !important;
+}
+
+.gap-lg {
+    gap: var(--gap-large) !important;
 }

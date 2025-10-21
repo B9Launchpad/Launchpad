@@ -3,7 +3,7 @@ import SettingsIcon from '@components/icons/Settings';
 import SidebarItem from '@components/layout/sidebar/SidebarItem';
 import InputString from '@components/common/Input/StringInput';
 import InputSearch from '@components/common/Input/SearchInput';
-import Profile from '@components/common/Profile';
+import Profile from '@/components/common/User/Profile';
 import FileUpload from '@components/common/Input/FileUpload/FileUpload';
 import InputCheckbox, { CheckboxOption } from '@components/common/Input/Checkbox';
 import NewPassword from '@components/common/Input/NewPassword';

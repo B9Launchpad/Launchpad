@@ -48,7 +48,7 @@ export class SettingsScanner {
             }
         ) => void
     ): Promise<void> {
-        if (this.registered) return;
+        //if (this.registered) return;
 
         try {
             for (const manifestItem of settingsManifest) {

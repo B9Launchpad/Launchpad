@@ -37,10 +37,21 @@ export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
 
             const status = response.status;
 
-            if(status === 202) {
-                router.push('/') // navigate to /dashboard
-            } else if (status === 401) {
-                setLoginStatus("isUnauthorised");
+
+            switch (status) {
+                case 202: {
+                    router.push('/');
+                    break;
+                }
+                case 401:
+                    setLoginStatus("isUnauthorised")
+                    break;
+                case 404:
+                    setLoginStatus("isUnauthorised")
+                    break;
+                default: {
+                    setLoginStatus("isError");
+                }
             }
         } catch (error: any) {
             console.log(error);

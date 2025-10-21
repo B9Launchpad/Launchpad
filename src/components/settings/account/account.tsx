@@ -15,7 +15,7 @@ const SettingsAccount: React.FC = () => {
             >   
                 <WindowBlock>
                     <div className='flex-row items-center gap-md'>
-                        <img className="profile__picture--large" src="/storage/d70ee478ead2fef85d9a86575b6d0315.webp"></img>
+                        <img className="profile__picture-lg" src="/storage/d70ee478ead2fef85d9a86575b6d0315.webp"></img>
                         <h2>Tatiana Y.</h2>
                     </div>
                     <WindowBlock className={"gap-md"}>

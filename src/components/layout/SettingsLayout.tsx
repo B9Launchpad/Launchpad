@@ -89,7 +89,13 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
         if (showSettings) {
             setIsVisible(true);
             if (!activePageState.page && registeredPages.length > 0) {
-                setActivePage(registeredPages[0]);
+                const accountPage = registeredPages.find(page => page.id === 'account');
+                if (accountPage) {
+                    setActivePage(accountPage);
+                } else {
+                    // Fallback to first page if account not found
+                    setActivePage(registeredPages[0]);
+                }
             }
         }
     }, [showSettings, registeredPages]);

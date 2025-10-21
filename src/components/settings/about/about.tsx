@@ -3,6 +3,7 @@ import React from 'react';
 import WindowComponent from '@/components/common/Window';
 import info from '@/app-info.json';
 import { LaunchpadLogo } from '@/components/common/Logo';
+import WindowBlock from '@/components/modules/FormBlock';
 
 
 const SettingsAbout: React.FC = () => {
@@ -17,17 +18,17 @@ const SettingsAbout: React.FC = () => {
             <div className='flex-row'>
                 <LaunchpadLogo className='app__logo'/>
                 <div className='flex-col' style={{paddingLeft: '6px'}}>
-                    <h2>{info.name}</h2>
-                    <small>v{info.version}</small>
-                    {/* VERY TEMPORARY. USE COMPONENTS LATER FOR LAYOUTS */}
-                    <h4>
-                        Copyright notice
-                    </h4>
-                    <small>
-                        © 2022-{getCurrentYear()} B9 Creators. All rights reserved.
-                        <br/><br/>
-                        B9 Creators and Launchpad, and the B9 Creators and Launchpad logo are either registered trademarks of B9 Creators in the United Kingdom and/or other countries. All other trademarks are property of their respective owners.
-                    </small>
+                    <WindowBlock>
+                        <div className='flex-col'>
+                            <h2>{info.name}</h2>
+                            <small>v{info.version}</small>
+                        </div>
+                        <WindowBlock label='Copyright notice' description={`© 2022-${getCurrentYear()} B9 Creators. All rights reserved.`}>
+                            <small>
+                                B9 Creators and Launchpad, and the B9 Creators and Launchpad logo are either registered trademarks of B9 Creators in the United Kingdom and/or other countries. All other trademarks are property of their respective owners.
+                            </small>
+                        </WindowBlock>
+                    </WindowBlock>
                 </div>
             </div>
         </WindowComponent>

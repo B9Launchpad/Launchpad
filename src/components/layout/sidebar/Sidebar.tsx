@@ -1,6 +1,6 @@
 import InputSearch from "@/components/common/Input/SearchInput";
 import Logo from "@/components/common/Logo";
-import Profile, { ProfileProps } from "@/components/common/Profile";
+import Profile, { ProfileProps } from "@/components/common/User/Profile";
 import SidebarItem, { SidebarItemProps } from "./SidebarItem";
 import { useSearch } from "@/contexts/SearchContext";
 import { useMemo } from "react";

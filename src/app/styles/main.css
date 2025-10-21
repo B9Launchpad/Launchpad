@@ -868,55 +868,55 @@ nav {
 
     /* Tag colours */
 
-    .tag__wrap.access {
+    .tag__wrap.access, .profile__picture.access {
         background-color: var(--background-access);
         color: var(--access);
         fill: var(--access);
     }
 
-    .tag__wrap.critical {
+    .tag__wrap.critical, .profile__picture.critical {
         background-color: var(--background-critical);
         color: var(--critical);
         fill: var(--critical);
     }
 
-    .tag__wrap.warning {
+    .tag__wrap.warning, .profile__picture.warning {
         background-color: var(--background-warning);
         color: var(--warning);
         fill: var(--warning);
     }
 
-    .tag__wrap.success {
+    .tag__wrap.success, .profile__picture.success {
         background-color: var(--background-success);
         color: var(--success);
         fill: var(--success);
     }
 
-    .tag__wrap.purple {
+    .tag__wrap.purple, .profile__picture.purple {
         background-color: var(--background-purple);
         color: var(--purple);
         fill: var(--purple);
     }
 
-    .tag__wrap.pink {
+    .tag__wrap.pink, .profile__picture.pink {
         background-color: var(--background-pink);
         color: var(--pink);
         fill: var(--pink);
     }
 
-    .tag__wrap.orange {
+    .tag__wrap.orange, .profile__picture.orange {
         background-color: var(--background-orange);
         color: var(--orange);
         fill: var(--orange);
     }
 
-    .tag__wrap.blue {
+    .tag__wrap.blue, .profile__picture.blue {
         background-color: var(--background-blue);
         color: var(--blue);
         fill: var(--blue);
     }
 
-    .tag__wrap.brown {
+    .tag__wrap.brown, .profile__picture.brown {
         background-color: var(--background-brown);
         color: var(--brown);
         fill: var(--brown);
@@ -934,7 +934,15 @@ nav {
     box-sizing: border-box;
 }
 
-.table-compact tr:not(:last-child) td {
+.table-list tr {
+    min-height: 42px;
+}
+
+.table-list td {
+    padding: var(--padding-small)
+}
+
+.table-compact tr:not(:last-child) td, .table-list tr:not(:last-child) td {
     border-bottom: solid var(--muted) 1px;
 }
 
@@ -1070,15 +1078,37 @@ Please consider alternatives before removing */
     align-items: center;
 }
 
-.profile__picture, .profile__picture--large {
+.profile__picture, .profile__picture-lg, .profile__picture-base, .profile__picture-md, .profile__picture-sm {
     border-radius: 50%;
     width: 48px;
     height: 48px;
 }
 
-.profile__picture--large {
-    width: 96px;
-    height: 96px;
+    /* Profile picture sizing */
+
+    .profile__picture-xs {
+        width: 36px;
+        height: 36px;
+    }
+
+    .profile__picture-sm {
+        width: 40px;
+        height: 40px;
+    }
+
+    .profile__picture-lg {
+        width: 96px;
+        height: 96px;
+    }
+
+.profile__picture--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font: var(--font-primary);
+    font-weight: var(--font-weight-bold);
+    -moz-user-select: none;
+    user-select: none;
 }
 
 .profile__info {

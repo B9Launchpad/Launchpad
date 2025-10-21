@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useView } from "@/contexts/ViewContext";
-import Button from "../common/Button";
 import SettingsSidebar, { SettingsSidebarItems } from "./sidebar/SettingsSidebar";
 import { SearchProvider } from "@/contexts/SearchContext";
 import IconLogout from "../icons/Logout";
@@ -35,11 +34,12 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
     
     const { registeredPages, getPagesByCategory, loadComponent, loadedComponents } = useSettingsRegistry();
 
-    // Helper functions to update state
+    // setActivePageState helper
     const setActivePage = (page: SettingsPage | LazySettingsPage | null) => {
+        setActiveComponent(null);
         setActivePageState({ 
             page, 
-            sectionId: null // Reset section when page changes
+            sectionId: null
         });
     };
 
@@ -50,7 +50,6 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
         }));
     };
 
-    // Load component when active page changes
     useEffect(() => {
         const loadActiveComponent = async () => {
             if (!activePageState.page) {
@@ -59,7 +58,9 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             }
 
             let targetSectionId = activePageState.sectionId;
-            setIsLoading(!loadedComponents.has(`${activePageState.page.id}-${targetSectionId}`))
+            const componentKey = `${activePageState.page.id}-${targetSectionId}`;
+            
+            setIsLoading(!loadedComponents.has(componentKey));
             
             if(!targetSectionId) {
                 const defaultSection = activePageState.page.sections.find(s => s.default === true);
@@ -81,7 +82,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
         };
 
         loadActiveComponent();
-    }, [activePageState, loadComponent, loadedComponents]); // activePageState changes trigger this
+    }, [activePageState, loadComponent, loadedComponents]);
 
     // showSettings visibility control
     useEffect(() => {
@@ -102,19 +103,31 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             user: [
                 ...userPages.map(page => ({
                     label: page.label,
-                    onClick: () => setActivePage(page)
+                    onClick: () => {
+                        if(activePageState.page?.id !== page.id) {
+                            setActivePage(page);
+                        }
+                    }
                 }))
             ],
             panel: [
                 ...panelPages.map(page => ({
                     label: page.label,
-                    onClick: () => setActivePage(page)
+                    onClick: () => {
+                        if(activePageState.page?.id !== page.id) {
+                            setActivePage(page);
+                        }
+                    }
                 }))
             ],
             misc: [
                 ...miscPages.map(page => ({
                     label: page.label,
-                    onClick: () => setActivePage(page)
+                    onClick: () => {
+                        if(activePageState.page?.id !== page.id) {
+                            setActivePage(page);
+                        }
+                    }
                 })),
                 
                 // STATICS
@@ -134,13 +147,8 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             return <div>Select a setting from the sidebar</div>;
         }
 
-        if(isLoading && !activeComponent) {
-            return <SuspenseLoader></SuspenseLoader>
-        }
-
-        // Render dynamic components as imported by settingsScanner.ts
-        if (activeComponent) {
-            const PageComponent = activeComponent;
+        // Very fragile loader
+        if (isLoading || !activeComponent) {
             return (
                 <div className="settings__content--wrap">
                     <PageHeader 
@@ -157,17 +165,34 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
                             }))
                         }/>
                     )}
-                    {isLoading ? ( <SuspenseLoader/>)
-                    : (
-                        <div className="settings__content">
-                            <PageComponent />
-                        </div>
-                    )}
+                    <SuspenseLoader/>
                 </div>
             );
         }
 
-        return <div>Failed to load settings page</div>;
+        // Render dynamic components as imported by settingsScanner.ts
+        const PageComponent = activeComponent;
+        return (
+            <div className="settings__content--wrap">
+                <PageHeader 
+                    title={activePageState.page.label} 
+                    settingsPath={true} 
+                    path={[{slug: activePageState.page.label}]}
+                />
+                {activePageState.page.sections.length > 1 && (
+                    <HeaderSectionBrowser currentId={activePageState.sectionId || undefined} items={
+                        activePageState.page.sections.map(section => ({
+                            label: section.label,
+                            id: section.id,
+                            onClick: () => setActiveSectionId(section.id)
+                        }))
+                    }/>
+                )}
+                <div className="settings__content">
+                    <PageComponent />
+                </div>
+            </div>
+        );
     };
 
     const style = useSpring({

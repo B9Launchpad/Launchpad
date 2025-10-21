@@ -34,11 +34,17 @@ h4 {
 
 p {
     color: var(--text);
+    font: var(--font-primary);
+    font-weight: var(--font-weight-thin)
 }
 
 small {
     font: var(--font-small);
     color: var(--muted);
+}
+
+small.success, p.success, em.success {
+    color: var(--success)
 }
 
 strong {
@@ -51,7 +57,7 @@ a {
     color: var(--access);
 }
 
-a:focus-visible, .access:focus-visible {
+a:focus-visible, .access:focus-visible, .tag__wrap:focus-visible {
     outline: var(--focus-outline)
 }
 
@@ -68,14 +74,6 @@ em {
 
 .system-font {
     font-family: "system-ui", sans-serif;
-}
-
-.flex {
-    display: flex;
-}
-
-.flex-col {
-    flex-direction: column;
 }
 
 .w100 {

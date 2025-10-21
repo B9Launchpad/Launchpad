@@ -4,20 +4,77 @@ import WindowComponent from '@/components/common/Window';
 import InputString from '@/components/common/Input/StringInput';
 import WindowBlock from '@/components/modules/FormBlock';
 import InputSelect from '@/components/common/Input/SelectInput';
+import Button from '@/components/common/Button';
 
 const SettingsAccount: React.FC = () => {
     return (
         <>
             <WindowComponent 
-                action={[
-                    { 
-                        children: (<>Cancel</>),
-                        variant: 'secondary'
-                    },
-                    { 
-                        children: (<>Save</>)
-                    }
-                ]}
+                label={"Personal info"} 
+                description={"Customise how your profile information will appear in the network"}
+            >   
+                <WindowBlock>
+                    <div className='flex-row items-center gap-md'>
+                        <img className="profile__picture--large" src="/storage/d70ee478ead2fef85d9a86575b6d0315.webp"></img>
+                        <h2>Tatiana Y.</h2>
+                    </div>
+                    <WindowBlock className={"gap-md"}>
+                        <div className='flex-row justify-between items-center'>
+                            <div className='gap-sm flex flex-col'>
+                                <em className='input__title'>Name</em>
+                                <p>Tatiana Yakovleva</p>
+                            </div>
+                            <Button inline={true} variant='secondary'>Edit</Button>
+                        </div>
+                        <div className='flex-row justify-between items-center'>
+                            <div className='gap-sm flex flex-col'>
+                                <em className='input__title'>Email Address</em>
+                                <div className='flex-col'>
+                                    <p>tyakovleva@b9creators.co.uk</p>
+                                    <small className='success'>Email address verified</small>
+                                </div>
+                            </div>
+                            <Button inline={true} variant='secondary'>Edit</Button>
+                        </div>
+                        <div className='flex-row justify-between items-center'>
+                            <div className='gap-sm flex flex-col'>
+                                <em className='input__title'>Profile picture</em>
+                            </div>
+                            <div className='flex-row gap-sm'>
+                                <Button inline={true} variant='critical'>Remove</Button>
+                                <Button inline={true} variant='secondary'>Edit</Button>
+                            </div>
+                        </div>
+                        <div className='flex-row justify-between items-center'>
+                            <div className='gap-sm flex flex-col'>
+                                <em className='input__title'>Country</em>
+                                <div className='flex-col'>
+                                    <p>United Kingdom</p>
+                                </div>
+                            </div>
+                            <Button inline={true} variant='secondary'>Edit</Button>
+                        </div>
+                        <div className='flex-row justify-between items-center'>
+                            <div className='gap-sm flex flex-col'>
+                                <em className='input__title'>Timezone</em>
+                                <div className='flex-col'>
+                                    <p>GMT+0 London, currently 23:37</p>
+                                </div>
+                            </div>
+                            <Button inline={true} variant='secondary'>Edit</Button>
+                        </div>
+                        <div className='flex-row justify-between items-center'>
+                            <div className='gap-sm flex flex-col'>
+                                <em className='input__title'>Role</em>
+                                <div className='flex-col'>
+                                    <p>User</p>
+                                </div>
+                            </div>
+                        </div>
+                    </WindowBlock>
+                </WindowBlock>
+            </WindowComponent>
+            <WindowComponent 
                 label={"Personal info"} 
                 description={"Customise how your profile information will appear in the network"}
             >   

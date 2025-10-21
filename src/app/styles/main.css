@@ -238,6 +238,7 @@ button {
     border-radius: 12px;
     transition: 150ms ease-out;
 }
+
 .button__icon-container {
     width: 28px;
     height: 28px;
@@ -271,6 +272,12 @@ button {
 
 
 /* Conditional Styles */
+    .button--inline {
+        padding: var(--padding-small) var(--padding-medium);
+        height: auto;
+        border-radius: var(--radius-small);
+    }
+
     button[data-icon=true] {
         padding: 10px 6px;
     }
@@ -1063,10 +1070,15 @@ Please consider alternatives before removing */
     align-items: center;
 }
 
-.profile__picture {
+.profile__picture, .profile__picture--large {
     border-radius: 50%;
     width: 48px;
     height: 48px;
+}
+
+.profile__picture--large {
+    width: 96px;
+    height: 96px;
 }
 
 .profile__info {

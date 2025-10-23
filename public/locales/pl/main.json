@@ -1,0 +1,10 @@
+{
+    "layout": {
+        "search": {
+            "noResults": "Brak wyników wyszukiwania"
+        }
+    },
+    "modules": {
+        "settings": "Ustawienia"
+    }
+}

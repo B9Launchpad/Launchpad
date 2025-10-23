@@ -1,5 +1,5 @@
 import { SVGProps } from "react"
-const SearchIcon = (props: SVGProps<SVGSVGElement>) => (
+const IconSearch = (props: SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
       fillRule="evenodd"
@@ -8,4 +8,4 @@ const SearchIcon = (props: SVGProps<SVGSVGElement>) => (
     />
   </svg>
 )
-export default SearchIcon;
+export default IconSearch;

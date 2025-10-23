@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useMemo, useEffect, useRef, useState } from "react";
 import useLastInteractionKeyboard from "@/functions/useLastInteractionKeyboard";
 import { useRouter } from "next/navigation";
+import IconSearch from "@/components/icons/Search";
 
 export type SettingsSidebarItems = {
     user: SidebarItems,
@@ -138,7 +139,10 @@ const SettingsSidebar: React.FC<SettingsSidedebarProps> = ({ items }) => {
                 aria-activedescendant={allItems.length > 0 ? `sidebar-item-${focusedIndex}` : undefined}
             >
                 {noQueryResults ? (
-                    <p className="sidebar__no-results">Nothing found (BEAUTIFY!)</p>
+                    <div className="sidebar__no-results">
+                        <IconSearch className="sidebar__no-results--icon"/>
+                        <small>{t('layout.search.noResults')}</small>
+                    </div>
                 ) : (
                     filteredBlocks.map((block, blockIndex) => (
                         <div key={blockIndex} className="sidebar-block sidebar__items--wrap">

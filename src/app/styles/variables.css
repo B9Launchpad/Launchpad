@@ -168,7 +168,13 @@
     --focus-outline: 2px solid var(--access);
 
     --checkbox-radio-size: 20px;
-    --input-height: 42px;
+
+        /* Sizing */
+
+        --input-height: 42px;
+        --icon-base: 64px;
+        --icon-md: 72px;
+        --icon-lg: 96px;
 
     --main-sidebar-width: 300px;
 }

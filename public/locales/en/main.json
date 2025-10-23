@@ -1,4 +1,9 @@
 {
+    "layout": {
+        "search": {
+            "noResults": "No search results"
+        }
+    },
     "modules": {
         "settings": "Settings"
     }

@@ -1,4 +1,5 @@
-// src/components/settings/modules/index.tsx
+// TO DO: i18n localise
+
 import React from 'react';
 import WindowComponent from '@/components/common/Window';
 import info from '@/app-info.json';

@@ -515,6 +515,19 @@ nav {
     display: inline-block;
 }
 
+.sidebar__no-results {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-standard);
+    padding-top: var(--padding-large);
+    align-items: center;
+}
+
+.sidebar__no-results--icon {
+    fill: var(--text);
+    height: var(--icon-md);
+}
+
 /* Expandeable Item —— Sidebar */
 
 .sidebar__item-expandable_label  {

@@ -1,5 +1,5 @@
 import { JSX, useEffect, useRef, useState } from "react";
-import SearchIcon from "../../icons/Search";
+import IconSearch from "../../icons/Search";
 import useLastInteractionKeyboard from "../../../functions/useLastInteractionKeyboard";
 import { useSearch } from "../../../contexts/SearchContext";
 
@@ -57,7 +57,7 @@ const InputSearch = ({
         <div className="input__small--wrap">
             { label && ( <label onClick={handleClick} className="input__label">{label}</label> )}
             <div ref={inputContentRef} onClick={handleClick} className="input__search--content">
-                <SearchIcon/>
+                <IconSearch/>
                 <input autoComplete={"off"} autoCapitalize="off" autoCorrect={"off"} onFocus={handleFocus} onBlur={handleBlur} name="searchbox" aria-label="searchbox" className="input__search" ref={inputRef} placeholder={placeholder} value={value} onChange={(e) => setValue(e.target.value)}></input>
             </div>
         </div>

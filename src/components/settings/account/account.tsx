@@ -1,9 +1,8 @@
-// src/components/settings/modules/index.tsx
+// TO DO: i18n localise
+
 import React from 'react';
 import WindowComponent from '@/components/common/Window';
-import InputString from '@/components/common/Input/StringInput';
 import WindowBlock from '@/components/modules/FormBlock';
-import InputSelect from '@/components/common/Input/SelectInput';
 import Button from '@/components/common/Button';
 import List from '@/components/common/Table/List';
 

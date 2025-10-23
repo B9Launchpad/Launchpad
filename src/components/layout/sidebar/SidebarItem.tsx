@@ -23,17 +23,30 @@ export interface SidebarItemProps {
   icon?: React.ReactNode;
   url?: string;
   items?: Item[];
+  active?: boolean;
   critical?: boolean;
   onClick?: () => void;
+  id?: string;
+  isFocused?: boolean;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ label, critical = false, icon, url, type = 'primary', items, onClick }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({ id, isFocused = false, label, active = false, critical = false, icon, url, type = 'primary', items, onClick }) => {
   const [expanded, setExpanded] = useState(false);
   const contentRef = useRef<HTMLUListElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState(0);
   const pathname = usePathname()
-  const isActive = pathname === url
+  const isActive = pathname === url;
+  const itemRef = useRef<HTMLDivElement>(null);
+
+  //useEffect(() => {
+  //  if (isFocused && itemRef.current) {
+  //    itemRef.current.scrollIntoView({
+  //       behavior: 'smooth',
+  //       block: 'nearest'
+  //    });
+  //  }
+  //}, [isFocused]);
 
 {/* Konfiguration für Animation des zusammneklappbares Elements */}
   
@@ -68,13 +81,15 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ label, critical = false, icon
   return (
     <div className='sidebar__item'>
       <div
-        className="sidebar__item-wrap"
+        ref={itemRef}
+        className={`sidebar__item-wrap${critical === true ? ' critical' : ''}${active ? ' active' : ''}${isFocused ? ' focused' : ''}`}
         onClick={handleClick}
       >
         <div className="sidebar__item-link-group">
           <Link
+            tabIndex={-1}
             href={url || '#'}
-            className={`sidebar__item-content ${isActive ? 'font-semibold' : ''}${critical === true ? ' critical' : ''}`}
+            className={`sidebar__item-content ${isActive ? 'font-semibold' : ''}`}
           >
             {icon && <span className='sidebar__item-icon'>{icon}</span>}
             <span className={`sidebar__item-label ${type}`}>{label}</span>

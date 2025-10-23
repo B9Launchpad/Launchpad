@@ -5,11 +5,13 @@ interface TagProps {
     onClick?: () => void;
     icon?: React.ReactNode;
     iconAfterText?: true;
+    tabIndex?: number;
+    isFocused?: boolean;
 }
 
 export type Colors = "access" | "warning" | "critical" | "success" | "pink" | "purple" | "orange" | "blue" | "brown" | "primary" | "secondary" | "muted";
 
-const Tag: React.FC<TagProps> = ({ children, label, color = "secondary", onClick, icon, iconAfterText = false }) => {
+const Tag: React.FC<TagProps> = ({ tabIndex = null, isFocused = false, children, label, color = "secondary", onClick, icon, iconAfterText = false }) => {
     const handleClick = () => {
         if(!onClick) return
         onClick();
@@ -20,8 +22,9 @@ const Tag: React.FC<TagProps> = ({ children, label, color = "secondary", onClick
             role={"button"}
             onClick={handleClick}
             className={`tag__wrap ${color} 
-            ${onClick ? "clickable" : ""}`}
-            tabIndex={onClick ? 0 : -1}
+            ${onClick ? "clickable" : ""}
+            ${isFocused ? 'focused' : ""}`}
+            tabIndex={tabIndex === null ? onClick ? 0 : -1 : tabIndex}
         >
             {(!iconAfterText && icon) && icon}
             {children}{label}

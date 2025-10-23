@@ -1,8 +1,10 @@
 import { createContext, useContext, useState } from "react";
 import securityConfig from "../config/security.json"
 import { useRouter } from "next/navigation";
+import makeFetchRequest from "@/utils/fetch/makeFetchRequest";
 
 // TO DO: Implement securityConfig (contemplate whether on backend or frontend)
+// Rewrite loginStatus
 
 export type loginCredentials = { email: string, password: string} | null
 type LoginStatus = "isIdle" | "isProcessing" | "isError" | "isUnauthorised";
@@ -24,18 +26,13 @@ export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
     const handleRequest = async (credentials: loginCredentials) => {
         setCredentials(credentials)
         try {
-            const response = await fetch('http://localhost:8080/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify(credentials),
-                credentials: "include"
-            });
-            setLoginStatus("isProcessing");
 
-            const status = response.status;
+            const { status } = await makeFetchRequest({
+                url: '/login',
+                method: 'POST',
+                body: credentials,
+                includeCredentials: true,
+            })
 
 
             switch (status) {

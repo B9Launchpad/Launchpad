@@ -109,6 +109,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             user: [
                 ...userPages.map(page => ({
                     label: page.label,
+                    active: page.id === activePageState.page?.id,
                     onClick: () => {
                         if(activePageState.page?.id !== page.id) {
                             setActivePage(page);
@@ -119,6 +120,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             panel: [
                 ...panelPages.map(page => ({
                     label: page.label,
+                    active: page.id === activePageState.page?.id,
                     onClick: () => {
                         if(activePageState.page?.id !== page.id) {
                             setActivePage(page);
@@ -129,6 +131,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             misc: [
                 ...miscPages.map(page => ({
                     label: page.label,
+                    active: page.id === activePageState.page?.id,
                     onClick: () => {
                         if(activePageState.page?.id !== page.id) {
                             setActivePage(page);
@@ -233,7 +236,11 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
         return null;
     }
 
-    const sidebarItems = getSidebarItems();
+    const sidebarItems = React.useMemo(() => getSidebarItems(), [
+        activePageState.page?.id, 
+        registeredPages, 
+        getPagesByCategory
+    ]);
 
     return (
         <animated.div 

@@ -11,6 +11,8 @@ import KeyCap from "../misc/KeyCap";
 import IconBack from "../icons/Input/Back";
 import SuspenseLoader from "../common/Loader";
 import HeaderSectionBrowser from "./header/SectionBrowser";
+import makeFetchRequest from "@/utils/fetch/makeFetchRequest";
+import { useRouter } from "next/navigation";
 
 interface LayoutSettingsProps {
     children?: React.ReactNode;
@@ -22,6 +24,7 @@ interface ActivePageState {
 }
 
 const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
+    const router = useRouter();
     const { showSettings, setShowSettings } = useView();
     const [isVisible, setIsVisible] = useState(false);
     const [activePageState, setActivePageState] = useState<ActivePageState>({ 
@@ -49,6 +52,18 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             sectionId
         }));
     };
+
+    const logout = async () => {
+        const { status } = await makeFetchRequest({
+            url: '/logout',
+            method: 'GET',
+            includeCredentials: true
+        })
+    
+        if(status === 200) {
+            router.push('/login');
+        }
+    }
 
     useEffect(() => {
         const loadActiveComponent = async () => {
@@ -145,7 +160,9 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
                     icon: <IconLogout/>,
                     type: 'primary' as const,
                     critical: true,
-                    url: '/api/logout'
+                    onClick: () => {
+                        logout();
+                    }
                 }
             ],
         };

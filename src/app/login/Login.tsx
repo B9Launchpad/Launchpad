@@ -12,7 +12,6 @@ import SpringConfig from "@utils/SpringConfig"
 import { InputSmallRef } from "@components/common/Input/SmallInput"
 import Link from "next/link"
 import { useTranslation } from "react-i18next"
-import validateEmail from "@/functions/validateEmail"
 
 type loginErrors = { username: string; password: string };
 const errorsInit = {

@@ -4,7 +4,7 @@
     background-color: var(--background);
     display: grid;
     grid-template-columns: calc(100vw / 3) calc(100vw - (100vw / 3));
-    grid-template-rows: 100%;
+    grid-template-rows: 100%;   
     height: 100%;
 }
 

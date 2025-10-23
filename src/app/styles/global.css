@@ -48,7 +48,8 @@ small.success, p.success, em.success {
 }
 
 strong {
-    font-weight: var(--font-weight-bold)
+    color: inherit;
+    font-weight: var(--font-weight-bold);
 }
 
 a {
@@ -57,7 +58,7 @@ a {
     color: var(--access);
 }
 
-a:focus-visible, .access:focus-visible, .tag__wrap:focus-visible {
+a:focus-visible, .access:focus-visible, .tag__wrap:focus-visible, .sidebar__item-wrap.focused, .tag__wrap.focused {
     outline: var(--focus-outline)
 }
 

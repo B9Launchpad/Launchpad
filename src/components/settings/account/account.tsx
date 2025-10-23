@@ -5,6 +5,7 @@ import InputString from '@/components/common/Input/StringInput';
 import WindowBlock from '@/components/modules/FormBlock';
 import InputSelect from '@/components/common/Input/SelectInput';
 import Button from '@/components/common/Button';
+import List from '@/components/common/Table/List';
 
 const SettingsAccount: React.FC = () => {
     return (
@@ -41,8 +42,8 @@ const SettingsAccount: React.FC = () => {
                                 <em className='input__title'>Profile picture</em>
                             </div>
                             <div className='flex-row gap-sm'>
-                                <Button inline={true} variant='critical'>Remove</Button>
-                                <Button inline={true} variant='secondary'>Edit</Button>
+                                <Button inline variant='critical'>Remove</Button>
+                                <Button inline variant='secondary'>Edit</Button>
                             </div>
                         </div>
                         <div className='flex-row justify-between items-center'>
@@ -52,7 +53,7 @@ const SettingsAccount: React.FC = () => {
                                     <p>United Kingdom</p>
                                 </div>
                             </div>
-                            <Button inline={true} variant='secondary'>Edit</Button>
+                            <Button inline variant='secondary'>Edit</Button>
                         </div>
                         <div className='flex-row justify-between items-center'>
                             <div className='gap-sm flex flex-col'>
@@ -75,39 +76,32 @@ const SettingsAccount: React.FC = () => {
                 </WindowBlock>
             </WindowComponent>
             <WindowComponent 
-                label={"Personal info"} 
-                description={"Customise how your profile information will appear in the network"}
+                label={"Security & Access"} 
+                description={"This is where your account safety information sits — keep it safe!"}
             >   
-                <WindowBlock direction='row'>
-                    <h2>Profile picture will be here!</h2>
-                    <WindowBlock>
-                        <InputString expand={true} title={'Name'} isMandatory={true} type={'string'}></InputString>
-                        <InputString expand={true} title={'Email Address'} isMandatory={true} type={'string'}>
-                            <small>Email address verified!</small>
-                        </InputString>
-                        <InputSelect 
-                            options={[
-                                {
-                                    label: "Admin",
-                                    value: "admin"
-                                },
-                                {
-                                    label: "User",
-                                    value: "user"
-                                },
-                                {
-                                    label: "Owner",
-                                    value: "owner"
-                                }
-                            ]}
-                            title={'Role'} 
-                            expand={true}
-                            value='user'
-                            disabled={true}
-                        >
-                        </InputSelect>
-                    </WindowBlock>
+                <WindowBlock label='Multi-Factor Authentication' description='Setting up an authentication app is a good way to add an extra layer of security to your account to ensure that only you can log in'>
+                    <small className='success'>
+                        <strong>MFA protection active</strong>
+                    </small>
+                    <div className='flex-row gap'>
+                        <Button label="Show backup codes" variant='secondary'></Button>
+                        <Button label="Remove MFA protection" variant='critical'></Button>
+                    </div>
                 </WindowBlock>
+                <WindowBlock label='Passkeys' description='Add an extra layer of security to your account with a security key'>
+                    <List items={[
+                        {
+                            content: "Enlanpass"
+                        },
+                        {
+                            content: "Airdroid"
+                        }
+                    ]}/>
+                </WindowBlock>
+                <div className='flex-row gap'>
+                    <Button label="Change my password"></Button>
+                    <Button label="Delete account" variant="critical"></Button>
+                </div>
             </WindowComponent>
         </>
     );

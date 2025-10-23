@@ -31,7 +31,6 @@ const HeaderPath: React.FC<HeaderPathProps> = ({ path, from = 'dashboard' }) => 
                         <span className="path__item">{item.slug}</span>
                     )}
                     
-                    {/* Стрелка после элемента, кроме последнего */}
                     {index < path.length - 1 && (
                         <span className="mx-2 text-gray-400">→</span>
                     )}

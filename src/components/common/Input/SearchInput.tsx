@@ -8,6 +8,7 @@ interface SearchInputProps {
     placeholder?: string;
     //onSearch: (value: string) => void; // Function to be executed on search. removed for SearchContext
     debounce?: boolean; // optional debounce
+    autoFocus?: boolean;
 }
 
 export type searchQuery = string;
@@ -16,7 +17,8 @@ const InputSearch = ({
     label,
     placeholder = 'Search',
     //onSearch, removed for SearchContext
-    debounce = true
+    debounce = true,
+    autoFocus = true
 }: SearchInputProps): JSX.Element => {
     const { setQuery } = useSearch()
     const inputRef = useRef<HTMLInputElement>(null)
@@ -36,6 +38,12 @@ const InputSearch = ({
             clearTimeout(handler);
         }
     }, [value, /*onSearch removed for SearchContext*/, debounceDelay])
+
+    useEffect(() => {
+        if(autoFocus && inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, [autoFocus, inputRef.current])
 
     const handleClick = () => {
         if(inputRef.current) {

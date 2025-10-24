@@ -25,8 +25,10 @@ export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
 
     const handleRequest = async (credentials: loginCredentials) => {
         setCredentials(credentials)
-        try {
 
+        setLoginStatus("isProcessing")
+
+        try {
             const { status } = await makeFetchRequest({
                 url: '/login',
                 method: 'POST',

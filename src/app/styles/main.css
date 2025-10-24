@@ -6,6 +6,8 @@
     border: 0;
     outline-offset: var(--padding-outer-border);
     color: var(--text);
+    scrollbar-width: thin;
+    scrollbar-color: var(--muted) transparent;
 }
 
 /* Common layout settings */
@@ -121,6 +123,20 @@ main.main-layout__content {
     .section__block {
         gap: var(--gap-standard);
         width: 100%;
+    }
+
+    /* Popups (modal windows) */
+
+    .modal__wrap {
+        display: flex !important;
+        background-color: var(--background-modal);
+        padding: 24px 0;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .modal__content {
+        width: 480px;
     }
 
 /* Guest layout settings */

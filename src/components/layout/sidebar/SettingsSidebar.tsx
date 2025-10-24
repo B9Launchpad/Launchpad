@@ -127,7 +127,7 @@ const SettingsSidebar: React.FC<SettingsSidedebarProps> = ({ items }) => {
 
     return (
         <nav>
-            <InputSearch debounce={false}/>
+            <InputSearch autoFocus={true} debounce={false}/>
             <div 
                 ref={sidebarRef}
                 role="navigation"

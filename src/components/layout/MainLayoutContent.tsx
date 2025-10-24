@@ -7,6 +7,7 @@ import SettingsIcon from "../icons/Settings";
 import SidebarComponent, { SidebarItems } from "./sidebar/Sidebar";
 import LayoutSettings from "./SettingsLayout";
 import { SettingsRegistryProvider } from "@/contexts/SettingsRegistryContext";
+import { PopupProvider } from "@/contexts/PopupContext";
 
 interface MainLayoutProps {
     children: React.ReactNode;
@@ -38,22 +39,24 @@ export default function MainLayoutContent({ children }: MainLayoutProps) {
 
     return (
             <div className="main-layout__wrap">
-                <div className={"main-layout__layer"} aria-hidden={showSettings} aria-modal={!showSettings} data-layer={"base"}>
-                    <SearchProvider>
-                        <SidebarComponent
-                            items={SidebarItems} 
-                            profile={profile}
-                        />
-                    </SearchProvider>
-                    <main className="main-layout__content">
-                        {children}
-                    </main>
-                </div>
-                <SettingsRegistryProvider>
-                    {showSettings && (
-                        <LayoutSettings></LayoutSettings>
-                    )}
-                </SettingsRegistryProvider>
+                <PopupProvider>
+                    <div className={"main-layout__layer"} aria-hidden={showSettings} aria-modal={!showSettings} data-layer={"base"}>
+                        <SearchProvider>
+                            <SidebarComponent
+                                items={SidebarItems} 
+                                profile={profile}
+                            />
+                        </SearchProvider>
+                        <main className="main-layout__content">
+                            {children}
+                        </main>
+                    </div>
+                    <SettingsRegistryProvider>
+                        {showSettings && (
+                            <LayoutSettings></LayoutSettings>
+                        )}
+                    </SettingsRegistryProvider>
+                </PopupProvider>
             </div>
     )
 }

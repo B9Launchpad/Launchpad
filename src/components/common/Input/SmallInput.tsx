@@ -5,6 +5,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { autoComplete } from "./StringInput";
 
 interface SmallInputProps {
   label?: string;
@@ -15,7 +16,7 @@ interface SmallInputProps {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   maxLength?: number;
-  autoComplete?: string;
+  autoComplete?: autoComplete;
   name?: string;
   id?: string;
   autofocus?: boolean;

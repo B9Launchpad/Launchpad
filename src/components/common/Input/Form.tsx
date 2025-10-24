@@ -13,6 +13,7 @@ const FormComponent: React.FC<FormComponentProps> = ({ children, onSubmit, submi
     const fetchStatus = useFetchStatus();
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
         if(fetchStatus) return;
         
         onSubmit(e);

@@ -5,8 +5,12 @@ import WindowComponent from '@/components/common/Window';
 import WindowBlock from '@/components/modules/FormBlock';
 import Button from '@/components/common/Button';
 import List from '@/components/common/Table/List';
+import { usePopup } from '@/contexts/PopupContext';
+import InputString from '@/components/common/Input/StringInput';
 
 const SettingsAccount: React.FC = () => {
+    const { setPopup } = usePopup();
+
     return (
         <>
             <WindowComponent 
@@ -24,7 +28,7 @@ const SettingsAccount: React.FC = () => {
                                 <em className='input__title'>Name</em>
                                 <p>Tatiana Yakovleva</p>
                             </div>
-                            <Button inline={true} variant='secondary'>Edit</Button>
+                            <Button inline={true} onClick={() => {setPopup(<NamePopup/>)}} variant='secondary'>Edit</Button>
                         </div>
                         <div className='flex-row justify-between items-center'>
                             <div className='gap-sm flex flex-col'>
@@ -107,3 +111,13 @@ const SettingsAccount: React.FC = () => {
 };
 
 export default SettingsAccount;
+
+const NamePopup: React.FC = () => {
+
+    return (
+        <>
+            <h4>Set yourself a new name!</h4>
+            <InputString title='New name' isMandatory type='string'></InputString>
+        </>
+    )
+}

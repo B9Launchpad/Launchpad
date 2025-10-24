@@ -1,3 +1,4 @@
+import { usePopup } from "@/contexts/PopupContext";
 import { useUser } from "@/contexts/UserContext";
 import getNameForKeyValue from "@/utils/keycaps/keycap-lookup";
 import { useContext, useEffect, useRef } from "react";
@@ -56,6 +57,7 @@ interface KeyCapProps {
 const KeyCap: React.FC<KeyCapProps> = ({ keyName, onKeyPress }) => {
     const keyRef = useRef<HTMLDivElement>(null);
     const { os } = useUser();
+    const { isOpen } = usePopup();
     if(keyName === "Control" && os === "MacOS") {
         keyName = "Meta"
     } else if (keyName === "Meta" && os !== "MacOS") {
@@ -63,6 +65,7 @@ const KeyCap: React.FC<KeyCapProps> = ({ keyName, onKeyPress }) => {
     }
 
     useEffect(() => {
+        if(isOpen) return;
         const handleGlobalKeyDown = (e: KeyboardEvent) => {
             if(!onKeyPress) return;
             if (e.key === keyName) {
@@ -104,7 +107,7 @@ const KeyCap: React.FC<KeyCapProps> = ({ keyName, onKeyPress }) => {
             document.removeEventListener('keydown', handleGlobalKeyDown);
             document.removeEventListener('keyup', handleGlobalKeyUp)
         };
-    }, [keyName]);
+    }, [keyName, isOpen]);
 
     useEffect(() => {
         if(onKeyPress) {

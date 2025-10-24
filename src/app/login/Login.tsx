@@ -93,7 +93,7 @@ const LoginPromptPage: React.FC = () => {
                     <small>{t('instructions')}</small>
                 </div>
                 {/* Login */}
-                <InputSmall ref={loginRef} value={credentials?.email} label={t('loginPrompt')}/>
+                <InputSmall ref={loginRef} autoComplete="email" value={credentials?.email} label={t('loginPrompt')}/>
                 {/* Password */}
                 <InputSmall ref={passwordRef} type="password" label={t('passwordPrompt')}>
                     <small>{t('forgotPassword')}

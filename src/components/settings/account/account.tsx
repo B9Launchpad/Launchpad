@@ -1,15 +1,16 @@
 // TO DO: i18n localise
 
-import React from 'react';
+import React, { useRef } from 'react';
 import WindowComponent from '@/components/common/Window';
 import WindowBlock from '@/components/modules/FormBlock';
 import Button from '@/components/common/Button';
 import List from '@/components/common/Table/List';
+import InputString, { InputStringRef } from '@/components/common/Input/StringInput';
+import Form from '@/components/common/Input/Form';
+import Modal from '@/components/common/Modal';
 import { usePopup } from '@/contexts/PopupContext';
-import InputString from '@/components/common/Input/StringInput';
 
 const SettingsAccount: React.FC = () => {
-    const { setPopup } = usePopup();
 
     return (
         <>
@@ -28,7 +29,9 @@ const SettingsAccount: React.FC = () => {
                                 <em className='input__title'>Name</em>
                                 <p>Tatiana Yakovleva</p>
                             </div>
-                            <Button inline={true} onClick={() => {setPopup(<NamePopup/>)}} variant='secondary'>Edit</Button>
+                            <Modal.Trigger content={<NamePopup/>} label='Edit name'>
+                                <Button inline={true} variant='secondary'>Edit</Button>
+                            </Modal.Trigger>
                         </div>
                         <div className='flex-row justify-between items-center'>
                             <div className='gap-sm flex flex-col'>
@@ -113,11 +116,40 @@ const SettingsAccount: React.FC = () => {
 export default SettingsAccount;
 
 const NamePopup: React.FC = () => {
+    const { closePopup } = usePopup();
+    const nameRef = useRef<InputStringRef>(null);
+    
+
+    function splitName(name: string): string[] {
+        let splitName = name.split(' ')
+
+        splitName.forEach((s, i) => splitName[i] = s.charAt(0).toUpperCase() + s.slice(1));
+
+        if(splitName.length > 1) {
+            return [splitName[0], splitName[splitName.length -1 ]];
+        } else {
+            return [splitName[0]];
+        }
+    }
+
+    const handleSubmit = () => {
+        if(!nameRef.current) return;
+
+        if(nameRef.current.value.length < 1) {
+            nameRef.current.error("Please enter a value")
+            return;
+        }
+
+        alert("Your new name is... " + splitName(nameRef.current.value as string));
+    }
 
     return (
-        <>
-            <h4>Set yourself a new name!</h4>
-            <InputString title='New name' isMandatory type='string'></InputString>
-        </>
+        <Form onSubmit={handleSubmit} showSubmitButton={false}>
+            <InputString ref={nameRef} title='New name' isMandatory type='string'></InputString>
+            <Modal.Action action={[
+                {label: "Cancel", variant: "secondary", onClick: closePopup},
+                {label: "Submit", onClick: handleSubmit}]}>    
+            </Modal.Action>
+        </Form>
     )
 }

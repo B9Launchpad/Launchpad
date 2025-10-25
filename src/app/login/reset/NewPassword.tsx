@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react"
 import NewPassword, {NewPasswordRef} from "@components/common/Input/NewPassword";
 import { useReset } from "@/contexts/ResetContext";
-import FormComponent from "@components/common/Input/Form";
+import Form from "@components/common/Input/Form";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 
@@ -31,7 +31,7 @@ const ResetNewPasswordPage = () => {
     }, [data.changeAccepted]);
 
     return (
-        <FormComponent onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit}>
             <div className="hero__content">
                 <div>
                     <em>{t('greeting', {ns: "general", name: 'Tatiana'})}</em>
@@ -42,7 +42,7 @@ const ResetNewPasswordPage = () => {
                 </div>
                 <NewPassword ref={newPasswordRef}></NewPassword>
             </div>
-        </FormComponent>
+        </Form>
     )
 }
 

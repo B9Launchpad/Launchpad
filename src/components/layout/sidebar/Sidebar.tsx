@@ -6,7 +6,6 @@ import { useSearch } from "@/contexts/SearchContext";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import SettingsIcon from "@/components/icons/Settings";
-import IconLogout from "@/components/icons/Logout";
 import { useView } from "@/contexts/ViewContext";
 
 interface SidebarComponentProps {
@@ -35,7 +34,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ items, profile }) =
 
 
     return (
-        <nav>
+        <nav className="sidebar__wrap">
             <Logo/>
             <InputSearch debounce={false}/>
             <div className="sidebar__items--wrap">

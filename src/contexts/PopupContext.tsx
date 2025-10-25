@@ -4,8 +4,9 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState } f
 import { useSpring, animated } from "react-spring";
 
 interface PopupContextProps {
-    setPopup: (content: React.ReactNode, action?: ButtonProps[], config?: PopupConfig) => void;
+    setPopup: (content: React.ReactNode, label: string, description?: string, action?: ButtonProps[], config?: PopupConfig) => void;
     closePopup: () => void;
+    updatePopup: (patch: Partial<PopupState>) => void;
     isOpen: boolean;
     config?: PopupConfig;
 }
@@ -17,8 +18,10 @@ interface PopupConfig {
 
 const PopupContext = createContext<PopupContextProps | undefined>(undefined);
 
-interface PopupState {
+export interface PopupState {
     content: React.ReactNode;
+    label: string;
+    description?: string
     action?: ButtonProps[];
     isOpen: boolean;
     config?: PopupConfig;
@@ -27,16 +30,20 @@ interface PopupState {
 export const PopupProvider = ({ children }: {children: React.ReactNode }) => {
     const [popupState, setPopupState] = useState<PopupState>({
         content: null,
+        label: "",
+        description: "",
         action: [],
         isOpen: false
     })
     const [isVisible, setIsVisible] = useState<boolean>(false);
     const contentRef = useRef<HTMLDivElement>(null);
 
-    const setPopup = useCallback((content: React.ReactNode, action: ButtonProps[] = [{label: "Close", variant: "primary", onClick: closePopup}], config?: PopupConfig) => {
+    const setPopup = useCallback((content: React.ReactNode, label: string, description?: string, action?: ButtonProps[], config?: PopupConfig) => {
         setPopupState({
             content,
             action,
+            label,
+            description,
             isOpen: true,
             config: {
                 closeOnBackdrop: true,
@@ -44,6 +51,13 @@ export const PopupProvider = ({ children }: {children: React.ReactNode }) => {
                 ...config
             }
         });
+    }, []);
+
+    const updatePopup = useCallback((patch: Partial<PopupState>) => {
+        setPopupState(prev => ({
+            ...prev,
+            ...patch
+        }));
     }, []);
 
     const closePopup = useCallback(() => {
@@ -116,8 +130,8 @@ export const PopupProvider = ({ children }: {children: React.ReactNode }) => {
     const value: PopupContextProps = {
         setPopup,
         closePopup,
-        isOpen: popupState.isOpen,
-        config: popupState.config
+        updatePopup,
+        isOpen: popupState.isOpen
     };
 
     return (
@@ -126,7 +140,7 @@ export const PopupProvider = ({ children }: {children: React.ReactNode }) => {
             { popupState.isOpen && (
                 <animated.div style={fadeInStyle} className="main-layout__layer modal__wrap">
                     <animated.div ref={contentRef} className="modal__content" style={popupStyle}>
-                        <WindowComponent action={popupState.action}>
+                        <WindowComponent label={popupState.label} description={popupState?.description} action={popupState.action}>
                             {popupState.content}
                         </WindowComponent>
                     </animated.div>

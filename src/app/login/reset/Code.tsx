@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import InputSmall, {InputSmallRef} from "../../../components/common/Input/SmallInput";
 import { useReset } from "../../../contexts/ResetContext";
-import FormComponent from "../../../components/common/Input/Form";
+import Form from "../../../components/common/Input/Form";
 import maskEmail from "../../../functions/Auth/maskEmail";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
@@ -48,7 +48,7 @@ const ResetCodePage = () => {
     }
 
     return (
-        <FormComponent onSubmit={validateCode}>
+        <Form onSubmit={validateCode}>
             <div className="hero__content">
                 <div>
                     <h1>{t('reset.challengeMailTitle')}</h1>
@@ -68,7 +68,7 @@ const ResetCodePage = () => {
                     </small>
                 </InputSmall>
             </div>
-        </FormComponent>
+        </Form>
     )
 }
 

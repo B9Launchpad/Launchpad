@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import InputSmall, {InputSmallRef} from "../../../components/common/Input/SmallInput";
 import { useReset } from "../../../contexts/ResetContext";
 import validateEmail from "../../../functions/validateEmail";
-import FormComponent from "../../../components/common/Input/Form";
+import Form from "../../../components/common/Input/Form";
 import Link from "next/link";
 import { useTranslation } from "react-i18next";
 
@@ -39,7 +39,7 @@ const ResetEmailPage = () => {
     }, [data])
 
     return (
-        <FormComponent onSubmit={handleEntry}>
+        <Form onSubmit={handleEntry}>
             <div className="hero__content">
                 <div>
                     <h1>{t('reset.title')}</h1>
@@ -59,7 +59,7 @@ const ResetEmailPage = () => {
                     </small>
                 </InputSmall>
             </div>
-        </FormComponent>
+        </Form>
     )
 }
 

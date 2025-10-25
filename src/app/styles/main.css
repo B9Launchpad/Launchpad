@@ -421,6 +421,10 @@ nav {
     box-sizing: border-box;
 }
 
+.sidebar__wrap {
+    border-right: 1px solid var(--background-secondary);
+}
+
 .sidebar__items--wrap {
     display: flex;
     flex-direction: column;
@@ -1180,6 +1184,7 @@ Please consider alternatives before removing */
     flex-direction: column;
     gap: var(--gap-window);
     border-radius: var(--radius);
+    border: 1px solid var(--background-secondary);
 }
 
 .content__window--action {

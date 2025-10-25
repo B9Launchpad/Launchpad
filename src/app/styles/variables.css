@@ -14,7 +14,7 @@
 
     /* UI Backgrounds */
     --background: #EEEEEE;
-    --background-modal: #EEEEEE9D;
+    --background-modal: #8f8f8f9d;
     --background-content: #FFFFFF;
     --background-login: #EEEEEECC;
 
@@ -112,7 +112,7 @@
         var(--font-family);
 
     --input-label:
-        var(--font-weight-bold)
+        var(--font-weight-regular)
         var(--font-size-primary)
         var(--font-family);
 

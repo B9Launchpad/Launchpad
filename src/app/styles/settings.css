@@ -13,6 +13,7 @@
     display: flex;
     justify-content: space-between;
     padding: var(--padding-large) var(--padding-standard);
+    border-right: 1px solid var(--background-secondary);
 }
 
 .settings__content--wrap {

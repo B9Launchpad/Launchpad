@@ -18,7 +18,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -27,22 +27,44 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@functions/*": ["src/functions/*"],
-      "@utils/*": ["src/utils/*"],
-      "@i18n": ["src/i18n/index.ts"],
-      "@locales/*": ["public/locales/*"],
-      "@contexts/*": ["src/contexts/*"],
-      "@hooks/*": ["src/hooks/*"],
-      "@icons/*": ["src/components/icons/*"],
-      "@styles/*": ["src/app/styles/*"]
+      "@/*": [
+        "src/*"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@functions/*": [
+        "src/functions/*"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@i18n": [
+        "src/i18n/index.ts"
+      ],
+      "@locales/*": [
+        "public/locales/*"
+      ],
+      "@contexts/*": [
+        "src/contexts/*"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+      "@icons/*": [
+        "src/components/icons/*"
+      ],
+      "@styles/*": [
+        "src/app/styles/*"
+      ]
     }
   },
   "include": [
     "src",
-    "build/types/**/*.ts"
-  , "src/app"  ],
+    "build/types/**/*.ts",
+    "src/app",
+    "build/dev/types/**/*.ts"
+  ],
   "exclude": [
     "node_modules"
   ]

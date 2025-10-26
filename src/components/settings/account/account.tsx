@@ -8,7 +8,11 @@ import List from '@/components/common/Table/List';
 import InputString, { InputStringRef } from '@/components/common/Input/StringInput';
 import Form from '@/components/common/Input/Form';
 import Modal from '@/components/common/Modal';
-import { usePopup } from '@/contexts/PopupContext';
+import { useModal } from '@/contexts/ModalContext';
+import FileUpload from '@/components/common/Input/FileUpload/FileUpload';
+import { supportedCountries } from "@functions/SupportedCountries";
+import { useTranslation } from 'react-i18next';
+import InputSelect from '@/components/common/Input/SelectInput';
 
 const SettingsAccount: React.FC = () => {
 
@@ -41,7 +45,7 @@ const SettingsAccount: React.FC = () => {
                                     <small className='success'>Email address verified</small>
                                 </div>
                             </div>
-                            <Button inline={true} variant='secondary'>Edit</Button>
+                            <Button inline variant='secondary'>Edit</Button>
                         </div>
                         <div className='flex-row justify-between items-center'>
                             <div className='gap-sm flex flex-col'>
@@ -49,7 +53,9 @@ const SettingsAccount: React.FC = () => {
                             </div>
                             <div className='flex-row gap-sm'>
                                 <Button inline variant='critical'>Remove</Button>
-                                <Button inline variant='secondary'>Edit</Button>
+                                <Modal.Trigger label="Editing profile picture" content={<PictureModal/>}>
+                                    <Button inline variant='secondary'>Edit</Button>
+                                </Modal.Trigger>
                             </div>
                         </div>
                         <div className='flex-row justify-between items-center'>
@@ -59,7 +65,9 @@ const SettingsAccount: React.FC = () => {
                                     <p>United Kingdom</p>
                                 </div>
                             </div>
-                            <Button inline variant='secondary'>Edit</Button>
+                            <Modal.Trigger content={<CountriesModal/>} label='Editing country...'>
+                                <Button inline variant='secondary'>Edit</Button>
+                            </Modal.Trigger>
                         </div>
                         <div className='flex-row justify-between items-center'>
                             <div className='gap-sm flex flex-col'>
@@ -116,7 +124,7 @@ const SettingsAccount: React.FC = () => {
 export default SettingsAccount;
 
 const NamePopup: React.FC = () => {
-    const { closePopup } = usePopup();
+    const { closeModal } = useModal();
     const nameRef = useRef<InputStringRef>(null);
     
 
@@ -137,18 +145,64 @@ const NamePopup: React.FC = () => {
 
         if(nameRef.current.value.length < 1) {
             nameRef.current.error("Please enter a value")
-            return;
         }
 
-        alert("Your new name is... " + splitName(nameRef.current.value as string));
+        //closeModal();
+        //return splitName(nameRef.current.value as string);
     }
 
     return (
         <Form onSubmit={handleSubmit} showSubmitButton={false}>
             <InputString ref={nameRef} title='New name' isMandatory type='string'></InputString>
             <Modal.Action action={[
-                {label: "Cancel", variant: "secondary", onClick: closePopup},
+                {label: "Cancel", variant: "secondary", onClick: closeModal},
                 {label: "Submit", onClick: handleSubmit}]}>    
+            </Modal.Action>
+        </Form>
+    )
+}
+
+const PictureModal: React.FC = () => {
+    const { closeModal } = useModal();
+
+    const handleSubmit = () => {
+        return;
+    }
+
+    return (
+        <Form onSubmit={handleSubmit} showSubmitButton={false}>
+            <FileUpload accept='.png .webp .jpg'/>
+        
+            <Modal.Action action={[
+                { label: "Cancel", variant: "secondary", onClick: closeModal },
+                { label: "Submit", type: "submit", onClick: handleSubmit }]}>
+            </Modal.Action>
+        </Form>
+    )
+}
+
+const CountriesModal: React.FC = () => {
+    const { closeModal } = useModal();
+    const { t } = useTranslation();
+
+    const regionOptions =
+        supportedCountries.map((country: string) => ({
+            value: country,
+            label: t(country, { ns: "countries" })
+        }))
+        .sort((a, b) => a.label.localeCompare(b.label))
+
+    const handleSubmit = () => {
+        return true;
+    }
+
+    return (
+        <Form onSubmit={handleSubmit} showSubmitButton={false}>
+            <InputSelect title={"Select new country"} options={regionOptions}/>
+
+            <Modal.Action action={[
+                { label: "Cancel", variant: "secondary", onClick: closeModal },
+                { label: "Submit", trigger: {content: <p>Hello world!</p>}, triggerOnSuccess: true, onClick: handleSubmit }]}>
             </Modal.Action>
         </Form>
     )

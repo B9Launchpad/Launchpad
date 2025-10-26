@@ -1,4 +1,4 @@
-import { usePopup } from "@/contexts/PopupContext";
+import { useModal } from "@/contexts/ModalContext";
 import { useUser } from "@/contexts/UserContext";
 import getNameForKeyValue from "@/utils/keycaps/keycap-lookup";
 import { useContext, useEffect, useRef } from "react";
@@ -57,7 +57,7 @@ interface KeyCapProps {
 const KeyCap: React.FC<KeyCapProps> = ({ keyName, onKeyPress }) => {
     const keyRef = useRef<HTMLDivElement>(null);
     const { os } = useUser();
-    const { isOpen } = usePopup();
+    const { isOpen } = useModal();
     if(keyName === "Control" && os === "MacOS") {
         keyName = "Meta"
     } else if (keyName === "Meta" && os !== "MacOS") {

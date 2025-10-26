@@ -1,10 +1,12 @@
-import Button, { ButtonProps } from "./Button";
+import Button from "./Button";
+import type { ModalActionButtonProps } from "./Modal";
+import Modal from "./Modal";
 
 interface WindowProps {
     label?: string;
     description?: string;
     children: React.ReactNode;
-    action?: ButtonProps[]
+    action?: ModalActionButtonProps[]
 }
 
 const WindowComponent: React.FC<WindowProps> = ({ label, description, children, action }) => {
@@ -17,9 +19,19 @@ const WindowComponent: React.FC<WindowProps> = ({ label, description, children, 
             {children}
             {action && ( 
                 <div className="content__window--action">
-                    {action.map((item, index) => (
-                        <Button key={index} {...item}/>
-                    ))}
+                    {action.map((item, index) => {
+                    if(item.trigger) {
+                        return (
+                            <Modal.Trigger key={index} {...item.trigger} triggerOnSuccess={item.triggerOnSuccess}>
+                                <Button {...item}/>
+                            </Modal.Trigger>
+                        )
+                    } else {
+                        return (
+                            <Button key={index} {...item} />
+                        )
+                    }
+                    })}
                 </div>
             )}
         </div>

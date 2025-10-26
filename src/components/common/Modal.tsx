@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import { PopupState, usePopup } from "@/contexts/PopupContext";
+import { ModalConfig, ModalState, useModal } from "@/contexts/ModalContext";
 import { ButtonProps } from "./Button";
 
 
-type ModalProps = Omit<PopupState,
+type ModalProps = Omit<ModalState,
     "content" | "isOpen"> & {
         children: React.ReactNode;
     };
@@ -12,19 +12,19 @@ const Modal: React.FC<ModalProps> & {
     Trigger: React.FC<ModalTriggerProps>;
     Action: React.FC<ModalActionsProps>
 } = ({ children, label = "", description = "", action = [], config }) => {
-        const { setPopup, closePopup } = usePopup();
+        const { setModal, closeModal } = useModal();
 
         useEffect(() => {
             if (action.length === 0)
                 action = [{
                     label: "Close",
                     variant: "primary",
-                    onClick: closePopup
+                    onClick: closeModal
                 }];
 
-            setPopup(children, label, description, action, config);
+            setModal(children, label, description, action, config);
             return () => {
-                closePopup();
+                closeModal();
             };
         }, []);
         return null;
@@ -39,7 +39,8 @@ interface ModalTriggerProps {
         onClick?: React.MouseEventHandler
     }>;
     action?: ButtonProps[];
-    config?: any;
+    config?: ModalConfig;
+    triggerOnSuccess?: boolean;
 }
 const ModalTrigger: React.FC<ModalTriggerProps> = ({
     content,
@@ -47,38 +48,53 @@ const ModalTrigger: React.FC<ModalTriggerProps> = ({
     label = "",
     description = "",
     action = [],
-    config
+    config,
+    triggerOnSuccess = false,
 }) => {
-    const { setPopup, closePopup } = usePopup();
-    // Клонируем child элемент и добавляем ему onClick handler
+    const { setModal, closeModal } = useModal();
+    // clone child and add onClick handler
 
     if (action.length === 0)
         action = [{
             label: "Close",
             variant: "primary",
-            onClick: closePopup
+            onClick: closeModal
         }];
 
     const triggerElement = React.cloneElement(children, {
-        onClick: (e: React.MouseEvent) => { // Вызываем оригинальный onClick если он есть
-            children.props.onClick?.(e);
-            // Открываем модалку с переданным контентом
-            setPopup(content, label, description, action, config);
+        onClick: (e: React.MouseEvent) => {
+            switch(triggerOnSuccess) {
+                case false:
+                    children.props.onClick?.(e);
+                    setModal(content, label, description, action, config);
+                    break;
+                case true:
+                    const result = children.props.onClick?.(e);
+                    if(!result) return;
+                    setModal(content, label, description, action, config);
+                    break;
+            }
         }
     });
     return triggerElement;
 };
 
+export interface ModalActionButtonProps extends ButtonProps {
+    onClick?: () => void | boolean;
+    trigger?: Omit<ModalTriggerProps, "children">;
+    triggerOnSuccess?: boolean;
+}
+
 interface ModalActionsProps {
-    action: ButtonProps[];
+    action: ModalActionButtonProps[];
 }
 
 const ModalAction: React.FC<ModalActionsProps> = ({ action }) => {
-    const { updatePopup } = usePopup();
+    const { updateModal } = useModal();
 
     useEffect(() => {
         if (!action) return;
-        updatePopup({ action });
+        updateModal({ action });
     }, []);
 
     return null;

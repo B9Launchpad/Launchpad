@@ -7,13 +7,13 @@ import FilePreview from "./File";
 
 
 interface FileUploadProps {
-    title: string;
+    title?: string;
     description?: string;
     isMandatory?: boolean;
     error?: string;
     disabled?: boolean;
     accept: string;
-    allowMultiple: boolean;
+    allowMultiple?: boolean;
     onFilesSelected?: (files: FileList | null) => void;
     ariaLabel?: string;
 }
@@ -109,11 +109,11 @@ const processFiles = (files: File[]) => {
   return (
     <div className="input__wrap">
       <div className="input__content">
-        <span className="input__title-content">
+        { title && ( <span className="input__title-content">
           <p className="input__title">{title}</p>
           {isMandatory && <p className="input__mandatory">*</p>}
-        </span>
-        {description && <p className="input__description">{description} {t('fileupload.supportedFormats', {formats: supportedFormats.join(", ")})}</p>}
+        </span> ) }
+        <p className="input__description">{description} {t('fileupload.supportedFormats', {formats: supportedFormats.join(", ")})}</p>
       </div>
 
       <input

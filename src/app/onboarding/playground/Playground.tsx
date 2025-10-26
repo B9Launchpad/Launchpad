@@ -16,7 +16,7 @@ import { SearchProvider } from '@/contexts/SearchContext';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
 import KeyCap from '@/components/misc/KeyCap';
-import Tag from '@/components/common/Tag';
+import Tag, { Colors } from '@/components/common/Tag';
 
 
 function PlaygroundPage() {
@@ -75,7 +75,7 @@ const handleGet = () => {
   console.log(smallTableRef.current?.getSelected())
 }
 
-  const tagColours = ["access", "warning", "critical", "success", "pink", "purple", "orange", "blue", "brown", "primary", "secondary", "muted", "transparent"]
+  const tagColours = ["access", "warning", "critical", "success", "pink", "purple", "orange", "blue", "brown", "primary", "secondary", "muted", "transparent"] as Colors[]
 
   return (
     <section style={{backgroundColor: "var(--background-content)"}}>

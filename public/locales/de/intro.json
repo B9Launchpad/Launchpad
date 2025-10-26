@@ -13,7 +13,7 @@
         "name": "Ihre Name",
         "email": "Ihre Email Adresse",
         "wrongEmail": "Falsche Adresse?",
-        "otherEmail": "Andere Email verwenden",
+        "otherEmail": "Anderes Email verwenden",
         "picture": "Profilbild",
         "pictureInstructions": "Wenn Sie möchten, können Sie Ihres Profilbild hochladen. Unterstützte Erweiterungen: .png, .jpg, .jpeg, .svg, .webp."
     },

@@ -1,10 +1,17 @@
 {
     "layout": {
         "search": {
-            "noResults": "Результатов не найдено"
-        }
+            "noResults": "Результатов не найдено",
+            "search": "Поиск"
+        },
+        "browseSections": "Просмотр разделов"
     },
     "modules": {
-        "settings": "Настройки"
+        "settings": {
+            "label": "Настройки",
+            "userSettings": "Настройки пользователя",
+            "panelSettings": "Настройки приложения",
+            "logout": "Выйти"
+        }
     }
 }

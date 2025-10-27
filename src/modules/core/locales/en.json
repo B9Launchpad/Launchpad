@@ -1,0 +1,39 @@
+{
+    "account": {
+        "label": "Account",
+        "sections": {
+            "account": {
+                "label": "Account",
+                "personalInfo": {
+                    "label": "Personal info",
+                    "description": "Customise how your profile information will appear in the network",
+
+                    "name": "Name",
+                    "email": "Email address",
+                    "profilePicture": "Profile picture",
+                    "country": "Country",
+                    "timezone": "Timezone",
+                    "role": "Role"
+                },
+                "security": {
+                    "label": "Security & Access",
+                    "description": "This is where your account safety information sits — keep it safe!",
+
+                    "MFA": "Multi-Factor Authentication",
+                    "MFAdescription": "Setting up an authentication app is a good way to add an extra layer of security to your account to ensure that only you can log in.",
+                    "showCodes": "Show backup codes",
+                    "removeMFA": "Remove MFA protection",
+
+                    "passkeys": "Passkeys",
+                    "passkeysDescription": "Add an extra layer of security to your account with a security key.",
+
+                    "changePassword": "Change password",
+                    "deleteAccount": "Delete account"
+                }
+            },
+            "teams": {
+                "label": "Комманды"
+            }
+        }
+    }
+}

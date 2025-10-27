@@ -36,7 +36,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ items, profile }) =
     return (
         <nav className="sidebar__wrap">
             <Logo/>
-            <InputSearch debounce={false}/>
+            <InputSearch placeholder={t('layout.search.search')} debounce={false}/>
             <div className="sidebar__items--wrap">
                 {noQueryResults ? (
                     <p>Nothing found (BEAUTIFY!)</p>
@@ -53,7 +53,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ items, profile }) =
                 }
             </div>
             <div className="sidebar__items--low">
-                <SidebarItem onClick={() => {setShowSettings(true)}} label={t('modules.settings')} type="secondary" icon={<SettingsIcon/>}/>
+                <SidebarItem onClick={() => {setShowSettings(true)}} label={t('modules.settings.label')} type="secondary" icon={<SettingsIcon/>}/>
             </div>
             <Profile name={profile.name} email={profile.email} picture={profile.picture}/>
         </nav>

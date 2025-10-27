@@ -1,5 +1,6 @@
 import IconArrowRight from "@/components/icons/ArrowRight";
 import SettingsIcon from "@/components/icons/Settings";
+import { useTranslation } from "react-i18next";
 
 export type HeaderPathType = 
     Array<{
@@ -14,13 +15,15 @@ interface HeaderPathProps {
 }
 
 const HeaderPath: React.FC<HeaderPathProps> = ({ path, from = 'dashboard' }) => {
+    const { t } = useTranslation('main') 
+
     return (
         <>
             {path.map((item, index) => (
                 <div key={index} className="path__wrap">
                         <a className="path__item--root">
                             <SettingsIcon className="icon-small"/>
-                            {from}
+                            {t('modules.' + from + '.label')}
                         </a>
                         <IconArrowRight className="icon-small"/>
                     {item.url ? (

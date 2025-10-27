@@ -13,6 +13,7 @@ import SuspenseLoader from "../common/Loader";
 import HeaderSectionBrowser from "./header/SectionBrowser";
 import makeFetchRequest from "@/utils/fetch/makeFetchRequest";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
 
 interface LayoutSettingsProps {
     children?: React.ReactNode;
@@ -24,6 +25,7 @@ interface ActivePageState {
 }
 
 const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
+    const { t } = useTranslation('main');
     const router = useRouter();
     const { showSettings, setShowSettings } = useView();
     const [isVisible, setIsVisible] = useState(false);
@@ -156,7 +158,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
                 
                 // STATICS
                 {
-                    label: "Log out",
+                    label: t('modules.settings.logout'),
                     icon: <IconLogout/>,
                     type: 'primary' as const,
                     critical: true,

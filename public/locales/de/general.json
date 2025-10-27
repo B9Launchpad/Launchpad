@@ -5,7 +5,12 @@
     "termsOfUse": "Nutzungsbedingungen",
     "copyrightNote": "alle rechte vorbehalten",
     "greeting": "Hallo, {{name}}!",
+
     "submit": "Bestätigen",
+    "cancel": "Abbrechen",
+    "edit": "Bearbeiten",
+    "remove": "Entfernen",
+
     "tryAgain": "Erneut versuchen",
     "continue": "Weiter",
     "or": "oder",

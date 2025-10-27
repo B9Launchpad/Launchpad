@@ -1,6 +1,7 @@
 import Tag from "@/components/common/Tag";
 import useLastInteractionKeyboard from "@/functions/useLastInteractionKeyboard";
 import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 type SectionBrowserItem = {
     label: string;
@@ -14,6 +15,7 @@ interface HeaderSectionBrowserProps {
 }
 
 const HeaderSectionBrowser: React.FC<HeaderSectionBrowserProps> = ({ items, currentId }) => {
+    const { t } = useTranslation('main')
     const [currentSectionId, setCurrentSectionId] = useState<string>(currentId || items[0].id);
     const containerRef = useRef<HTMLDivElement>(null);
     const [focusedIndex, setFocusedIndex] = useState<number>(0);
@@ -79,7 +81,7 @@ const HeaderSectionBrowser: React.FC<HeaderSectionBrowserProps> = ({ items, curr
 
     return (
         <div className="header__section-browser">
-            <small className="header__section-browser--label">Browse sections</small>
+            <small className="header__section-browser--label">{t('layout.browseSections')}</small>
             <div 
                 onKeyDown={handleKeyDown}
                 onFocus={handleFocus}

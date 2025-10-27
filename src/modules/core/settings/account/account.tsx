@@ -15,12 +15,13 @@ import { useTranslation } from 'react-i18next';
 import InputSelect from '@/components/common/Input/SelectInput';
 
 const SettingsAccount: React.FC = () => {
+    const { t } = useTranslation('module-core');
 
     return (
         <>
             <WindowComponent 
-                label={"Personal info"} 
-                description={"Customise how your profile information will appear in the network"}
+                label={t('account.sections.account.personalInfo.label')} 
+                description={t('account.sections.account.personalInfo.description')}
             >   
                 <WindowBlock>
                     <div className='flex-row items-center gap-md'>
@@ -30,57 +31,57 @@ const SettingsAccount: React.FC = () => {
                     <WindowBlock className={"gap-md"}>
                         <div className='flex-row justify-between items-center'>
                             <div className='gap-sm flex flex-col'>
-                                <em className='input__title'>Name</em>
+                                <em className='input__title'>{t('account.sections.account.personalInfo.name')}</em>
                                 <p>Tatiana Yakovleva</p>
                             </div>
                             <Modal.Trigger content={<NamePopup/>} label='Edit name'>
-                                <Button inline={true} variant='secondary'>Edit</Button>
+                                <Button inline={true} variant='secondary'>{t('edit', { ns: "general" })}</Button>
                             </Modal.Trigger>
                         </div>
                         <div className='flex-row justify-between items-center'>
                             <div className='gap-sm flex flex-col'>
-                                <em className='input__title'>Email Address</em>
+                                <em className='input__title'>{t('account.sections.account.personalInfo.email')}</em>
                                 <div className='flex-col'>
                                     <p>tyakovleva@b9creators.co.uk</p>
                                     <small className='success'>Email address verified</small>
                                 </div>
                             </div>
-                            <Button inline variant='secondary'>Edit</Button>
+                            <Button inline variant='secondary'>{t('edit', {ns: "general"})}</Button>
                         </div>
                         <div className='flex-row justify-between items-center'>
                             <div className='gap-sm flex flex-col'>
-                                <em className='input__title'>Profile picture</em>
+                                <em className='input__title'>{t('account.sections.account.personalInfo.profilePicture')}</em>
                             </div>
                             <div className='flex-row gap-sm'>
-                                <Button inline variant='critical'>Remove</Button>
+                                <Button inline variant='critical'>{t('remove', { ns: "general" })}</Button>
                                 <Modal.Trigger label="Editing profile picture" content={<PictureModal/>}>
-                                    <Button inline variant='secondary'>Edit</Button>
+                                    <Button inline variant='secondary'>{t('edit', { ns: "general" })}</Button>
                                 </Modal.Trigger>
                             </div>
                         </div>
                         <div className='flex-row justify-between items-center'>
                             <div className='gap-sm flex flex-col'>
-                                <em className='input__title'>Country</em>
+                                <em className='input__title'>{t('account.sections.account.personalInfo.country')}</em>
                                 <div className='flex-col'>
                                     <p>United Kingdom</p>
                                 </div>
                             </div>
                             <Modal.Trigger content={<CountriesModal/>} label='Editing country...'>
-                                <Button inline variant='secondary'>Edit</Button>
+                                <Button inline variant='secondary'>{t('edit', { ns: "general" })}</Button>
                             </Modal.Trigger>
                         </div>
                         <div className='flex-row justify-between items-center'>
                             <div className='gap-sm flex flex-col'>
-                                <em className='input__title'>Timezone</em>
+                                <em className='input__title'>{t('account.sections.account.personalInfo.timezone')}</em>
                                 <div className='flex-col'>
                                     <p>GMT+0 London, currently 23:37</p>
                                 </div>
                             </div>
-                            <Button inline={true} variant='secondary'>Edit</Button>
+                            <Button inline={true} variant='secondary'>{t('edit', { ns: "general" })}</Button>
                         </div>
                         <div className='flex-row justify-between items-center'>
                             <div className='gap-sm flex flex-col'>
-                                <em className='input__title'>Role</em>
+                                <em className='input__title'>{t('account.sections.account.personalInfo.role')}</em>
                                 <div className='flex-col'>
                                     <p>User</p>
                                 </div>
@@ -90,19 +91,19 @@ const SettingsAccount: React.FC = () => {
                 </WindowBlock>
             </WindowComponent>
             <WindowComponent 
-                label={"Security & Access"} 
-                description={"This is where your account safety information sits — keep it safe!"}
+                label={t('account.sections.account.security.label')} 
+                description={t('account.sections.account.security.description')}
             >   
-                <WindowBlock label='Multi-Factor Authentication' description='Setting up an authentication app is a good way to add an extra layer of security to your account to ensure that only you can log in'>
+                <WindowBlock label={t('account.sections.account.security.MFA')} description={t('account.sections.account.security.MFAdescription')}>
                     <small className='success'>
                         <strong>MFA protection active</strong>
                     </small>
                     <div className='flex-row gap'>
-                        <Button label="Show backup codes" variant='secondary'></Button>
-                        <Button label="Remove MFA protection" variant='critical'></Button>
+                        <Button label={t('account.sections.account.security.showCodes')} variant='secondary'></Button>
+                        <Button label={t('account.sections.account.security.removeMFA')} variant='critical'></Button>
                     </div>
                 </WindowBlock>
-                <WindowBlock label='Passkeys' description='Add an extra layer of security to your account with a security key'>
+                <WindowBlock label={t('account.sections.account.security.passkeys')} description={t('account.sections.account.security.passkeysDescription')}>
                     <List items={[
                         {
                             content: "Enlanpass"
@@ -113,8 +114,8 @@ const SettingsAccount: React.FC = () => {
                     ]}/>
                 </WindowBlock>
                 <div className='flex-row gap'>
-                    <Button label="Change my password"></Button>
-                    <Button label="Delete account" variant="critical"></Button>
+                    <Button label={t('account.sections.account.security.changePassword')}></Button>
+                    <Button label={t('account.sections.account.security.deleteAccount')} variant="critical"></Button>
                 </div>
             </WindowComponent>
         </>

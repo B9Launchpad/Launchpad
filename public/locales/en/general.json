@@ -5,7 +5,12 @@
     "termsOfUse": "Terms of Use",
     "copyrightNote": "all rights reserved",
     "greeting": "Hi, {{name}}!",
+
     "submit": "Submit",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "remove": "Remove",
+
     "tryAgain": "Try again",
     "Launchpad": "Launchpad",
     "B9 Creators": "B9 Creators",

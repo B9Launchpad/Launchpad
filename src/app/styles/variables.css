@@ -33,8 +33,8 @@
     --hover-text-access: #DEE1FE;
     /* Critical Type */
     --background-critical: #F1C5C1;
-    --hover-background-critical: #F23F42;
-    --hover-text-critical: #F1C5C1;
+    --hover-background-critical: #ECACA6;
+    --hover-text-critical: #fc2023;
 
     --background-success: #D4F2DF;
     --background-warning: #FFF1D4;
@@ -211,6 +211,8 @@
     --background-access: #182ef836;
     /* Critical Type */
     --background-critical: #C7170740;
+    --hover-background-critical: #C7170766;
+    --hover-text-critical: #f04936;
 
     --background-success: #28BE5F33;
     --background-warning: #FFB92833;

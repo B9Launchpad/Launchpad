@@ -1,9 +1,7 @@
-interface SettingsManifestPageSection {
-    id: string;
-    label: string;
-    default?: boolean;
-    fileName: string;
-}
+import modulesManifest from '@/modules/modules.manifest.json';
+import { CachedSettingsPageSection, LazySettingsPage, SettingsPage } from '@/contexts/SettingsRegistryContext';
+import React from 'react';
+import { ModuleManifest, SettingsManifestPageSection } from '@/modules/module.utils';
 
 export interface SettingsPageSection {
     id: string;
@@ -19,16 +17,19 @@ export interface SettingsManifest {
     sections: SettingsManifestPageSection[];
 }
 
-import settingsManifest from '@/components/settings/settings-manifest.json';
-import { CachedSettingsPageSection, LazySettingsPage, SettingsPage } from '@/contexts/SettingsRegistryContext';
-import React from 'react';
+interface ModulesManifest {
+    module: string;
+    manifestPath: string;
+    hasSettings: boolean;
+    settingsPages?: string[];
+}
 
 export class SettingsScanner {
     private static instance: SettingsScanner;
     private registered: boolean = false;
     private componentCache = new Map<string, React.ComponentType>();
 
-    private constructor() {}
+    private constructor() { }
 
     static getInstance(): SettingsScanner {
         if (!SettingsScanner.instance) {
@@ -42,7 +43,7 @@ export class SettingsScanner {
             page: Omit<SettingsPage, 'sections'> & {
                 sections: (
                     Omit<CachedSettingsPageSection, 'component'> & {
-                      loader: () => Promise<React.ComponentType>;
+                        loader: () => Promise<React.ComponentType>;
                     }
                 )[];
             }
@@ -51,66 +52,76 @@ export class SettingsScanner {
         //if (this.registered) return;
 
         try {
-            for (const manifestItem of settingsManifest) {
-                try {
-                    /* Resolve metadata first.
-                    *  
-                    */
-                    const manifest = await import(
-                        /* @vite-ignore */ `@components/settings/${manifestItem.path}`
-                    );
-                    
-                    // Handle clumsy developers who have exported more default.
-                    const settingsConfig: SettingsManifest = manifest.default || manifest.settings;
-                    
-                    const pageSections: SettingsPageSection[] = []
+            for (const moduleItem of modulesManifest as ModulesManifest[]) {
+                if (!moduleItem.hasSettings) continue;
 
-                    if (settingsConfig && settingsConfig.id) {
-                        for(const section of settingsConfig.sections) {
+                try {
+                    // Импортируем module.manifest.ts
+                    const moduleManifest = await import(
+                        /* @vite-ignore */ `@/modules/${moduleItem.manifestPath}`
+                    );
+
+                    const settingsConfig: ModuleManifest = moduleManifest.default || moduleManifest.moduleManifest;
+
+                    if (!settingsConfig?.settings) {
+                        console.warn(`No settings found in module manifest for ${moduleItem.module}`);
+                        continue;
+                    }
+
+                    for (const settingsPage of settingsConfig.settings) {
+                        const pageSections: SettingsPageSection[] = [];
+
+                        for (const section of settingsPage.sections) {
                             const loader = async (): Promise<React.ComponentType> => {
-                                const cacheKey = `${manifestItem.name}-${section.id}`;
-                                // Check cache
+                                const cacheKey = `${settingsPage.id}-${section.id}`;
+
                                 if (this.componentCache.has(cacheKey)) {
                                     return this.componentCache.get(cacheKey)!;
                                 }
 
-                                // if no cache then...
                                 try {
+                                    const importPath = settingsPage.folderName
+                                        ? `${moduleItem.module}/settings/${settingsPage.folderName}/${section.fileName.replace(/\.(tsx|ts)$/, '')}`
+                                        : `${moduleItem.module}/settings/${section.fileName.replace(/\.(tsx|ts)$/, '')}`;
+
                                     const lazyModule = await import(
-                                        /* @vite-ignore */ `@components/settings/${manifestItem.name}/${section.fileName}`
+                                        /* @vite-ignore */ `@/modules/${importPath}`
                                     );
 
-                                    const lazyConfig = lazyModule.default;
-                                    let component: React.ComponentType;
+                                    const component = lazyModule.default;
 
-                                    try {
-                                        component = lazyConfig;
-                                    } catch {
-                                        throw new Error(`No valid component found for ${manifestItem.path}`);
+                                    if (!component) {
+                                        throw new Error(`No default export found for ${importPath}`);
                                     }
 
                                     this.componentCache.set(cacheKey, component);
                                     return component;
                                 } catch (error) {
-                                    console.error(`Failed to load component for ${manifestItem.path}:`, error);
-                                    // Fallback
-                                    return () => React.createElement('div', null, `Failed to load module from: ${manifestItem.path}`);
+                                    console.error(`Failed to load component for ${settingsPage.id}.${section.id}:`, error);
+                                    return () => React.createElement('div', null, `Failed to load: ${settingsPage.label} - ${section.label}`);
                                 }
                             };
-                            pageSections.push({id: section.id, label: section.label, default: section?.default, loader: loader})
+
+                            pageSections.push({
+                                id: section.id,
+                                label: section.label,
+                                default: section?.default,
+                                loader: loader
+                            });
                         }
+
                         registerFunction({
-                            id: settingsConfig.id,
-                            label: settingsConfig.label,
-                            category: settingsConfig.category,
+                            id: settingsPage.id,
+                            label: settingsPage.label,
+                            category: settingsPage.category,
                             sections: pageSections
                         });
-                        console.log(`Registered settings page metadata: ${settingsConfig.label}`);
-                    } /**/ else {
-                        console.warn(`Invalid settings module at ${manifestItem.path}: missing id or component`);
+
+                        console.log(`Registered settings page: ${settingsPage.label} from module ${moduleItem.module}`);
                     }
+
                 } catch (error) {
-                    console.error(`Failed to load settings module ${manifestItem.path}:`, error);
+                    console.error(`Failed to load settings from module ${moduleItem.module}:`, error);
                 }
             }
 
@@ -124,9 +135,9 @@ export class SettingsScanner {
     async loadComponent(id: string, sectionId: string, pages: Array<SettingsPage | LazySettingsPage>): Promise<React.ComponentType | null> {
         // Check cached.
         const page = pages.find(page => page.id === id) as SettingsPage;
-        if(page && 'sections' in page) {
+        if (page && 'sections' in page) {
             const section = page.sections.find(s => s.id === sectionId);
-            if(section && 'component' in section) {
+            if (section && 'component' in section) {
                 return section.component;
             }
         }

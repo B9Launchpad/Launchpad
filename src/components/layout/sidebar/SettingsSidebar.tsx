@@ -30,8 +30,8 @@ const SettingsSidebar: React.FC<SettingsSidedebarProps> = ({ items }) => {
     const router = useRouter();
 
     const SidebarBlocks = [
-        { title: "User Settings", items: items.user },
-        { title: "Panel Settings", items: items.panel },
+        { title: t('modules.settings.userSettings'), items: items.user },
+        { title: t('modules.settings.panelSettings'), items: items.panel },
         { items: items.misc },
     ] satisfies SidebarBlocks;
 
@@ -45,7 +45,7 @@ const SettingsSidebar: React.FC<SettingsSidedebarProps> = ({ items }) => {
         return SidebarBlocks.map(block => ({
             ...block,
             items: block.items.filter(item => 
-                item.label.toLowerCase().includes(searchTerm)
+                item.label.toLowerCase().startsWith(searchTerm)
             )
         })).filter(block => block.items.length > 0);
     }, [items, query]);
@@ -127,7 +127,7 @@ const SettingsSidebar: React.FC<SettingsSidedebarProps> = ({ items }) => {
 
     return (
         <nav>
-            <InputSearch autoFocus={true} debounce={false}/>
+            <InputSearch autoFocus={true} placeholder={t('layout.search.search')} debounce={false}/>
             <div 
                 ref={sidebarRef}
                 role="navigation"

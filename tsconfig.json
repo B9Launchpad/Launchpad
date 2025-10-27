@@ -56,6 +56,9 @@
       ],
       "@styles/*": [
         "src/app/styles/*"
+      ],
+      "@modules/*": [
+        "src/modules/*"
       ]
     }
   },

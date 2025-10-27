@@ -306,6 +306,7 @@ button {
         color: var(--contrast);
         background-color: var(--background-primary);
         fill: var(--contrast);
+        border: 1px solid transparent;
     }
     button.primary:not(:disabled):hover {
         color: var(--hover-text-primary);
@@ -316,11 +317,13 @@ button {
         color: var(--text);
         fill: var(--text);
         background-color: var(--background-secondary);
+        border: 1px solid var(--hover-background-secondary);
     }
     button.secondary:not(:disabled):hover {
         color: var(--hover-text-secondary);
         fill: var(--hover-text-secondary);
         background-color: var(--hover-background-secondary);
+        border: 1px solid var(--muted);
     }
     button.access {
         color: var(--access);
@@ -336,11 +339,13 @@ button {
         color: var(--critical);
         fill: var(--critical);
         background-color: var(--background-critical);
+        border: 1px solid var(--hover-background-critical)
     }
     button.critical:not(:disabled):hover {
         color: var(--hover-text-critical);
         fill: var(--hover-text-critical);
         background-color: var(--hover-background-critical);
+        border: 1px solid var(--critical)
     }
     button.tertiary {
         color: var(--text);
@@ -716,6 +721,10 @@ nav {
     border-radius: var(--radius);
     box-sizing: border-box;
     transition: border-color var(--transition);
+}
+
+.input__file-upload > em {
+    text-align: center;
 }
 
 .input__file-upload.error {

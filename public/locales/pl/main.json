@@ -1,10 +1,17 @@
 {
     "layout": {
         "search": {
-            "noResults": "Brak wyników wyszukiwania"
-        }
+            "noResults": "Brak wyników wyszukiwania",
+            "search": "Szukaj"
+        },
+        "browseSections": "Przeglądaj sekcje"
     },
     "modules": {
-        "settings": "Ustawienia"
+        "settings": {
+            "label": "Ustawienia",
+            "userSettings": "Ustawiena użytkownika",
+            "panelSettings": "Ustawiena aplikacji",
+            "logout": "Wyloguj"
+        }
     }
 }

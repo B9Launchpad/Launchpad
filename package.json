@@ -29,8 +29,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "dev": "node src/utils/generate-settings-manifest.js && next dev --turbopack",
-    "build": "next build",
+    "dev": "node src/utils/generate-modules-manifest.js && next dev --turbopack",
+    "build": "node src/utils/generate-modules-manifest.js && next build",
     "start": "next start",
     "test": "jest"
   },

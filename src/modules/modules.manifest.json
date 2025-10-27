@@ -1,0 +1,13 @@
+[
+  {
+    "module": "core",
+    "manifestPath": "core/module.manifest.ts",
+    "hasSettings": true,
+    "locales": [
+      "de.json",
+      "en.json",
+      "pl.json",
+      "ru.json"
+    ]
+  }
+]

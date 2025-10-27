@@ -10,7 +10,7 @@ const modulesRoot = path.join(process.cwd(), 'src', 'modules')
 export async function getServerTranslations(locale: string, namespaces: string[] = ['general']) {
   const i18nInstance: I18nInstance = i18next.createInstance()
 
-  // Загружаем манифест модулей
+  // Load module manifest
   const manifestRaw = await fs.readFile(modulesManifestPath, 'utf-8')
   const manifest = JSON.parse(manifestRaw)
 
@@ -29,7 +29,7 @@ export async function getServerTranslations(locale: string, namespaces: string[]
       initImmediate: false,
     })
 
-  // Теперь читаем модульные переводы вручную
+  // Manual module read
   for (const mod of manifest) {
     const moduleNamespace = `module-${mod.module}`
     const filePath = path.join(modulesRoot, mod.module, 'locales', `${locale}.json`)
@@ -39,7 +39,7 @@ export async function getServerTranslations(locale: string, namespaces: string[]
       const parsed = JSON.parse(data)
       i18nInstance.addResourceBundle(locale, moduleNamespace, parsed, true, true)
     } catch {
-      // если перевода нет — просто пропускаем
+      // Skip untranslated
     }
   }
 

@@ -4,6 +4,7 @@ import { SettingsPageSection, SettingsScanner } from '@utils/settingsScanner';
 export interface SettingsPage {
     id: string;
     label: string;
+    ns?: string;
     category: 'user' | 'panel' | 'misc' | string;
     sections: CachedSettingsPageSection[]
 }
@@ -18,6 +19,7 @@ export interface CachedSettingsPageSection {
 export interface LazySettingsPage {
     id: string;
     label: string;
+    ns?: string;
     category: 'user' | 'panel' | 'misc' | string;
     sections: SettingsPageSection[];
 }
@@ -91,6 +93,7 @@ export const SettingsRegistryProvider: React.FC<{ children: ReactNode }> = ({ ch
                     const newPage: SettingsPage = {
                         id: page.id,
                         label: page.label,
+                        ns: page.ns,
                         category: page.category,
                         sections: updatedSections as CachedSettingsPageSection[]
                     };

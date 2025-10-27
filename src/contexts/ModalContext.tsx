@@ -44,7 +44,6 @@ export const PopupProvider = ({ children }: {children: React.ReactNode }) => {
     const setModal = useCallback((content: React.ReactNode, label: string, description?: string, action?: ModalActionButtonProps[], config?: ModalConfig) => {
         setModalState(prevState => {
             if (prevState.content !== null) {
-                console.log('Pushing to stack:', prevState);
                 setModalStack(prevStack => [...prevStack, prevState]);
                 setIsTransition(true);
             }
@@ -84,10 +83,6 @@ export const PopupProvider = ({ children }: {children: React.ReactNode }) => {
             }
         });
     }, []);
-
-    useEffect(() => {
-        console.log(modalStack)
-    }, [modalStack])
 
     useEffect(() => {
         if(!modalState.isOpen) return;

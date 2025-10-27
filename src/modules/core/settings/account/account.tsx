@@ -125,6 +125,7 @@ const SettingsAccount: React.FC = () => {
 export default SettingsAccount;
 
 const NamePopup: React.FC = () => {
+    const { t } = useTranslation('module-core')
     const { closeModal } = useModal();
     const nameRef = useRef<InputStringRef>(null);
     
@@ -156,8 +157,8 @@ const NamePopup: React.FC = () => {
         <Form onSubmit={handleSubmit} showSubmitButton={false}>
             <InputString ref={nameRef} title='New name' isMandatory type='string'></InputString>
             <Modal.Action action={[
-                {label: "Cancel", variant: "secondary", onClick: closeModal},
-                {label: "Submit", onClick: handleSubmit}]}>    
+                { label: t('cancel', { ns: "general" }), variant: "secondary", onClick: closeModal},
+                { label: t('submit', { ns: "general" }), onClick: handleSubmit}]}>    
             </Modal.Action>
         </Form>
     )
@@ -165,6 +166,7 @@ const NamePopup: React.FC = () => {
 
 const PictureModal: React.FC = () => {
     const { closeModal } = useModal();
+    const { t } = useTranslation('module-core')
 
     const handleSubmit = () => {
         return;
@@ -175,8 +177,8 @@ const PictureModal: React.FC = () => {
             <FileUpload accept='.png .webp .jpg'/>
         
             <Modal.Action action={[
-                { label: "Cancel", variant: "secondary", onClick: closeModal },
-                { label: "Submit", type: "submit", onClick: handleSubmit }]}>
+                { label: t('cancel', {ns: "general"}), variant: "secondary", onClick: closeModal },
+                { label: t('submit', { ns: "general" }), type: "submit", onClick: handleSubmit }]}>
             </Modal.Action>
         </Form>
     )
@@ -202,8 +204,8 @@ const CountriesModal: React.FC = () => {
             <InputSelect title={"Select new country"} options={regionOptions}/>
 
             <Modal.Action action={[
-                { label: "Cancel", variant: "secondary", onClick: closeModal },
-                { label: "Submit", trigger: {content: <p>Hello world!</p>}, triggerOnSuccess: true, onClick: handleSubmit }]}>
+                { label: t('cancel', { ns: "general" }), variant: "secondary", onClick: closeModal },
+                { label: t('submit', { ns: "general" }), trigger: {content: <p>Hello world!</p>}, triggerOnSuccess: true, onClick: handleSubmit }]}>
             </Modal.Action>
         </Form>
     )

@@ -13,6 +13,7 @@ export interface SettingsPageSection {
 export interface SettingsManifest {
     id: string;
     label: string;
+    ns?: string;
     category: 'user' | 'panel' | 'misc';
     sections: SettingsManifestPageSection[];
 }
@@ -21,6 +22,7 @@ interface ModulesManifest {
     module: string;
     manifestPath: string;
     hasSettings: boolean;
+    locales?: false | [];
     settingsPages?: string[];
 }
 
@@ -113,6 +115,7 @@ export class SettingsScanner {
                         registerFunction({
                             id: settingsPage.id,
                             label: settingsPage.label,
+                            ns: moduleItem.locales === false ? undefined : `module-${moduleItem.module}`,
                             category: settingsPage.category,
                             sections: pageSections
                         });

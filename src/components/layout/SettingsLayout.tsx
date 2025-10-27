@@ -125,7 +125,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
         return {
             user: [
                 ...userPages.map(page => ({
-                    label: page.label,
+                    label: page.ns ? t(page.label, { ns: page.ns }) : page.label,
                     active: page.id === activePageState.page?.id,
                     onClick: () => {
                         if(activePageState.page?.id !== page.id) {
@@ -136,7 +136,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             ],
             panel: [
                 ...panelPages.map(page => ({
-                    label: page.label,
+                    label: page.ns ? t(page.label, { ns: page.ns }) : page.label,
                     active: page.id === activePageState.page?.id,
                     onClick: () => {
                         if(activePageState.page?.id !== page.id) {
@@ -147,7 +147,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             ],
             misc: [
                 ...miscPages.map(page => ({
-                    label: page.label,
+                    label: page.ns ? t(page.label, {ns: page.ns}) : page.label,
                     active: page.id === activePageState.page?.id,
                     onClick: () => {
                         if(activePageState.page?.id !== page.id) {
@@ -180,14 +180,15 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             return (
                 <div className="settings__content--wrap">
                     <PageHeader 
-                        title={activePageState.page.label} 
+                        title={activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label} 
                         settingsPath={true} 
-                        path={[{slug: activePageState.page.label}]}
+                        path={[{ slug: (activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label) }]}
                     />
                     {activePageState.page.sections.length > 1 && (
                         <HeaderSectionBrowser currentId={activePageState.sectionId || undefined} items={
-                            activePageState.page.sections.map(section => ({
-                                label: section.label,
+                            activePageState.page.sections.map(section => (
+                                {
+                                label: activePageState?.page?.ns ? t(section.label, {ns: activePageState.page.ns}) : section.label,
                                 id: section.id,
                                 onClick: () => setActiveSectionId(section.id)
                             }))
@@ -203,14 +204,14 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
         return (
             <div className="settings__content--wrap">
                 <PageHeader 
-                    title={activePageState.page.label} 
+                    title={activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label}
                     settingsPath={true} 
-                    path={[{slug: activePageState.page.label}]}
+                    path={[{ slug: (activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label) }]}
                 />
                 {activePageState.page.sections.length > 1 && (
                     <HeaderSectionBrowser currentId={activePageState.sectionId || undefined} items={
                         activePageState.page.sections.map(section => ({
-                            label: section.label,
+                            label: activePageState?.page?.ns ? t(section.label, { ns: activePageState.page.ns }) : section.label,
                             id: section.id,
                             onClick: () => setActiveSectionId(section.id)
                         }))

@@ -5,9 +5,11 @@ import WindowComponent from '@/components/common/Window';
 import info from '@/app-info.json';
 import { LaunchpadLogo } from '@/components/common/Logo';
 import WindowBlock from '@/components/modules/FormBlock';
+import { useTranslation } from 'react-i18next';
 
 
 const SettingsAbout: React.FC = () => {
+    const { t } = useTranslation('module-core')
     const getCurrentYear = () => {
         const d: Date = new Date();
         let year = d.getFullYear();
@@ -24,9 +26,9 @@ const SettingsAbout: React.FC = () => {
                             <h2>{info.name}</h2>
                             <small>v{info.version}</small>
                         </div>
-                        <WindowBlock label='Copyright notice' description={`© 2022-${getCurrentYear()} B9 Creators. All rights reserved.`}>
+                        <WindowBlock label={t('about.copyrightNotice')} description={`© 2022-${getCurrentYear()} B9 Creators, ${t('copyrightNote', { ns: 'general'})}.`}>
                             <small>
-                                B9 Creators and Launchpad, and the B9 Creators and Launchpad logo are either registered trademarks of B9 Creators in the United Kingdom and/or other countries. All other trademarks are property of their respective owners.
+                                {t('about.copyrightText')}
                             </small>
                         </WindowBlock>
                     </WindowBlock>

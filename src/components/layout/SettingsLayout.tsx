@@ -59,7 +59,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
         const { status } = await makeFetchRequest({
             url: '/logout',
             method: 'GET',
-            includeCredentials: true
+            credentials: "include"
         })
     
         if(status === 200) {

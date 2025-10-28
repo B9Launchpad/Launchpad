@@ -7,12 +7,12 @@ interface FetchOptions {
     url: string;
     method?: "POST" | "GET" | "PUT" | "PATCH" | "OPTIONS" | "HEAD" | "DELETE";
     body?: any;
-    includeCredentials?: boolean;
+    credentials?: "include" | "omit" | "same-origin";
 }
 
 // TO DO: Report if makeFetchRequest is currently awaiting response;
 
-const makeFetchRequest = async ({ url, method = 'POST', body, includeCredentials = false }: FetchOptions) => {
+const makeFetchRequest = async ({ url, method = 'POST', body, credentials }: FetchOptions) => {
     if (url.startsWith("host//", 0)) {
         url = HOST_URL + url.replace("host//", "/");   
     }
@@ -31,7 +31,7 @@ const makeFetchRequest = async ({ url, method = 'POST', body, includeCredentials
             },
             body: JSON.stringify(body),
             mode: 'cors',
-            credentials: includeCredentials === true ? 'include' : 'omit'
+            credentials: credentials,
         });
 
         return {

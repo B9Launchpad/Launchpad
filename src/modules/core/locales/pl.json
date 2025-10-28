@@ -1,3 +1,45 @@
 {
-    "hello": "Hi!"
+    "account": {
+        "label": "Konto",
+        "sections": {
+            "account": {
+                "label": "Konto",
+                "personalInfo": {
+                    "label": "Dane osobiste",
+                    "description": "Skonfiguruj, w jaki sposób informacje z Twojego profilu są wyświetlane w sieci",
+                    "name": "Imię",
+
+                    "email": "Adres e-mail",
+                    "emailVerified": "Adres e-mail zweryfikowany",
+                    "emailNotVerified": "Adres e-mail musi zostać zweryfikowany",
+
+                    "profilePicture": "Zdjęcie profilowe",
+                    "country": "Kraj",
+                    "timezone": "Strefa czasowa",
+                    "role": "Rola"
+                },
+                "security": {
+                    "label": "Bezpieczeństwo i dostęp",
+                    "description": "Tutaj przechowywane są informacje dotyczące bezpieczeństwa Twojego konta — chroń je!",
+                    
+                    "MFA": "Uwierzytelnianie wieloskładnikowe",
+                    "MFAdescription": "Skonfigurowanie aplikacji uwierzytelniającej to dobry sposób na dodanie dodatkowej warstwy bezpieczeństwa do Twojego konta, gwarantując, że tylko Ty możesz się zalogować.",
+                    "showCodes": "Pokaż kody resetowania",
+                    "removeMFA": "Usuń ochronę MFA",
+                    "passkeys": "Klucze dostępu (Passkeys)",
+                    "passkeysDescription": "Dodaj dodatkową warstwę bezpieczeństwa do swojego konta za pomocą klucza zabezpieczającego.",
+                    "changePassword": "Zmień hasło",
+                    "deleteAccount": "Usuń konto"
+                }
+            },
+            "teams": {
+                "label": "Zespoły"
+            }
+        }
+    },
+    "about": {
+        "label": "O aplikacji",
+        "copyrightNotice": "Zastrzeżenie praw autorskich",
+        "copyrightText": "B9 Creators i Launchpad, a także logo B9 Creators i Launchpad są zarejestrowanymi znakami towarowymi B9 Creators w Wielkiej Brytanii i/lub innych krajach. Wszystkie inne znaki towarowe są własnością ich odpowiednich właścicieli."
+    }
 }

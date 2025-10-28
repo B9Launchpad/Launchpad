@@ -4,9 +4,9 @@ import { NextResponse } from 'next/server'
 
 export async function GET(
     req: Request,
-    { params }: { params: { lng: string; ns: string } }
+    { params }: { params: Promise<{ lng: string; ns: string }> }
 ) {
-    const { lng, ns } = await params
+    const { lng, ns } = await params;
 
     const namespace = ns.replace('.json', '');
 

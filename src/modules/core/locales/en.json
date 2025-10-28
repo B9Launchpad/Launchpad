@@ -9,7 +9,11 @@
                     "description": "Customise how your profile information will appear in the network",
 
                     "name": "Name",
+
                     "email": "Email address",
+                    "emailVerified": "Email address verified",
+                    "emailNotVerified": "Email address must be verified",
+
                     "profilePicture": "Profile picture",
                     "country": "Country",
                     "timezone": "Timezone",
@@ -35,5 +39,11 @@
                 "label": "Комманды"
             }
         }
+    },
+    "about": {
+        "label": "About",
+
+        "copyrightNotice": "Copyright notice",
+        "copyrightText": "B9 Creators and Launchpad, and the B9 Creators and Launchpad logo are either registered trademarks of B9 Creators in the United Kingdom and/or other countries. All other trademarks are property of their respective owners."
     }
 }

@@ -77,7 +77,7 @@ export const ResetProvider = ({ children }: {children: React.ReactNode}) => {
                     email: data.email,
                     code: String(code)
                 },
-                includeCredentials: true
+                credentials: "include"
             })
 
             const { status } = res;
@@ -102,7 +102,7 @@ export const ResetProvider = ({ children }: {children: React.ReactNode}) => {
                 body: {
                     password: newPassword,
                 },
-                includeCredentials: true
+                credentials: "include"
             })
 
             const { status } = res;

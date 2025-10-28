@@ -33,7 +33,7 @@ export const LoginProvider = ({ children }: {children: React.ReactNode}) => {
                 url: '/login',
                 method: 'POST',
                 body: credentials,
-                includeCredentials: true,
+                credentials: "include",
             })
 
 

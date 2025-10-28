@@ -5,7 +5,7 @@ export async function GET(request: any) {
     const { status } = await makeFetchRequest({
         url: '/logout',
         method: 'GET',
-        includeCredentials: true
+        credentials: "include"
     })
 
     if(status === 200) {

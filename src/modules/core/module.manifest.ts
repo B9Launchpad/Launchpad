@@ -26,7 +26,7 @@ export const moduleManifest: ModuleManifest = {
         },
         {
             id: 'about',
-            label: 'About',
+            label: 'about.label',
             folderName: "about",
             category: 'misc',
             sections: [

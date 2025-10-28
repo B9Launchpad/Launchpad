@@ -28,7 +28,7 @@ const OnboardingLanguage: React.FC<OnboardingProps> = ({onNext, data}) => {
         await makeFetchRequest({
             url: '/locale',
             body: {locale: newLocale},
-            includeCredentials: true,
+            credentials: "include",
         })
         router.refresh();
     }

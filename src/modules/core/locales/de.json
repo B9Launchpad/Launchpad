@@ -1,3 +1,44 @@
 {
-    "hello": "Hi!"
+    "account": {
+        "label": "Account",
+        "sections": {
+            "account": {
+                "label": "Account",
+                "personalInfo": {
+                    "label": "Profil",
+                    "description": "Passen Sie an, wie Ihre Profilinformationen online angezegt werden.",
+                    "name": "Name",
+
+                    "email": "E-Mail Adrese",
+                    "emailVerified": "E-Mail Adrese verifiziert",
+                    "emailNotVerified": "E-Mail Adrese muss verifiziert werden",
+
+                    "profilePicture": "Profilbild",
+                    "country": "Land",
+                    "timezone": "Zeitzone",
+                    "role": "Rolle"
+                },
+                "security": {
+                    "label": "Sicherheit und Zugriff",
+                    "description": "Ihr Kontosicherheitsinformationen werden hier gespeichert — kümmern Sie sich darum!",
+                    "MFA": "Multi-Faktor-Authentifizierung",
+                    "MFAdescription": "Die Einrichtung einer Authentifizierungs-App ist eine gute Möglichkeit, Ihrem Account eine zusätzliche Sicherheitsebene hinzuzufügen, um sicherzustellen, dass nur Sie sich einloggen können.",
+                    "showCodes": "Backup-Codes anzeigen",
+                    "removeMFA": "MFA-Schutz entfernen",
+                    "passkeys": "Sicherheitsschlüssel",
+                    "passkeysDescription": "Fügen Sie Ihrem Account zusätzliche Sicherheitsebene mit einem Sicherheitsschlüssel hinzu.",
+                    "changePassword": "Passwort ändern",
+                    "deleteAccount": "Account löschen"
+                }
+            },
+            "teams": {
+                "label": "Teams"
+            }
+        }
+    },
+    "about": {
+        "label": "Über Launchpad",
+        "copyrightNotice": "Urheberrechtshinweis",
+        "copyrightText": "B9 Creators und Launchpad, sowie B9 Creators und Launchpads Logo sind eingetragene Warenzeichen von B9 Creators im Vereinigten Königreich und/oder anderen Länder. Alle anderen Marken sind Eigentum ihrer jeweiligen Inhaber."
+    }
 }

@@ -10,10 +10,19 @@
     scrollbar-color: var(--muted) transparent;
 }
 
+#root {
+    height: 100vh;
+}
+
 /* Common layout settings */
 
 .guest__layout h1, .intro-layout__wrap h1 {
     font: var(--font-title-large)
+}
+
+.guest__layout .hero-heading {
+    font-size: 128px;
+    color: var(--access);
 }
 
 body {
@@ -136,7 +145,14 @@ main.main-layout__content {
     }
 
     .modal__content {
-        width: 480px;
+        max-width: min(100%, 540px);
+        min-width: 480px;
+    }
+
+    .modal__content form {
+        display: inherit;
+        gap: inherit;
+        flex-direction: inherit;
     }
 
 /* Guest layout settings */
@@ -929,6 +945,12 @@ nav {
 
     /* Tag colours */
 
+    .tag__wrap.access, .profile__picture.secondary {
+        background-color: var(--background-secondary);
+        color: var(--text);
+        fill: var(--text);
+    }
+
     .tag__wrap.access, .profile__picture.access {
         background-color: var(--background-access);
         color: var(--access);
@@ -1158,6 +1180,7 @@ Please consider alternatives before removing */
     }
 
     .profile__picture-lg {
+        font-size: 32px!important;
         width: 96px;
         height: 96px;
     }
@@ -1204,7 +1227,16 @@ Please consider alternatives before removing */
 }
 
 .content-window__label {
-    font: var(--font-section-title)
+    font: var(--font-section-title);
+    max-width: 100%;
+    overflow: hidden;
+    word-break: break-word;
+}
+
+.content-window__description {
+    max-width: 100%;
+    overflow: hidden;
+    word-break: break-word;
 }
 
 .app__logo {

@@ -1,6 +1,6 @@
 // TO DO: i18n localise
 
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import WindowComponent from '@/components/common/Window';
 import WindowBlock from '@/components/modules/FormBlock';
 import Button from '@/components/common/Button';
@@ -13,9 +13,14 @@ import FileUpload from '@/components/common/Input/FileUpload/FileUpload';
 import { supportedCountries } from "@functions/SupportedCountries";
 import { useTranslation } from 'react-i18next';
 import InputSelect from '@/components/common/Input/SelectInput';
+import { useUser } from '@/contexts/UserContext';
+import NewPassword, { NewPasswordRef } from '@/components/common/Input/NewPassword';
+import makeFetchRequest from '@/utils/fetch/makeFetchRequest';
+import ProfilePicturePlaceholder from '@/components/common/User/PicturePlaceholder';
 
 const SettingsAccount: React.FC = () => {
     const { t } = useTranslation('module-core');
+    const user = useUser();
 
     return (
         <>
@@ -25,14 +30,18 @@ const SettingsAccount: React.FC = () => {
             >   
                 <WindowBlock>
                     <div className='flex-row items-center gap-md'>
-                        <img className="profile__picture-lg" src="/storage/d70ee478ead2fef85d9a86575b6d0315.webp"></img>
-                        <h2>Tatiana Y.</h2>
+                        {user.picture.length !== 0 ? (
+                            <img className="profile__picture-lg" src="/storage/d70ee478ead2fef85d9a86575b6d0315.webp"></img>
+                        ) : (
+                            <ProfilePicturePlaceholder size='lg' label={user.name} color={'secondary'}/>
+                        )}
+                        <h2>{user.name}</h2>
                     </div>
                     <WindowBlock className={"gap-md"}>
                         <div className='flex-row justify-between items-center'>
                             <div className='gap-sm flex flex-col'>
                                 <em className='input__title'>{t('account.sections.account.personalInfo.name')}</em>
-                                <p>Tatiana Yakovleva</p>
+                                <p>{user.name}</p>
                             </div>
                             <Modal.Trigger content={<NamePopup/>} label='Edit name'>
                                 <Button inline={true} variant='secondary'>{t('edit', { ns: "general" })}</Button>
@@ -42,8 +51,16 @@ const SettingsAccount: React.FC = () => {
                             <div className='gap-sm flex flex-col'>
                                 <em className='input__title'>{t('account.sections.account.personalInfo.email')}</em>
                                 <div className='flex-col'>
-                                    <p>tyakovleva@b9creators.co.uk</p>
-                                    <small className='success'>Email address verified</small>
+                                    <p>{user.email}</p>
+                                    {user.isVerified === true ? (
+                                        <small className='success'>{t('account.sections.account.personalInfo.emailVerified')}</small>
+                                    ) : (
+                                        <small className='critical'>{t('account.sections.account.personalInfo.emailNotVerified')}.
+                                            <Modal.Trigger label='Verify your email' description={`We've sent you a verification code to ${user.email}. Please type it in to continue`} content={<VerifyEmailPopup/>}>
+                                                <a> {t('account.sections.account.personalInfo.verifyEmail')}.</a>
+                                            </Modal.Trigger>
+                                        </small>
+                                    )}
                                 </div>
                             </div>
                             <Button inline variant='secondary'>{t('edit', {ns: "general"})}</Button>
@@ -63,7 +80,7 @@ const SettingsAccount: React.FC = () => {
                             <div className='gap-sm flex flex-col'>
                                 <em className='input__title'>{t('account.sections.account.personalInfo.country')}</em>
                                 <div className='flex-col'>
-                                    <p>United Kingdom</p>
+                                    <p>{t(user.country, {ns: 'countries'})}</p>
                                 </div>
                             </div>
                             <Modal.Trigger content={<CountriesModal/>} label='Editing country...'>
@@ -114,7 +131,9 @@ const SettingsAccount: React.FC = () => {
                     ]}/>
                 </WindowBlock>
                 <div className='flex-row gap'>
-                    <Button label={t('account.sections.account.security.changePassword')}></Button>
+                    <Modal.Trigger label='Change password' content={<NewPasswordModal/>}>
+                        <Button label={t('account.sections.account.security.changePassword')}></Button>
+                    </Modal.Trigger>
                     <Button label={t('account.sections.account.security.deleteAccount')} variant="critical"></Button>
                 </div>
             </WindowComponent>
@@ -155,7 +174,7 @@ const NamePopup: React.FC = () => {
 
     return (
         <Form onSubmit={handleSubmit} showSubmitButton={false}>
-            <InputString ref={nameRef} title='New name' isMandatory type='string'></InputString>
+            <InputString ref={nameRef} label='New name' isMandatory type='string'></InputString>
             <Modal.Action action={[
                 { label: t('cancel', { ns: "general" }), variant: "secondary", onClick: closeModal},
                 { label: t('submit', { ns: "general" }), onClick: handleSubmit}]}>    
@@ -187,6 +206,7 @@ const PictureModal: React.FC = () => {
 const CountriesModal: React.FC = () => {
     const { closeModal } = useModal();
     const { t } = useTranslation();
+    const { country } = useUser();
 
     const regionOptions =
         supportedCountries.map((country: string) => ({
@@ -201,12 +221,94 @@ const CountriesModal: React.FC = () => {
 
     return (
         <Form onSubmit={handleSubmit} showSubmitButton={false}>
-            <InputSelect title={"Select new country"} options={regionOptions}/>
+            <InputSelect value={country} label={"Select new country"} options={regionOptions}/>
 
             <Modal.Action action={[
                 { label: t('cancel', { ns: "general" }), variant: "secondary", onClick: closeModal },
                 { label: t('submit', { ns: "general" }), trigger: {content: <p>Hello world!</p>}, triggerOnSuccess: true, onClick: handleSubmit }]}>
             </Modal.Action>
+        </Form>
+    )
+}
+
+const VerifyEmailPopup = () => {
+    const { closeModal } = useModal();
+    const { t } = useTranslation('module-core');
+    const { email } = useUser();
+
+    const handleSubmit = async () => {
+        return;
+    }
+
+    return (
+        <Form onSubmit={handleSubmit} showSubmitButton={false}>
+            <InputString label={`6-digit verification code`} isMandatory type='string'></InputString>
+            <Modal.Action action={[
+                { label: t('cancel', { ns: 'general' }), onClick: closeModal, variant: 'secondary' },
+                { label: t('submit', { ns: 'general' }), type: 'submit', onClick: handleSubmit }
+            ]}></Modal.Action>
+        </Form>
+    )
+}
+
+const NewPasswordModal = () => {
+    const { closeModal } = useModal();
+    const newPasswordRef = useRef<NewPasswordRef>(null);
+    const oldPasswordRef = useRef<InputStringRef>(null);
+    const [error, setError] = useState<false | string>(false);
+    const { t } = useTranslation('module-core');
+
+    const handleSubmit = async () => {
+        if(!oldPasswordRef.current || !newPasswordRef.current) return;
+        const oldPassword = oldPasswordRef.current;
+        const newPasswordInput = newPasswordRef.current;
+
+        if(oldPassword.value.length < 8) {
+            oldPassword.error('Invalid old password, please try again');
+            return;
+        }
+
+        const newPassword = newPasswordInput.validate();
+        if(newPassword === false) return;
+
+        const { status } = await makeFetchRequest({
+            url: '/profile/change-password',
+            method: "POST",
+            body: {current_password: oldPassword.value, new_password: newPassword},
+            credentials: 'include'
+        })
+
+        switch(status) {
+            case 422: {
+                setError('New password cannot be the same as old password.');
+                break;
+            }
+            case 401: {
+                oldPassword.error('Incorrect password, please try again.')
+                setError(false);
+                break;
+            }
+            case 200: {
+                closeModal();
+            }
+        }
+
+        return;
+    }
+
+    return (
+        <Form onSubmit={handleSubmit} showSubmitButton={false}>
+            <WindowBlock>
+                <InputString ref={oldPasswordRef} label='Old password' isMandatory type='password'></InputString>
+                <NewPassword ref={newPasswordRef}></NewPassword>
+                {error !== false && (
+                    <p className="input__error-message">{error}</p>
+                )}
+            </WindowBlock>
+            <Modal.Action action={[
+                { label: t('cancel', {ns: 'general'}), onClick: closeModal, variant: 'secondary'},
+                { label: t('submit', { ns: 'general'}), type: 'submit', onClick: handleSubmit}
+            ]}></Modal.Action>
         </Form>
     )
 }

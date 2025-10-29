@@ -25,7 +25,7 @@ describe("FileUpload.tsx && File.tsx", () => {
 
     render(
       <FileUpload
-        title="Upload"
+        label="Upload"
         accept=".txt"
         allowMultiple={false}
         onFilesSelected={handleFilesSelected}

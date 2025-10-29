@@ -55,13 +55,12 @@ const FilePreview: React.FC<FilePreviewProps> = ({ file, editMode, handleClick }
                     <IconFileTypeOther className="file-preview__icon"></IconFileTypeOther>
                 )}
                 <div className="file-preview__content">
-                    <p><strong className="file-preview__name">{file.name}</strong></p>
+                    <em className="file-preview__name">{file.name}</em>
                     <small>{formatBytes(file.size)}</small>
                 </div>
             </div>
             <div className="file-preview__controls">
                 <Button onClick={handleClick} variant={editMode === true ? 'critical' : 'primary'} icon={editMode === true ? <IconBin></IconBin> : <IconSecurity></IconSecurity>}>
-                    Hello
                 </Button>
             </div>
         </div>

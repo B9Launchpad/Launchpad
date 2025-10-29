@@ -12,9 +12,9 @@ export async function getLocaleFromCookies() {
 }
 
 // Retrieve locale from headers
-export function getLocaleFromHeaders(): string {
+export async function getLocaleFromHeaders(): Promise<string> {
   try {
-    const headers = require('next/headers').headers()
+    const headers = await require('next/headers').headers()
     const acceptLanguage = headers.get('accept-language')
     if (acceptLanguage) {
       // First (most preferred)

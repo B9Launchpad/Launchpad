@@ -47,6 +47,10 @@ small.success, p.success, em.success {
     color: var(--success)
 }
 
+small.critical, p.critical, em.critical {
+    color: var(--critical);
+}
+
 strong {
     color: inherit;
     font-weight: var(--font-weight-bold);

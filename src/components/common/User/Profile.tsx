@@ -7,14 +7,15 @@ export interface ProfileProps {
     picture: string;
 }
 
+export const formatName = (name: [string, string]) => {
+    let firstName: string = name[0];
+    let lastName: string = name[1];
+
+    return `${firstName} ${lastName.charAt(0)}.`
+}
+
 // Declaration of Button component with its configured props and styles
 const Profile: React.FC<ProfileProps> = ({ onClick, name, email, picture }) => {
-    const formatName = (name: [string, string]) => {
-        let firstName: string = name[0];
-        let lastName: string = name[1];
-
-        return `${firstName} ${lastName.charAt(0)}.`
-    }
 
     return (
         <div className="profile__wrap">

@@ -8,7 +8,7 @@ interface ProfilePicturePlaceholderProps {
 
 const ProfilePicturePlaceholder: React.FC<ProfilePicturePlaceholderProps> = ({ label, color, size = "base"}) => {
     return (
-        <div className={`profile__picture profile__picture-sm profile__picture--placeholder ${color}`}>
+        <div className={`profile__picture profile__picture-${size} profile__picture--placeholder ${color}`}>
             {label.charAt(0).toUpperCase()}
         </div>
     )

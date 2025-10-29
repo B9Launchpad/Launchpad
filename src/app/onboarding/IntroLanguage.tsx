@@ -76,9 +76,9 @@ const OnboardingLanguage: React.FC<OnboardingProps> = ({onNext, data}) => {
         <IntroLayout>
             <div className="intro__content">
                 <h1>{t('greeting')}</h1>
-                <InputSelect options={languageOptions} value={preferredLanguage} onChange={handleChange} title={t('chooseYourLanguage')}>
+                <InputSelect options={languageOptions} value={preferredLanguage} onChange={handleChange} label={t('chooseYourLanguage')}>
                 </InputSelect>
-                <InputSelect options={regionOptions} onChange={handleRegionChange} title={t('chooseYourRegion')}>
+                <InputSelect options={regionOptions} onChange={handleRegionChange} label={t('chooseYourRegion')}>
                 </InputSelect>
                 <Button onClick={handleSubmit}>{t("continue", {ns: "general"})}</Button>
             </div>

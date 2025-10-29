@@ -13,6 +13,7 @@
                     "email": "Email address",
                     "emailVerified": "Email address verified",
                     "emailNotVerified": "Email address must be verified",
+                    "verifyEmail": "Verify",
 
                     "profilePicture": "Profile picture",
                     "country": "Country",

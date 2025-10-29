@@ -180,7 +180,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             return (
                 <div className="settings__content--wrap">
                     <PageHeader 
-                        title={activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label} 
+                        label={activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label} 
                         settingsPath={true} 
                         path={[{ slug: (activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label) }]}
                     />
@@ -204,7 +204,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
         return (
             <div className="settings__content--wrap">
                 <PageHeader 
-                    title={activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label}
+                    label={activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label}
                     settingsPath={true} 
                     path={[{ slug: (activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label) }]}
                 />

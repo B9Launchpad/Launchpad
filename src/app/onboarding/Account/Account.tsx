@@ -39,13 +39,13 @@ const OnboardingAccount: React.FC<OnboardingProps> = ({ onNext, data }) => {
         <IntroLayout>
             <div className="intro__content">
                 <h1>{t('personalDetails.title')}</h1>
-                <InputString ref={nameRef} autoComplete={"name"} title={t('personalDetails.name')} isMandatory={true} type="string"></InputString>
-                <InputString ref={emailRef} autoComplete={"email"} title={t('personalDetails.email')} value="gsafiannikov@b9creators.co.uk" disabled={true} isMandatory={true} type="string">
+                <InputString ref={nameRef} autoComplete={"name"} label={t('personalDetails.name')} isMandatory={true} type="string"></InputString>
+                <InputString ref={emailRef} autoComplete={"email"} label={t('personalDetails.email')} value="gsafiannikov@b9creators.co.uk" disabled={true} isMandatory={true} type="string">
                     <small>
                         {t('personalDetails.wrongEmail')} <Link href={'/login/reset'}>{t('personalDetails.otherEmail')}</Link>
                     </small>
                 </InputString>
-                <FileUpload accept=".png" title={t('personalDetails.picture')} description={t('personalDetails.pictureInstructions')} allowMultiple={false}></FileUpload>
+                <FileUpload accept=".png" label={t('personalDetails.picture')} description={t('personalDetails.pictureInstructions')} allowMultiple={false}></FileUpload>
                 <Button onClick={handleSubmit}>{t("continue", {ns: "general"})}</Button>
             </div>
             <p>Some shits here</p>

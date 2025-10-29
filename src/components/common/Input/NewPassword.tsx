@@ -96,7 +96,7 @@ const NewPassword = forwardRef<NewPasswordRef>((_props, ref) => {
     return (
         <>
             <div className="input__wrap">
-                <InputString type="password" autoComplete="new-password" title={t('newPassword.password')} isMandatory={true} onChange={(e) => handleChange(e)}>
+                <InputString type="password" autoComplete="new-password" label={t('newPassword.password')} isMandatory={true} onChange={(e) => handleChange(e)}>
                 <div className="input-requirements__wrap">
                     <p>{t('newPassword.instructions')}</p>
                     <div className="input-requirements__content">
@@ -127,7 +127,7 @@ const NewPassword = forwardRef<NewPasswordRef>((_props, ref) => {
                 </InputString>
             </div>
             <animated.div className="input__wrap" ref={contentRef} style={style}>
-                <InputString disabled={!expanded} ref={inputRef} onChange={(e) => handleRepeatChange(e)} title={t('newPassword.repeatPassword')} error={passwordError !== null ? passwordError : ""} autoComplete="new-password" isMandatory={true} type="password"></InputString>
+                <InputString disabled={!expanded} ref={inputRef} onChange={(e) => handleRepeatChange(e)} label={t('newPassword.repeatPassword')} error={passwordError !== null ? passwordError : ""} autoComplete="new-password" isMandatory={true} type="password"></InputString>
             </animated.div>
         </>
     );

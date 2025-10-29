@@ -26,7 +26,7 @@ export default async function RootLayout({
 }) {
   let { locale, cookieFound } = await getLocaleFromCookies();
   if(!cookieFound) {
-    locale = getLocaleFromHeaders();
+    locale = await getLocaleFromHeaders();
   }
 
   let initialStore = {}

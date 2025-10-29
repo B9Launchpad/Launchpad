@@ -23,7 +23,7 @@ const Button: React.FC<ButtonProps> = ({ children, inline = false, label = child
     const [isDisabled, setIsDisabled] = useState<boolean>(disabled);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    if(!label && !children) throw new Error("Missing required prop: 'label' or 'children' must be provided, but received 'undefined'");
+    if(!label && !children && !icon) throw new Error("Missing required prop: 'label', 'children' or 'icon' must be provided, but received 'undefined'");
     // if(typeof label !== undefined && typeof children !== undefined) throw new Error("Invalid prop combination: 'label' and 'children' provided, but expected either 'label' or 'children'");
     // CONSIDER CLEANUP!
     const fetchStatus = useFetchStatus();

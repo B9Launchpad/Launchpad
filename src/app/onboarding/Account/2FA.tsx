@@ -31,7 +31,7 @@ const Onboarding2FA: React.FC<OnboardingProps> = ({ onNext }) => {
                     />
                 </small>
 
-                <InputString maxLength={6} title={t('security.2FA.6digitCode')} type="string" isMandatory={true} description={t('security.2FA.6digitCodeInstructions')}></InputString>
+                <InputString maxLength={6} label={t('security.2FA.6digitCode')} type="string" isMandatory={true} description={t('security.2FA.6digitCodeInstructions')}></InputString>
 
                 <Button onClick={() => onNext()}>{t("continue", {ns: "general"})}</Button>
             </div>

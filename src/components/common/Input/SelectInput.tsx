@@ -7,7 +7,7 @@ type InputSelectOptions = Array<
     }>
 
 interface InputProps {
-    title: string;
+    label: string;
     description?: string;
     options: InputSelectOptions;
     onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
@@ -16,13 +16,13 @@ interface InputProps {
     disabled?: boolean;
 }
 
-const InputSelect: React.FC<InputProps> = ({ expand = false, disabled = false, title, description, options, onChange, value, ...props}) => {
+const InputSelect: React.FC<InputProps> = ({ expand = false, disabled = false, label, description, options, onChange, value, ...props}) => {
 
     return (
         <div className={`input__wrap ${expand ? "expand" : ""}`}>
                 <div className="input__content">
                 <span className="input__title-content">
-                    <p className="input__title">{title}</p>
+                    <p className="input__title">{label}</p>
                 </span>
                 {description && (<p className="input__description">{description}</p>)}
             </div>

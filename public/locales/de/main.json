@@ -13,5 +13,12 @@
             "panelSettings": "App-Einstellungen",
             "logout": "Abmelden"
         }
+    },
+    "errors": {
+        "back": "Zurück zum Dashboard",
+        "404": {
+            "subtitle": "Leider konnte diese Seite auf Ihrem Launchpad nicht gefunden werden.",
+            "description": "Wenn Sie die Adresse manuell getippt haben, überprüfen Sie, ob sie richtig ist."
+        }
     }
 }

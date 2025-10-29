@@ -1,10 +1,10 @@
 import { forwardRef, useEffect, useRef, useState, useImperativeHandle } from "react";
 import useLastInteractionKeyboard from "../../../functions/useLastInteractionKeyboard";
 
-export type autoComplete = 'on' | 'off' | 'username email' | 'address-line1' | 'address-line2' | 'address-line3' | 'address-level1' | 'address-level2' | 'address-level3' | 'address-level4' | 'street-address' | 'country' | 'country-name' | 'postal-code' | 'name' | 'additional-name' | 'family-name' | 'given-name' | 'honoric-prefix' | 'honoric-suffix' | 'nickname' | 'organization-title' | 'username' | 'new-password' | 'current-password' | 'bday' | 'bday-day' | 'bday-month' | 'bday-year' | 'sex' | 'one-time-code' | 'organization' | 'cc-name' | 'cc-given-name' | 'cc-additional-name' | 'cc-family-name' | 'cc-number' | 'cc-exp' | 'cc-exp-month' | 'cc-exp-year' | 'cc-csc' | 'cc-type' | 'transaction-currency' | 'transaction-amount'| 'language' | 'url' | 'email' | 'photo' | 'tel' | 'tel-country-code' | 'tel-national' | 'tel-area-code' | 'tel-local' | 'tel-local-prefix' | 'tel-local-suffix' | 'tel-extension' | 'impp';
+export type autoComplete = 'on' | 'off' | 'username email' | 'address-line1' | 'address-line2' | 'address-line3' | 'address-level1' | 'address-level2' | 'address-level3' | 'address-level4' | 'street-address' | 'country' | 'country-name' | 'postal-code' | 'name' | 'additional-name' | 'family-name' | 'given-name' | 'honoric-prefix' | 'honoric-suffix' | 'nickname' | 'organization-label' | 'username' | 'new-password' | 'current-password' | 'bday' | 'bday-day' | 'bday-month' | 'bday-year' | 'sex' | 'one-time-code' | 'organization' | 'cc-name' | 'cc-given-name' | 'cc-additional-name' | 'cc-family-name' | 'cc-number' | 'cc-exp' | 'cc-exp-month' | 'cc-exp-year' | 'cc-csc' | 'cc-type' | 'transaction-currency' | 'transaction-amount'| 'language' | 'url' | 'email' | 'photo' | 'tel' | 'tel-country-code' | 'tel-national' | 'tel-area-code' | 'tel-local' | 'tel-local-prefix' | 'tel-local-suffix' | 'tel-extension' | 'impp';
 
 interface SmallInputProps {
-    title: string;
+    label: string;
     placeholder?: string;
     type: "string" | "number" | "float" | "password";
     children?: React.ReactNode;
@@ -28,7 +28,7 @@ export type InputStringRef = HTMLInputElement & {
   error: (message: string) => void;
 };
 
-const InputString = forwardRef<InputStringRef, SmallInputProps>(({ title, placeholder, id, autofocus, onChange, type = 'text', children, error = "", value = "", maxLength, autoComplete = 'off', name, disabled = false, isMandatory, description, expand = false}, ref) => {
+const InputString = forwardRef<InputStringRef, SmallInputProps>(({ label, placeholder, id, autofocus, onChange, type = 'text', children, error = "", value = "", maxLength, autoComplete = 'off', name, disabled = false, isMandatory, description, expand = false}, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [inputValue, setInputValue] = useState<string>(value);
     const [charCount, setCharCount] = useState(value?.length);
@@ -86,7 +86,7 @@ const InputString = forwardRef<InputStringRef, SmallInputProps>(({ title, placeh
         <div className={`input__wrap ${expand ? 'expand' : ''}`}>
             <div className={`input__content ${disabled === true ? 'disabled' : ''}`}>
                 <span className="input__title-content">
-                    <p className="input__title">{title}</p>
+                    <p className="input__title">{label}</p>
                     {isMandatory && (<p className="input__mandatory">*</p>)}
                 </span>
                 {description && (<p className="input__description">{description}</p>)}

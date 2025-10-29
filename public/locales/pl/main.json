@@ -13,5 +13,12 @@
             "panelSettings": "Ustawiena aplikacji",
             "logout": "Wyloguj"
         }
+    },
+    "errors": {
+        "back": "Wrócz do Dashboard",
+        "404": {
+            "subtitle": "Niestety, ta strona nie była znaleziona na Twoim Launchpadzie",
+            "description": "Jeśli wpisałeś adres ręcznie, sprawdź czy jest on poprawny."
+        }
     }
 }

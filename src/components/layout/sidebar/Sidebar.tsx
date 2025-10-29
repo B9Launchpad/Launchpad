@@ -7,6 +7,7 @@ import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
 import SettingsIcon from "@/components/icons/Settings";
 import { useView } from "@/contexts/ViewContext";
+import { useUser } from "@/contexts/UserContext";
 
 interface SidebarComponentProps {
     items?: SidebarItems;
@@ -19,6 +20,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ items, profile }) =
     const { query } = useSearch();
     const { t } = useTranslation('main')
     const { setShowSettings } = useView();
+    const { name, email } = useUser();
 
     const filteredItems = useMemo(() => {
         if (!items) return [];
@@ -55,7 +57,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ items, profile }) =
             <div className="sidebar__items--low">
                 <SidebarItem onClick={() => {setShowSettings(true)}} label={t('modules.settings.label')} type="secondary" icon={<SettingsIcon/>}/>
             </div>
-            <Profile name={profile.name} email={profile.email} picture={profile.picture}/>
+            <Profile name={profile.name} email={email} picture={profile.picture}/>
         </nav>
     )
 }

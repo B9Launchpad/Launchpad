@@ -80,7 +80,7 @@ const ModalTrigger: React.FC<ModalTriggerProps> = ({
 };
 
 export interface ModalActionButtonProps extends ButtonProps {
-    onClick?: () => void | boolean;
+    onClick?: () => void | boolean | Promise<void> | Promise<boolean>;
     trigger?: Omit<ModalTriggerProps, "children">;
     triggerOnSuccess?: boolean;
 }

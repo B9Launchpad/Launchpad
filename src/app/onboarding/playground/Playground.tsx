@@ -121,17 +121,17 @@ const handleGet = () => {
       <SidebarItem label={"Settings"} type={"secondary"} items={[{label: 'Hello world!', url: '/hello-world'}, {label: 'Hello world!', url: '/hello-world'}, {label: 'Hello world!', url: '/hello-world'}]} icon={<SettingsIcon/>}></SidebarItem>
 
       <Profile name={["Tatiana", "Yakovleva"]} email="tyakovleva@b9creators.co.uk" picture="/storage/d70ee478ead2fef85d9a86575b6d0315.webp"></Profile>
-      <InputString isMandatory={true} title={'Hello world!'} description={'This is where you type something'} type={'string'}/>
+      <InputString isMandatory={true} label={'Hello world!'} description={'This is where you type something'} type={'string'}/>
 
       
-      <FileUpload accept='.png .jpg .zip' title='Profile picutre' description="Upload sm" allowMultiple={false}></FileUpload>
+      <FileUpload accept='.png .jpg .zip' label='Profile picutre' description="Upload sm" allowMultiple={false}></FileUpload>
       
       <NewPassword></NewPassword>
 
       <InputCheckbox onToggle={(id) => { return }} label={"Hello world!"} options={checkboxOptions} description='Hello world!'></InputCheckbox>
 
       <InputRadio onToggle={() => { return }} options={options}></InputRadio>
-      <InputChips maxArrayLength={10} validation={[validateEmail, "Incorrect data"]} title={"Invite users to register"} type='string' isMandatory={false}></InputChips>
+      <InputChips maxArrayLength={10} validation={[validateEmail, "Incorrect data"]} label={"Invite users to register"} type='string' isMandatory={false}></InputChips>
     </section>
   );
 }

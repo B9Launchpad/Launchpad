@@ -35,7 +35,7 @@ const makeFetchRequest = async ({ url, method = 'POST', body, credentials }: Fet
         });
 
         return {
-            response: response,
+            response: response as Response,
             status: response.status,
             success: true
         };

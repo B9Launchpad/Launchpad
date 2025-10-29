@@ -12,6 +12,7 @@
                     "email": "Adres e-mail",
                     "emailVerified": "Adres e-mail zweryfikowany",
                     "emailNotVerified": "Adres e-mail musi zostać zweryfikowany",
+                    "verifyEmail": "Zweryfikować",
 
                     "profilePicture": "Zdjęcie profilowe",
                     "country": "Kraj",

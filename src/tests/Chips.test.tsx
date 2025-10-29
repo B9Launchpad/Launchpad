@@ -16,14 +16,14 @@ describe("Chips input component ", () => {
     it("renders children", () => {
         (useLastInteractionKeyboard as jest.Mock).mockReturnValue(false);
 
-        render(<InputChips type="string" isMandatory={false} title="Hello world">Put chips in</InputChips>);
+        render(<InputChips type="string" isMandatory={false} label="Hello world">Put chips in</InputChips>);
         expect(screen.getByText("Put chips in")).toBeInTheDocument();
     })
 
     it("renders mandatory star", () => {
         (useLastInteractionKeyboard as jest.Mock).mockReturnValue(false);
 
-        render(<InputChips type="string" isMandatory={true} title="Hello world"></InputChips>);
+        render(<InputChips type="string" isMandatory={true} label="Hello world"></InputChips>);
         expect(screen.getByText("Hello world")).toBeInTheDocument();
         expect(screen.getByText("*")).toBeInTheDocument();
     });
@@ -31,7 +31,7 @@ describe("Chips input component ", () => {
     it("updates input while typing", () => {
         (useLastInteractionKeyboard as jest.Mock).mockReturnValue(false);
 
-        render(<InputChips type="string" isMandatory title="Hello world"></InputChips>);
+        render(<InputChips type="string" isMandatory label="Hello world"></InputChips>);
         const input = screen.getByRole("textbox");
 
         fireEvent.change(input, {target: {value: "Hello"}});
@@ -41,7 +41,7 @@ describe("Chips input component ", () => {
     it("adds a chip when clicking + button", () => {
         (useLastInteractionKeyboard as jest.Mock).mockReturnValue(false);
 
-        render(<InputChips type="string" isMandatory title="Hello world"></InputChips>);
+        render(<InputChips type="string" isMandatory label="Hello world"></InputChips>);
         const input = screen.getByRole("textbox");
         const button = screen.getByRole("button", {name: "+"});
 
@@ -54,7 +54,7 @@ describe("Chips input component ", () => {
     it("adds a chip when pressing Enter", () => {
         (useLastInteractionKeyboard as jest.Mock).mockReturnValue(false);
 
-        render(<InputChips type="string" isMandatory title="Hello world"></InputChips>);
+        render(<InputChips type="string" isMandatory label="Hello world"></InputChips>);
         const input = screen.getByRole("textbox");
 
         fireEvent.change(input, {target: {value: "chip"}});
@@ -66,7 +66,7 @@ describe("Chips input component ", () => {
     it("removes a chip when bin icon clicked", () => {
         (useLastInteractionKeyboard as jest.Mock).mockReturnValue(false);
 
-        render(<InputChips title="Tags" isMandatory type={"string"} chips={["toRemove"]} />);
+        render(<InputChips label="Tags" isMandatory type={"string"} chips={["toRemove"]} />);
         const chip = screen.getByText("toRemove");
 
         fireEvent.click(screen.getByText("toRemove"));
@@ -77,7 +77,7 @@ describe("Chips input component ", () => {
         (useLastInteractionKeyboard as jest.Mock).mockReturnValue(false);
 
         const validation = [(val: string) => val.length > 3, "Too short!"];
-        render(<InputChips type="string" isMandatory title="Hello world" validation={validation as any}></InputChips>);
+        render(<InputChips type="string" isMandatory label="Hello world" validation={validation as any}></InputChips>);
 
         const input = screen.getByRole("textbox");
         const button = screen.getByRole("button", {name: "+"});
@@ -92,7 +92,7 @@ describe("Chips input component ", () => {
         (useLastInteractionKeyboard as jest.Mock).mockReturnValue(false);
 
         const ref = createRef<InputChipsRef>();
-        render(<InputChips type="string" isMandatory title="Hello world" ref={ref}/>);
+        render(<InputChips type="string" isMandatory label="Hello world" ref={ref}/>);
 
         const input = screen.getByRole("textbox");
         const button = screen.getByRole("button", { name: "+" });
@@ -112,7 +112,7 @@ describe("Chips input component ", () => {
     it("adds focus on keyboard focus", () => {
         (useLastInteractionKeyboard as jest.Mock).mockReturnValue(true);
 
-        render(<InputChips type="string" isMandatory title="Hello world"/>);
+        render(<InputChips type="string" isMandatory label="Hello world"/>);
         const input = screen.getByRole("textbox");
 
         fireEvent.focus(input);

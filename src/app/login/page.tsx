@@ -12,7 +12,7 @@ export default function Page() {
 
   return (
     <LoginProvider>
-      <GuestLayout backgroundURL={`/static/GuestLayout/Skyline${isDarkTheme === true ? 'Dark' : ""}.webp`}>
+      <GuestLayout backgroundURL={`/static/guest-layout/dusseldorf.webp`}>
         <LoginFlow />
       </GuestLayout>
     </LoginProvider>

@@ -13,7 +13,7 @@ if (!i18nInstance.isInitialized) {
     .init({
       ...commonConfig,
       backend: {
-        loadPath: '/api/get-locale/{{lng}}/{{ns}}.json'
+        loadPath: '/api/locale/{{lng}}/{{ns}}.json'
       },
       detection: {
         order: ['localStorage', 'cookie', 'navigator'],

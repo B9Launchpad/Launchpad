@@ -7,7 +7,7 @@ import FilePreview from "./File";
 
 
 interface FileUploadProps {
-    title?: string;
+    label?: string;
     description?: string;
     isMandatory?: boolean;
     error?: string;
@@ -19,7 +19,7 @@ interface FileUploadProps {
 }
 
 const FileUpload: React.FC<FileUploadProps> = ({
-    title,
+    label,
     description,
     isMandatory = false,
     error = null,
@@ -109,8 +109,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
     return (
         <div className="input__wrap">
             <div className="input__content">
-                {title && (<span className="input__title-content">
-                    <p className="input__title">{title}</p>
+                {label && (<span className="input__title-content">
+                    <p className="input__title">{label}</p>
                     {isMandatory && <p className="input__mandatory">*</p>}
                 </span>)}
                 <p className="input__description">{description} {t('fileupload.supportedFormats', { formats: supportedFormats.join(", ") })}</p>

@@ -16,7 +16,6 @@ function generateManifest() {
                 const manifestPath = join(fullPath, 'module.manifest.ts');
 
                 try {
-                    // Проверяем существует ли module.manifest.ts
                     if (statSync(manifestPath).isFile()) {
                         const settingsDir = join(fullPath, 'settings');
                         const hasSettings = statSync(settingsDir).isDirectory();
@@ -37,7 +36,6 @@ function generateManifest() {
                     }
                 } catch (error) {
                     if (error.code === 'ENOENT') {
-                        // Если manifest файл не найден, пропускаем эту директорию
                         console.warn(`module.manifest.ts not found for module "${item}" in ${fullPath}`);
                         continue;
                     }

@@ -6,7 +6,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 interface UserContextProps {
     os: string;
-    name: string;
+    name: string[];
     email: string;
     isVerified: boolean;
     country: string;
@@ -66,7 +66,7 @@ export const UserProvider = ({ children, os }: {children: React.ReactNode, os: s
     )
 
     return (
-        <UserContext.Provider value={{os, name: userData.username, email: userData.email, isVerified: userData.is_verified, country: userData.country, picture: userData.picture}}>
+        <UserContext.Provider value={{os, name: userData.username.split(" "), email: userData.email, isVerified: userData.is_verified, country: userData.country, picture: userData.picture}}>
             {children}
         </UserContext.Provider>
     )

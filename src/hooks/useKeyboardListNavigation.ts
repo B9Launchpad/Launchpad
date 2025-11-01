@@ -17,6 +17,7 @@ export function useKeyboardListNavigation<T>({
   const lastInteractionWasKeyboard = useLastInteractionKeyboard();
 
   const handleKeyDown = (e: KeyboardEvent<HTMLElement>) => {
+    
     if (e.key === "ArrowDown" || e.key === "ArrowRight") {
       e.preventDefault();
       setFocusedIndex((prev) => (prev + 1) % items.length);

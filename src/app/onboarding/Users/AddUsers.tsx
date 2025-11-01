@@ -34,7 +34,7 @@ const OnboardingAddUsers: React.FC<OnboardingProps> = ({ onNext, data }) => {
         <IntroLayout>
             <div className="intro__content">
                 <h1>Your employees</h1>
-                <InputChips maxArrayLength={10} ref={addUsersRef} type="string" autoComplete="email" isMandatory={false} label="Invite users to register" description="Please type the e-mail addresses of people you would like to add to this panel. You may add up to 10 people here – you will be able to add more later in settings."></InputChips>
+                <InputChips maxArrayLength={10} ref={addUsersRef} type="string" autoComplete="email" required={false} label="Invite users to register" description="Please type the e-mail addresses of people you would like to add to this panel. You may add up to 10 people here – you will be able to add more later in settings."></InputChips>
                 <Button onClick={handleSubmit}>{t("continue", {ns: "general"})}</Button>
             </div>
             <p>Some shits here</p>

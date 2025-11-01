@@ -14,6 +14,7 @@ import HeaderSectionBrowser from "./header/SectionBrowser";
 import makeFetchRequest from "@/utils/fetch/makeFetchRequest";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import { useModal } from "@/contexts/ModalContext";
 
 interface LayoutSettingsProps {
     children?: React.ReactNode;
@@ -36,6 +37,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
     const [activeComponent, setActiveComponent] = useState<React.ComponentType | null>(null);
     const [isLoading, setIsLoading] = useState(false);
     const containerRef = useRef<HTMLDivElement>(null);
+    const { isOpen } = useModal();
     
     const { registeredPages, getPagesByCategory, loadComponent, loadedComponents } = useSettingsRegistry();
 
@@ -180,7 +182,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             return (
                 <div className="settings__content--wrap">
                     <PageHeader 
-                        label={activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label} 
+                        title={activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label} 
                         settingsPath={true} 
                         path={[{ slug: (activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label) }]}
                     />
@@ -204,7 +206,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
         return (
             <div className="settings__content--wrap">
                 <PageHeader 
-                    label={activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label}
+                    title={activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label}
                     settingsPath={true} 
                     path={[{ slug: (activePageState.page.ns ? t(activePageState.page.label, { ns: activePageState.page.ns }) : activePageState.page.label) }]}
                 />

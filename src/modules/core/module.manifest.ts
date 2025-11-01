@@ -25,16 +25,30 @@ export const moduleManifest: ModuleManifest = {
             ]
         },
         {
-            id: 'about',
+            id: 'core.launchpad.about',
             label: 'about.label',
             folderName: "about",
             category: 'misc',
             sections: [
                 {
                     id: 'about',
-                    label: 'About',
+                    label: 'about.label',
                     default: true,
                     fileName: "about.tsx"
+                }
+            ]
+        },
+        {
+            id: 'core.launchpad.general',
+            label: 'general.label',
+            folderName: 'general',
+            category: 'panel',
+            sections: [
+                {
+                    id: 'general',
+                    label: 'general.label',
+                    default: true,
+                    fileName: 'general.tsx'
                 }
             ]
         }

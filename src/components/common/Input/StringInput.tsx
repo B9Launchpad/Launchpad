@@ -17,7 +17,7 @@ interface SmallInputProps {
     autoComplete?: autoComplete;
     autofocus?: boolean;
     disabled?: boolean;
-    isMandatory: boolean;
+    required?: boolean;
     description?: string;
     expand?: boolean;
 }
@@ -28,7 +28,7 @@ export type InputStringRef = HTMLInputElement & {
   error: (message: string) => void;
 };
 
-const InputString = forwardRef<InputStringRef, SmallInputProps>(({ label, placeholder, id, autofocus, onChange, type = 'text', children, error = "", value = "", maxLength, autoComplete = 'off', name, disabled = false, isMandatory, description, expand = false}, ref) => {
+const InputString = forwardRef<InputStringRef, SmallInputProps>(({ label, placeholder, id, autofocus, onChange, type = 'text', children, error = "", value = "", maxLength, autoComplete = 'off', name, disabled = false, required, description, expand = false}, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [inputValue, setInputValue] = useState<string>(value);
     const [charCount, setCharCount] = useState(value?.length);
@@ -87,7 +87,7 @@ const InputString = forwardRef<InputStringRef, SmallInputProps>(({ label, placeh
             <div className={`input__content ${disabled === true ? 'disabled' : ''}`}>
                 <span className="input__title-content">
                     <p className="input__title">{label}</p>
-                    {isMandatory && (<p className="input__mandatory">*</p>)}
+                    {required && (<p className="input__mandatory">*</p>)}
                 </span>
                 {description && (<p className="input__description">{description}</p>)}
             </div>

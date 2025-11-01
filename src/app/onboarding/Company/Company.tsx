@@ -35,7 +35,7 @@ const OnboardingCompany: React.FC<OnboardingProps> = ({ onNext, data }) => {
         <IntroLayout>
             <div className="intro__content">
                 <h1>{t('company.title')}</h1>
-                <InputString ref={inputRef} autoComplete={"name"} label={t('company.name')} isMandatory={true} type="string" error=""></InputString>
+                <InputString ref={inputRef} autoComplete={"name"} label={t('company.name')} required={true} type="string" error=""></InputString>
                 <FileUpload accept={".png .svg .webp .jpg .jpeg"} label={t('company.logo')} description={t('company.logoInstructions', { productName: t('Launchpad', {ns: "general"})})} allowMultiple={false}></FileUpload>
                 <Button onClick={handleSubmit}>{t("continue", {ns: "general"})}</Button>
             </div>

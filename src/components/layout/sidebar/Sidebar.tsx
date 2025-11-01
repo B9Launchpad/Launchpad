@@ -57,7 +57,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ items, profile }) =
             <div className="sidebar__items--low">
                 <SidebarItem onClick={() => {setShowSettings(true)}} label={t('modules.settings.label')} type="secondary" icon={<SettingsIcon/>}/>
             </div>
-            <Profile name={profile.name} email={email} picture={profile.picture}/>
+            <Profile name={name} email={email} picture={profile.picture}/>
         </nav>
     )
 }

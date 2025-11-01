@@ -1,4 +1,3 @@
-// lib/theme-server.ts
 import { cookies } from 'next/headers';
 
 export type Theme = 'light' | 'dark' | 'auto';
@@ -20,14 +19,11 @@ export async function getServerTheme(): Promise<ThemeInfo> {
   const theme = (cookieStore.get('theme')?.value as Theme) || 'auto';
   const inferredTheme = cookieStore.get('inferredTheme')?.value as InferredTheme | undefined;
   
-  // Resolve the final theme to apply
-  let resolvedTheme: InferredTheme = 'light'; // default fallback
+  let resolvedTheme: InferredTheme = 'light';
   
   if (theme === 'auto') {
-    // Use inferred theme if available, otherwise default to light
     resolvedTheme = inferredTheme || 'light';
   } else {
-    // Use the explicitly set theme
     resolvedTheme = theme as InferredTheme;
   }
   
@@ -38,17 +34,11 @@ export async function getServerTheme(): Promise<ThemeInfo> {
   };
 }
 
-/**
- * Helper function to get the resolved theme class for HTML attributes
- */
 export async function getServerThemeClass(): Promise<string> {
   const { resolvedTheme } = await getServerTheme();
   return resolvedTheme;
 }
 
-/**
- * Helper function to get theme for data attributes
- */
 export async function getServerThemeData(): Promise<{ 'data-theme': InferredTheme }> {
   const { resolvedTheme } = await getServerTheme();
   return { 'data-theme': resolvedTheme };

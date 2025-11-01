@@ -33,15 +33,15 @@ const SettingsAccount: React.FC = () => {
                         {user.picture.length !== 0 ? (
                             <img className="profile__picture-lg" src="/storage/d70ee478ead2fef85d9a86575b6d0315.webp"></img>
                         ) : (
-                            <ProfilePicturePlaceholder size='lg' label={user.name} color={'secondary'}/>
+                            <ProfilePicturePlaceholder size='lg' label={user.name[0]} color={'secondary'}/>
                         )}
-                        <h2>{user.name}</h2>
+                        <h2>{user.name.join(" ")}</h2>
                     </div>
                     <WindowBlock className={"gap-md"}>
                         <div className='flex-row justify-between items-center'>
                             <div className='gap-sm flex flex-col'>
                                 <em className='input__title'>{t('account.sections.account.personalInfo.name')}</em>
-                                <p>{user.name}</p>
+                                <p>{user.name.join(" ")}</p>
                             </div>
                             <Modal.Trigger content={<NamePopup/>} label='Edit name'>
                                 <Button inline={true} variant='secondary'>{t('edit', { ns: "general" })}</Button>
@@ -56,14 +56,16 @@ const SettingsAccount: React.FC = () => {
                                         <small className='success'>{t('account.sections.account.personalInfo.emailVerified')}</small>
                                     ) : (
                                         <small className='critical'>{t('account.sections.account.personalInfo.emailNotVerified')}.
-                                            <Modal.Trigger label='Verify your email' description={`We've sent you a verification code to ${user.email}. Please type it in to continue`} content={<VerifyEmailPopup/>}>
-                                                <a> {t('account.sections.account.personalInfo.verifyEmail')}.</a>
-                                            </Modal.Trigger>
                                         </small>
                                     )}
                                 </div>
                             </div>
-                            <Button inline variant='secondary'>{t('edit', {ns: "general"})}</Button>
+                            <div className='flex-row gap-sm'>
+                                <Modal.Trigger label='Verify your email' description={`We've sent you a verification code to ${user.email}. Please type it in to continue`} content={<VerifyEmailPopup />}>
+                                    <Button inline variant='access'>{t('account.sections.account.personalInfo.verifyEmail')}</Button>
+                                </Modal.Trigger>
+                                <Button inline variant='secondary'>{t('edit', {ns: "general"})}</Button>
+                            </div>
                         </div>
                         <div className='flex-row justify-between items-center'>
                             <div className='gap-sm flex flex-col'>
@@ -174,7 +176,7 @@ const NamePopup: React.FC = () => {
 
     return (
         <Form onSubmit={handleSubmit} showSubmitButton={false}>
-            <InputString ref={nameRef} label='New name' isMandatory type='string'></InputString>
+            <InputString ref={nameRef} label='New name' required type='string'></InputString>
             <Modal.Action action={[
                 { label: t('cancel', { ns: "general" }), variant: "secondary", onClick: closeModal},
                 { label: t('submit', { ns: "general" }), onClick: handleSubmit}]}>    
@@ -242,7 +244,7 @@ const VerifyEmailPopup = () => {
 
     return (
         <Form onSubmit={handleSubmit} showSubmitButton={false}>
-            <InputString label={`6-digit verification code`} isMandatory type='string'></InputString>
+            <InputString label={`6-digit verification code`} required type='string'></InputString>
             <Modal.Action action={[
                 { label: t('cancel', { ns: 'general' }), onClick: closeModal, variant: 'secondary' },
                 { label: t('submit', { ns: 'general' }), type: 'submit', onClick: handleSubmit }
@@ -299,7 +301,7 @@ const NewPasswordModal = () => {
     return (
         <Form onSubmit={handleSubmit} showSubmitButton={false}>
             <WindowBlock>
-                <InputString ref={oldPasswordRef} label='Old password' isMandatory type='password'></InputString>
+                <InputString ref={oldPasswordRef} label='Old password' required type='password'></InputString>
                 <NewPassword ref={newPasswordRef}></NewPassword>
                 {error !== false && (
                     <p className="input__error-message">{error}</p>

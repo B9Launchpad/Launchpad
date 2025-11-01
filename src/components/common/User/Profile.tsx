@@ -2,13 +2,14 @@
 
 export interface ProfileProps {
     onClick?: () => void;
-    name: [string, string];
+    name: string[];
     email: string;
     picture: string;
 }
 
-export const formatName = (name: [string, string]) => {
+export const formatName = (name: string[]) => {
     let firstName: string = name[0];
+    if(!name[1]) return firstName;
     let lastName: string = name[1];
 
     return `${firstName} ${lastName.charAt(0)}.`

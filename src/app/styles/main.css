@@ -345,11 +345,13 @@ button {
         color: var(--access);
         fill: var(--access);
         background-color: var(--background-access);
+        border: 1px solid var(--background-access);
     }
     button.access:not(:disabled):hover {
         color: var(--hover-text-access);
         fill: var(--hover-text-access);
         background-color: var(--hover-background-access);
+        border: 1px solid var(--access);
     }
     button.critical {
         color: var(--critical);

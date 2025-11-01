@@ -19,7 +19,7 @@ interface SmallInputProps {
     id?: string;
     autofocus?: boolean;
     disabled?: boolean;
-    isMandatory: boolean;
+    required: boolean;
     description?: string;
     validation?: [(value: string) => boolean, string]; 
     maxArrayLength?: number;
@@ -31,7 +31,7 @@ export type InputChipsRef = HTMLInputElement & {
   get: () => string[] | undefined;
 };
 
-const InputChips = forwardRef<InputChipsRef, SmallInputProps>(({ title, allowSameEntry = false, maxArrayLength, validation, placeholder, id, autofocus, onChange, type = 'text', children, error, value = "", chips, maxLength, autoComplete = 'off', name, disabled = false, isMandatory, description}, ref) => {
+const InputChips = forwardRef<InputChipsRef, SmallInputProps>(({ title, allowSameEntry = false, maxArrayLength, validation, placeholder, id, autofocus, onChange, type = 'text', children, error, value = "", chips, maxLength, autoComplete = 'off', name, disabled = false, required, description}, ref) => {
     const [inputValue, setInputValue] = useState<string>(value)
     const [currentChips, setCurrentChips] = useState<string[] | undefined>(chips);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -128,7 +128,7 @@ const InputChips = forwardRef<InputChipsRef, SmallInputProps>(({ title, allowSam
             <div className={`input__content ${disabled === true ? 'disabled' : ''}`}>
                 <span className="input__title-content">
                     <p className="input__title">{title}</p>
-                    {isMandatory && (<p className="input__mandatory">*</p>)}
+                    {required && (<p className="input__mandatory">*</p>)}
                 </span>
                 {description && (<p className="input__description">{description}</p>)}
             </div>

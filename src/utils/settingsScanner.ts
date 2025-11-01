@@ -58,15 +58,14 @@ export class SettingsScanner {
                 if (!moduleItem.hasSettings) continue;
 
                 try {
-                    // Импортируем module.manifest.ts
                     const moduleManifest = await import(
-                        /* @vite-ignore */ `@/modules/${moduleItem.manifestPath}`
+                        `@/modules/${moduleItem.manifestPath}`
                     );
 
                     const settingsConfig: ModuleManifest = moduleManifest.default || moduleManifest.moduleManifest;
 
-                    if (!settingsConfig?.settings) {
-                        console.warn(`No settings found in module manifest for ${moduleItem.module}`);
+                    if (!settingsConfig.settings) {
+                        console.warn(`No settings configuration found in module manifest for ${moduleItem.module} but was declared in modules-manifest.json`);
                         continue;
                     }
 
@@ -82,12 +81,13 @@ export class SettingsScanner {
                                 }
 
                                 try {
+                                    const sectionFileName = section.fileName.replace(/\.(tsx|ts)$/, '');
                                     const importPath = settingsPage.folderName
-                                        ? `${moduleItem.module}/settings/${settingsPage.folderName}/${section.fileName.replace(/\.(tsx|ts)$/, '')}`
-                                        : `${moduleItem.module}/settings/${section.fileName.replace(/\.(tsx|ts)$/, '')}`;
+                                        ? `${moduleItem.module}/settings/${settingsPage.folderName}/${sectionFileName}`
+                                        : `${moduleItem.module}/settings/${sectionFileName}`;
 
                                     const lazyModule = await import(
-                                        /* @vite-ignore */ `@/modules/${importPath}`
+                                        `@/modules/${importPath}`
                                     );
 
                                     const component = lazyModule.default;
@@ -119,8 +119,6 @@ export class SettingsScanner {
                             category: settingsPage.category,
                             sections: pageSections
                         });
-
-                        console.log(`Registered settings page: ${settingsPage.label} from module ${moduleItem.module}`);
                     }
 
                 } catch (error) {
@@ -130,7 +128,7 @@ export class SettingsScanner {
 
             this.registered = true;
         } catch (error) {
-            console.error('Settings scanner failed:', error);
+            console.error('Settings scanner failed with ', error);
         }
     }
 

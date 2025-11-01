@@ -162,7 +162,7 @@ export const PopupProvider = ({ children }: {children: React.ReactNode }) => {
             {children}
             { modalState.isOpen && (
                 <animated.div ref={backdropRef} style={fadeInStyle} className="main-layout__layer modal__wrap">
-                    <animated.div className="modal__content" style={popupStyle}>
+                    <animated.div className="modal__content" role={"dialog"} aria-modal={true} style={popupStyle}>
                         <WindowComponent label={modalState.label} description={modalState?.description} action={modalState.action}>
                             {modalState.content}
                         </WindowComponent>

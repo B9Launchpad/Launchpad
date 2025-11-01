@@ -39,8 +39,8 @@ const OnboardingAccount: React.FC<OnboardingProps> = ({ onNext, data }) => {
         <IntroLayout>
             <div className="intro__content">
                 <h1>{t('personalDetails.title')}</h1>
-                <InputString ref={nameRef} autoComplete={"name"} label={t('personalDetails.name')} isMandatory={true} type="string"></InputString>
-                <InputString ref={emailRef} autoComplete={"email"} label={t('personalDetails.email')} value="gsafiannikov@b9creators.co.uk" disabled={true} isMandatory={true} type="string">
+                <InputString ref={nameRef} autoComplete={"name"} label={t('personalDetails.name')} required={true} type="string"></InputString>
+                <InputString ref={emailRef} autoComplete={"email"} label={t('personalDetails.email')} value="gsafiannikov@b9creators.co.uk" disabled={true} required={true} type="string">
                     <small>
                         {t('personalDetails.wrongEmail')} <Link href={'/login/reset'}>{t('personalDetails.otherEmail')}</Link>
                     </small>

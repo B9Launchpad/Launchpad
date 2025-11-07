@@ -230,7 +230,7 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
     useEffect(() => {
         if(!isVisible) return;
         const trap = createFocusTrap(containerRef?.current as HTMLElement);
-        
+        a
         switch(isOpen) {
             case true: {
                 trap.pause();

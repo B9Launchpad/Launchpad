@@ -1,7 +1,8 @@
 import { ModalActionButtonProps } from "@/components/common/Modal";
 import { ButtonProps } from "@components/common/Button";
 import WindowComponent from "@components/common/Window";
-import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { createFocusTrap } from "focus-trap";
+import React, { createContext, ReactElement, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useSpring, animated } from "react-spring";
 
 interface ModalContextProps {
@@ -149,6 +150,16 @@ export const PopupProvider = ({ children }: {children: React.ReactNode }) => {
         immediate: isTransition,
         onRest: () => { if(isTransition) setIsTransition(false)}
     })
+
+    useEffect(() => {
+        if(!isVisible) return;
+        const trap = createFocusTrap(backdropRef?.current as HTMLElement);
+        trap.activate();
+
+        return () => {
+            trap.deactivate();
+        }
+    }, [isVisible])
 
     const value: ModalContextProps = {
         setModal,

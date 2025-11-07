@@ -15,6 +15,7 @@ import makeFetchRequest from "@/utils/fetch/makeFetchRequest";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { useModal } from "@/contexts/ModalContext";
+import { createFocusTrap } from "focus-trap";
 
 interface LayoutSettingsProps {
     children?: React.ReactNode;
@@ -225,6 +226,27 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
             </div>
         );
     };
+
+    useEffect(() => {
+        if(!isVisible) return;
+        const trap = createFocusTrap(containerRef?.current as HTMLElement);
+        
+        switch(isOpen) {
+            case true: {
+                trap.pause();
+                break;
+            } 
+            case false: {
+                trap.activate();
+                break;
+            }
+        }
+        trap.activate();
+
+        return () => {
+            trap.deactivate;
+        }
+    }, [isVisible, isOpen])
 
     const style = useSpring({
         from: { 

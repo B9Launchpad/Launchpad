@@ -241,10 +241,9 @@ const LayoutSettings: React.FC<LayoutSettingsProps> = () => {
                 break;
             }
         }
-        trap.activate();
 
         return () => {
-            trap.deactivate;
+            trap.deactivate();
         }
     }, [isVisible, isOpen])
 

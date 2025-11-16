@@ -471,8 +471,9 @@ nav {
 }
 
 .sidebar-block__title {
-    font: var(--font-primary-bold);
-    margin: 0 var(--padding-standard) 6px var(--padding-standard);
+    font: var(--font-small);
+    margin: 0px var(--padding-standard) 4px var(--padding-standard);
+    color: var(--muted);
 }
 
 .sidebar__items--low {

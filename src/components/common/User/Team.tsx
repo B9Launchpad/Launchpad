@@ -1,7 +1,7 @@
 import Tag, { Colors } from "../Tag";
 import ProfilePicturePlaceholder from "./PicturePlaceholder";
 
-interface TeamDisplayProps {
+export interface TeamDisplayProps {
     label: string;
     color: Colors;
     inline?: boolean;

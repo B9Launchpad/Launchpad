@@ -51,6 +51,20 @@ export const moduleManifest: ModuleManifest = {
                     fileName: 'general.tsx'
                 }
             ]
+        },
+        {
+            id: 'core.launchpad.accounts',
+            label: 'accounts.label',
+            folderName: 'accounts',
+            category: 'panel',
+            sections: [
+                {
+                    id: 'accounts',
+                    label: 'accounts.label',
+                    default: true,
+                    fileName: 'Accounts.tsx'
+                }
+            ]
         }
     ]
 };

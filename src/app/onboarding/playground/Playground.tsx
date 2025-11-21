@@ -10,7 +10,7 @@ import NewPassword from '@components/common/Input/NewPassword';
 import InputRadio from '@components/common/Input/Radio';
 import InputChips from '@components/common/Input/Chips';
 import validateEmail from '@functions/validateEmail';
-import SmallTable, { Column, SmallTableRef } from '@components/common/Table/Table';
+import SmallTable, { Column, SmallTableRef } from '@/components/common/Table/CompactTable';
 import { useRef } from 'react';
 import { SearchProvider } from '@/contexts/SearchContext';
 import { useTranslation } from 'react-i18next';

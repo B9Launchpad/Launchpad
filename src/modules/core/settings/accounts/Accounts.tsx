@@ -1,18 +1,20 @@
 import InputSearch from "@/components/common/Input/SearchInput";
 import Table, { Column } from "@/components/common/Table/Table";
-import { TeamDisplayProps } from "@/components/common/User/Team";
+import Profile from "@/components/common/User/Profile";
+import TeamDisplay, { TeamDisplayProps } from "@/components/common/User/Team";
 import { SearchProvider } from "@/contexts/SearchContext";
+import { ReactElement } from "react";
 
 const SettingsAccounts: React.FC = () => {
     interface AccountsItem {
-        user: {avatar: string, name: string, email: string};
+        user: ReactElement;
         id: number;
         role: 'user' | 'admin' | 'owner';
-        teams: Omit<TeamDisplayProps, 'inline'>[];
+        teams: ReactElement;
     }
     
     const columns: Column<AccountsItem>[] = [
-        { header: "Account", accessor: "user" },
+        { header: "Account", accessor: "user", isSearchable: true },
         { header: "ID", accessor: "id" },
         { header: "Role", accessor: "role" },
         { header: "Teams", accessor: 'teams'}
@@ -20,23 +22,17 @@ const SettingsAccounts: React.FC = () => {
 
     const data: AccountsItem[] = [
         { 
-            user: {avatar: '', email: 'tyakovleva@b9creators.co.uk', name: 'Tatiana Yakovleva'},
+            user: <Profile displayFullName email="tyakovleva@b9creators.co.uk" name={["Tatiana", "Yakovleva"]}/>,
             id: 55024,
             role: 'user',
-            teams: [{label: 'Executive', color: 'brown'}]
+            teams: <TeamDisplay label="Executive" color="brown" inline></TeamDisplay>
         },
-        {
-            user: { avatar: '', email: 'dwilenski@b9creators.co.uk', name: 'Dylan Wileński' },
-            id: 55025,
-            role: 'admin',
-            teams: [{ label: 'Waiters', color: 'warning' }]
-        }
     ]
 
     return (
         <SearchProvider>
             <InputSearch/>
-            <Table columns={columns} data={data}/>
+            <Table columns={columns} data={data} allowSelection/>
         </SearchProvider>
     )
 }

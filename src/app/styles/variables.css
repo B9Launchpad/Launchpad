@@ -40,7 +40,7 @@
     --background-warning: #FFF1D4;
     --background-tag: #D9D9D9;
     /* Table */
-    --background-table-hero: #D9D9D9;
+    --background-table-hero: #F0F4F8;
 
     /* Other Primary */
     --purple: #9747FF;
@@ -173,6 +173,7 @@
         /* Sizing */
 
         --input-height: 42px;
+        --table-row: 48px;
         --icon-base: 64px;
         --icon-md: 72px;
         --icon-lg: 96px;
@@ -218,7 +219,7 @@
     --background-warning: #FFB92833;
     --background-tag: #E2E2E2;
     /* Table */
-    --background-table-hero: #2C2C2C;
+    --background-table-hero: #789CC01C;
 
     /* Other Primary */
     --purple: #9747FF;

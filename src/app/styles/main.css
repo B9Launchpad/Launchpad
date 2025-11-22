@@ -1014,10 +1014,39 @@ nav {
     }
 
 /* Tables */
+.table__wrap {
+    border-radius: var(--radius-small);
+    overflow: hidden;
+}
 
 .table-compact tr, .table-compact thead {
     height: var(--input-height);
     box-sizing: border-box;
+}
+
+.table tr, .table thead {
+    height: var(--table-row);
+    box-sizing: border-box;
+}
+.table tr {
+    background-color: var(--background-content);
+}
+
+.table td:last-child, .table th:last-child {
+    padding-right: var(--padding-standard);
+}
+
+.table td:first-child, .table th:first-child {
+    padding-left: var(--padding-standard);
+}
+.table td {
+    font: var(--font-secondary);
+}
+
+.table th {
+    background-color: var(--background-table-hero);
+    font: var(--font-secondary);
+    font-weight: 600;
 }
 
 .table-list tr {
@@ -1036,17 +1065,21 @@ nav {
     border-bottom: solid var(--muted) 2px;
 }
 
+.table thead th {
+    border-bottom: solid var(--muted) 1px;
+}
+
 table {
     width: 100%;
     border-spacing: 0;
     border-collapse: separate;
 }
 
-.table-compact__checkbox {
+.table-compact__checkbox, .table__checkbox {
     width: calc(var(--checkbox-radio-size) + var(--gap-standard));
 }
 
-.table-compact__checkbox .input__wrap {
+.table-compact__checkbox .input__wrap, .table__checkbox .input__wrap {
     justify-content: center;
     width: fit-content;
     gap: 0;
@@ -1054,6 +1087,10 @@ table {
 
 .table-compact__checkbox .input-checkbox__wrap {
     gap: 0;
+}
+
+.table .tag__wrap {
+    font: var(--font-secondary)
 }
 
 /* Pad Select */
@@ -1203,7 +1240,7 @@ Please consider alternatives before removing */
     flex-direction: column;
 }
 .profile__name {
-    font: var(--font-primary-bold);
+    font: var(--font-primary);
 }
 .profile__email {
     font: var(--font-tertiary);

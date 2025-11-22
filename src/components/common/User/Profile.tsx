@@ -1,10 +1,13 @@
 // Configuring interface for propos to be used within the button
 
+import ProfilePicturePlaceholder from "./PicturePlaceholder";
+
 export interface ProfileProps {
     onClick?: () => void;
     name: string[];
     email: string;
-    picture: string;
+    picture?: string;
+    displayFullName?: boolean;
 }
 
 export const formatName = (name: string[]) => {
@@ -16,13 +19,21 @@ export const formatName = (name: string[]) => {
 }
 
 // Declaration of Button component with its configured props and styles
-const Profile: React.FC<ProfileProps> = ({ onClick, name, email, picture }) => {
+const Profile: React.FC<ProfileProps> = ({ onClick, displayFullName = false, name, email, picture }) => {
 
     return (
         <div className="profile__wrap">
-            <img className="profile__picture" src={picture}></img>
+            {picture ? (
+                <img className="profile__picture" src={picture}></img>
+            ) : (
+                <ProfilePicturePlaceholder label={name[0]} color="secondary"></ProfilePicturePlaceholder>
+            )}
             <div className="profile__info">
-                <p className="profile__name">{formatName(name)}</p> 
+                { displayFullName ? (
+                    <p className="profile__name">{name.join(" ")}</p>
+                ) : (
+                    <p className="profile__name">{formatName(name)}</p> 
+                )}
                 <p className="profile__email">{email}</p>
             </div>
         </div>

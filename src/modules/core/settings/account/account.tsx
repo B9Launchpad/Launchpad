@@ -1,7 +1,7 @@
 // TO DO: i18n localise
 
 import React, { useRef, useState } from 'react';
-import WindowComponent from '@/components/common/Window';
+import Window from '@/components/common/Window';
 import WindowBlock from '@/components/modules/FormBlock';
 import Button from '@/components/common/Button';
 import List from '@/components/common/Table/List';
@@ -24,7 +24,7 @@ const SettingsAccount: React.FC = () => {
 
     return (
         <>
-            <WindowComponent 
+            <Window 
                 label={t('account.sections.account.personalInfo.label')} 
                 description={t('account.sections.account.personalInfo.description')}
             >   
@@ -108,8 +108,8 @@ const SettingsAccount: React.FC = () => {
                         </div>
                     </WindowBlock>
                 </WindowBlock>
-            </WindowComponent>
-            <WindowComponent 
+            </Window>
+            <Window 
                 label={t('account.sections.account.security.label')} 
                 description={t('account.sections.account.security.description')}
             >   
@@ -138,7 +138,7 @@ const SettingsAccount: React.FC = () => {
                     </Modal.Trigger>
                     <Button label={t('account.sections.account.security.deleteAccount')} variant="critical"></Button>
                 </div>
-            </WindowComponent>
+            </Window>
         </>
     );
 };

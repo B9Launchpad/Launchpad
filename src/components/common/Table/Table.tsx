@@ -6,17 +6,15 @@ import InputCheckbox, {
 } from "@components/common/Input/Checkbox";
 import { useSearch } from "@contexts/SearchContext";
 
+// UPDATED INTERFACE
 export interface Column<T> {
     header: string;
     accessor: keyof T | ((row: T) => React.ReactNode);
     align?: "left" | "right" | "center";
 
-    /**
-     * Optional function to get a primitive value for sorting and searching.
-     * Required if 'accessor' returns a ReactNode and you want
-     * 'isSearchable' or 'isSortable' to be true.
-     */
-    getSortSearchValue?: (row: T) => string | number | Date;
+    getSearchValues?: (row: T) => string | string[];
+
+    getSortValue?: (row: T) => string | number | Date;
 
     /** Flag to enable searching on this column. Defaults to false. */
     isSearchable?: boolean;
@@ -36,7 +34,6 @@ interface TableProps<T> {
     allowSelection?: boolean;
     footer?: React.ReactNode;
     className?: string;
-    searchQuery?: string; // This prop seems redundant... remove?
 }
 
 function TableInner<T>(
@@ -46,7 +43,6 @@ function TableInner<T>(
         footer,
         className,
         label,
-        searchQuery, // redunant? see above
         allowSelection = false,
     }: TableProps<T>,
     ref: React.Ref<TableRef<T>>
@@ -111,54 +107,54 @@ function TableInner<T>(
     }, [selected, data.length]);
 
     const filteredData = useMemo(() => {
-        // fallback to searchquery
-        const effectiveQuery = (query || searchQuery || "").trim();
+        const effectiveQuery = (query || "").trim();
         if (!effectiveQuery) return data;
 
         const lowerCaseQuery = effectiveQuery.toLowerCase();
 
         return data.filter((row) =>
             columns.some((col) => {
-                // flag check
                 if (!col.isSearchable) return false;
 
                 let rawValue: any;
-                if (col.getSortSearchValue) {
-                    rawValue = col.getSortSearchValue(row);
+
+                if (col.getSearchValues) {
+                    rawValue = col.getSearchValues(row);
                 } else if (typeof col.accessor !== 'function') {
                     rawValue = row[col.accessor];
                 } else {
-                    console.warn(`Column "${col.header}" is searchable but has no 'getSortSearchValue' helper.`);
+                    console.warn(`Column "${col.header}" is searchable but has no search helper.`);
                     rawValue = null;
                 }
 
-                let stringValue = "";
-                if (rawValue === null || rawValue === undefined) {
-                    stringValue = "";
-                } else if (typeof rawValue === 'string' || typeof rawValue === 'number' || typeof rawValue === 'boolean') {
-                    stringValue = String(rawValue);
+                let searchValues: string[] = [];
+
+                if (Array.isArray(rawValue)) {
+                    searchValues = rawValue.map(v => String(v).toLowerCase());
+                } else if (rawValue !== null && rawValue !== undefined) {
+                    searchValues = [String(rawValue).toLowerCase()];
                 }
 
-                return stringValue.toLowerCase().includes(lowerCaseQuery);
+                return searchValues.some(val => val.startsWith(lowerCaseQuery));
             })
         );
-    }, [data, query, searchQuery, columns]);
+    }, [data, query, columns]);
 
-    // sortedData helper
     const sortedData = useMemo(() => {
         if (!sortConfig) return filteredData;
 
         const { columnIndex, direction } = sortConfig;
         const column = columns[columnIndex];
 
-        // Get string value for sort
-        const getSortValue = (row: T): string | number | Date | null => {
+        // sort value retrieval
+        const getSortValueForComparison = (row: T): string | number | Date | null => {
             if (!column.isSortable) return null;
 
-            if (column.getSortSearchValue) {
-                return column.getSortSearchValue(row);
+            if (column.getSortValue) {
+                return column.getSortValue(row);
             }
 
+            // fallback
             if (typeof column.accessor !== 'function') {
                 const val = row[column.accessor];
                 if (typeof val === 'string' || typeof val === 'number' || val instanceof Date) {
@@ -168,16 +164,16 @@ function TableInner<T>(
 
             // Unsortable
             if (typeof column.accessor === 'function') {
-                console.warn(`Column "${column.header}" is sortable but has no 'getSortSearchValue' helper.`);
+                console.warn(`Column "${column.header}" is sortable but has no 'getSortValue' helper.`);
             }
             return null;
         };
 
         return [...filteredData].sort((a, b) => {
-            const aVal = getSortValue(a);
-            const bVal = getSortValue(b);
+            const aVal = getSortValueForComparison(a);
+            const bVal = getSortValueForComparison(b);
 
-            // Put nulls/unsortables at the bottom
+            // Stash unsortables at the bottom
             if (aVal == null) return 1;
             if (bVal == null) return -1;
 
@@ -190,7 +186,6 @@ function TableInner<T>(
     const handleSort = (columnIndex: number) => {
         const column = columns[columnIndex];
 
-        // check flag
         if (!column.isSortable) return;
 
         setSortConfig((prev) => {

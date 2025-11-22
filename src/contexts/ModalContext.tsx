@@ -1,6 +1,6 @@
 import { ModalActionButtonProps } from "@/components/common/Modal";
 import { ButtonProps } from "@components/common/Button";
-import WindowComponent from "@components/common/Window";
+import Window from "@components/common/Window";
 import { createFocusTrap } from "focus-trap";
 import React, { createContext, ReactElement, useCallback, useContext, useEffect, useRef, useState } from "react";
 import { useSpring, animated } from "react-spring";
@@ -174,9 +174,9 @@ export const PopupProvider = ({ children }: {children: React.ReactNode }) => {
             { modalState.isOpen && (
                 <animated.div ref={backdropRef} style={fadeInStyle} className="main-layout__layer modal__wrap">
                     <animated.div className="modal__content" role={"dialog"} aria-modal={true} style={popupStyle}>
-                        <WindowComponent label={modalState.label} description={modalState?.description} action={modalState.action}>
+                        <Window label={modalState.label} description={modalState?.description} action={modalState.action}>
                             {modalState.content}
-                        </WindowComponent>
+                        </Window>
                     </animated.div>
                 </animated.div>
             )}

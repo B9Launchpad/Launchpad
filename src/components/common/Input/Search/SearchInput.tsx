@@ -1,13 +1,12 @@
 import { JSX, useEffect, useRef, useState } from "react";
-import IconSearch from "../../icons/Search";
-import useLastInteractionKeyboard from "../../../functions/useLastInteractionKeyboard";
-import { useSearch } from "../../../contexts/SearchContext";
+import IconSearch from "../../../icons/Search";
+import useLastInteractionKeyboard from "../../../../functions/useLastInteractionKeyboard";
+import { useSearch } from "../../../../contexts/SearchContext";
 
 interface SearchInputProps {
     label?: string;
     placeholder?: string;
-    //onSearch: (value: string) => void; // Function to be executed on search. removed for SearchContext
-    debounce?: boolean; // optional debounce
+    debounce?: boolean;
     autoFocus?: boolean;
 }
 
@@ -16,8 +15,7 @@ export type searchQuery = string;
 const InputSearch = ({
     label,
     placeholder = 'Search',
-    //onSearch, removed for SearchContext
-    debounce = true,
+    debounce = false,
     autoFocus = true
 }: SearchInputProps): JSX.Element => {
     const { setQuery } = useSearch()
@@ -27,17 +25,16 @@ const InputSearch = ({
     const lastInteractionWasKeyboard = useLastInteractionKeyboard();
     const debounceDelay = debounce === true ? 300 : 0 
 
-    //debounce logic
+    //debouncing
     useEffect(() => {
         const handler = setTimeout(() => {
-            //onSearch(value.trim()); removed for SearchContext
             setQuery(value.trim());
         }, debounceDelay);
 
         return () => {
             clearTimeout(handler);
         }
-    }, [value, /*onSearch removed for SearchContext*/, debounceDelay])
+    }, [value, debounceDelay])
 
     useEffect(() => {
         if(autoFocus && inputRef.current) {

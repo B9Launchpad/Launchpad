@@ -63,6 +63,12 @@ export const moduleManifest: ModuleManifest = {
                     label: 'accounts.label',
                     default: true,
                     fileName: 'Accounts.tsx'
+                },
+                {
+                    id: 'create-account',
+                    label: 'accounts.create.label',
+                    default: false,
+                    fileName: 'CreateAccount.tsx'
                 }
             ]
         }

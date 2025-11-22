@@ -6,7 +6,7 @@ export type autoComplete = 'on' | 'off' | 'username email' | 'address-line1' | '
 interface SmallInputProps {
     label: string;
     placeholder?: string;
-    type: "string" | "number" | "float" | "password";
+    type?: "string" | "number" | "float" | "password";
     children?: React.ReactNode;
     error?: string;
     value?: string;
@@ -28,7 +28,7 @@ export type InputStringRef = HTMLInputElement & {
   error: (message: string) => void;
 };
 
-const InputString = forwardRef<InputStringRef, SmallInputProps>(({ label, placeholder, id, autofocus, onChange, type = 'text', children, error = "", value = "", maxLength, autoComplete = 'off', name, disabled = false, required, description, expand = false}, ref) => {
+const InputString = forwardRef<InputStringRef, SmallInputProps>(({ label, placeholder, id, autofocus, onChange, type = 'string', children, error = "", value = "", maxLength, autoComplete = 'off', name, disabled = false, required, description, expand = false}, ref) => {
     const inputRef = useRef<HTMLInputElement>(null);
     const [inputValue, setInputValue] = useState<string>(value);
     const [charCount, setCharCount] = useState(value?.length);

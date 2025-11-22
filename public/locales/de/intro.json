@@ -10,7 +10,7 @@
     },
     "personalDetails": {
         "title": "Persönliche Daten",
-        "name": "Ihre Name",
+        "name": "Ihr Name",
         "email": "Ihre Email Adresse",
         "wrongEmail": "Falsche Adresse?",
         "otherEmail": "Anderes Email verwenden",

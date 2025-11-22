@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 
-type InputSelectOptions = Array<
+export type InputSelectOptions = Array<
     {
         label: string,
         value: any,
@@ -16,7 +16,21 @@ interface InputProps {
     disabled?: boolean;
 }
 
-const InputSelect: React.FC<InputProps> = ({ expand = false, disabled = false, label, description, options, onChange, value, ...props}) => {
+export type InputSelectRef = HTMLSelectElement & {
+    get: () => string;
+}
+
+const InputSelect = forwardRef<InputSelectRef, InputProps>(({ expand = false, disabled = false, label, description, options, onChange, value, ...props}, ref) => {
+    const selectRef = useRef<HTMLSelectElement>(null);
+
+    useImperativeHandle(ref, () => {
+        const node = selectRef.current!;
+        return Object.assign(node, {
+            get: () => {
+                return node.value;
+            }
+        })
+    })
 
     return (
         <div className={`input__wrap ${expand ? "expand" : ""}`}>
@@ -27,7 +41,7 @@ const InputSelect: React.FC<InputProps> = ({ expand = false, disabled = false, l
                 {description && (<p className="input__description">{description}</p>)}
             </div>
             <div className="input__field">
-                <select disabled={disabled} {...props} defaultValue={value} onChange={onChange} className={`input__main ${expand ? 'expand' : ''}`}>
+                <select ref={selectRef} disabled={disabled} {...props} defaultValue={value} onChange={onChange} className={`input__main ${expand ? 'expand' : ''}`}>
                     { options.map((item, index) => (
                         <option key={index} value={item.value}>{item.label}</option>
                     )) }
@@ -35,6 +49,6 @@ const InputSelect: React.FC<InputProps> = ({ expand = false, disabled = false, l
             </div>
         </div>
     )
-}
+})
 
 export default InputSelect;

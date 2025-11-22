@@ -1,7 +1,7 @@
 import IntroLayout from "../../../components/layout/IntroLayout";
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/common/Button";
-import SmallTable, { Column } from "../../../components/common/Table/CompactTable";
+import SmallTable, { Column } from "../../../components/common/Table/TableCompact";
 import { OnboardingDataType } from "../Index";
 
 interface OnboardingProps {

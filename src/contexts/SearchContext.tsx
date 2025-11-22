@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from "react";
-import { searchQuery } from "../components/common/Input/SearchInput";
+import { searchQuery } from "../components/common/Input/Search/SearchInput";
 
 const SearchContext = createContext<{
     query: searchQuery;

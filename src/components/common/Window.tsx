@@ -9,7 +9,7 @@ interface WindowProps {
     action?: ModalActionButtonProps[]
 }
 
-const WindowComponent: React.FC<WindowProps> = ({ label, description, children, action }) => {
+const Window: React.FC<WindowProps> = ({ label, description, children, action }) => {
     return (
         <div className="content-window">
             {label && ( <div>
@@ -38,4 +38,4 @@ const WindowComponent: React.FC<WindowProps> = ({ label, description, children, 
     )
 }
 
-export default WindowComponent;
+export default Window;

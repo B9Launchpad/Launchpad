@@ -1,7 +1,7 @@
 // TO DO: i18n localise
 
 import React from 'react';
-import WindowComponent from '@/components/common/Window';
+import Window from '@/components/common/Window';
 import List, { ListProps } from '@/components/common/Table/List';
 import TeamDisplay from '@/components/common/User/Team';
 import WindowBlock from '@/components/modules/FormBlock';
@@ -33,7 +33,7 @@ const SettingsAccountTeams: React.FC = () => {
 
     return (
         <>
-            <WindowComponent 
+            <Window 
                 label='Your teams'
                 description='Teams are subdivisions within your organisation, only the teams you are in will be shown here. Team membership is managed by your IT administrator.' 
                 action={[{label: "Join team with code"}]}
@@ -44,7 +44,7 @@ const SettingsAccountTeams: React.FC = () => {
                 <WindowBlock label='Pending invites' description='Teams you have been invited to join'>
                     <List items={listInviteItems.items}/>
                 </WindowBlock>
-            </WindowComponent>
+            </Window>
         </>
     );
 };

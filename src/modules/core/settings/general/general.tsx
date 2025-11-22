@@ -2,18 +2,18 @@ import Button from "@/components/common/Button"
 import InputCheckbox from "@/components/common/Input/Checkbox"
 import FileUpload from "@/components/common/Input/FileUpload/FileUpload"
 import InputString from "@/components/common/Input/StringInput"
-import WindowComponent from "@/components/common/Window"
+import Window from "@/components/common/Window"
 import WindowBlock from "@/components/modules/FormBlock"
 
 
 const SettingsGeneral: React.FC = () => {
 
     return (
-        <WindowComponent>
+        <Window>
             <Company/>
             <Dashboard/>
             <Security/>
-        </WindowComponent>
+        </Window>
     )
 }
 

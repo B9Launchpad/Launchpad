@@ -1,4 +1,4 @@
-import InputSearch from "@/components/common/Input/SearchInput";
+import InputSearch from "@/components/common/Input/Search/SearchInput";
 import Logo from "@/components/common/Logo";
 import Profile, { ProfileProps } from "@/components/common/User/Profile";
 import SidebarItem, { SidebarItemProps } from "./SidebarItem";

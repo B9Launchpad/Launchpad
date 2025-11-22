@@ -1,7 +1,7 @@
 // TO DO: i18n localise
 
 import React from 'react';
-import WindowComponent from '@/components/common/Window';
+import Window from '@/components/common/Window';
 import info from '@/app-info.json';
 import { LaunchpadLogo } from '@/components/common/Logo';
 import WindowBlock from '@/components/modules/FormBlock';
@@ -17,7 +17,7 @@ const SettingsAbout: React.FC = () => {
     }
 
     return (
-        <WindowComponent>
+        <Window>
             <div className='flex-row'>
                 <LaunchpadLogo className='app__logo'/>
                 <div className='flex-col' style={{paddingLeft: '6px'}}>
@@ -34,7 +34,7 @@ const SettingsAbout: React.FC = () => {
                     </WindowBlock>
                 </div>
             </div>
-        </WindowComponent>
+        </Window>
     );
 };
 

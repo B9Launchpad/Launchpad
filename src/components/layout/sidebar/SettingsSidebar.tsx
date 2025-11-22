@@ -1,4 +1,4 @@
-import InputSearch from "@/components/common/Input/SearchInput";
+import InputSearch from "@/components/common/Input/Search/SearchInput";
 import { SidebarItems } from "./Sidebar"
 import SidebarItem from "./SidebarItem";
 import { useSearch } from "@contexts/SearchContext";
@@ -7,6 +7,7 @@ import { useMemo, useEffect, useRef, useState } from "react";
 import useLastInteractionKeyboard from "@/functions/useLastInteractionKeyboard";
 import { useRouter } from "next/navigation";
 import IconSearch from "@/components/icons/Search";
+import SearchNoResults from "@/components/common/Input/Search/NoResults";
 
 export type SettingsSidebarItems = {
     user: SidebarItems,
@@ -139,10 +140,7 @@ const SettingsSidebar: React.FC<SettingsSidedebarProps> = ({ items }) => {
                 aria-activedescendant={allItems.length > 0 ? `sidebar-item-${focusedIndex}` : undefined}
             >
                 {noQueryResults ? (
-                    <div className="sidebar__no-results">
-                        <IconSearch className="sidebar__no-results--icon"/>
-                        <small>{t('layout.search.noResults')}</small>
-                    </div>
+                    <SearchNoResults/>
                 ) : (
                     filteredBlocks.map((block, blockIndex) => (
                         <div key={blockIndex} className="sidebar-block sidebar__items--wrap">

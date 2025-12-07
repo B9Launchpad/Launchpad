@@ -78,6 +78,12 @@ em {
     fill: var(--icon)
 }
 
+.icon-lg {
+    width: 96px;
+    height: 96px;
+    fill: var(--icon)
+}
+
 .system-font {
     font-family: "system-ui", sans-serif;
 }

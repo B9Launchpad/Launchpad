@@ -48,9 +48,8 @@ const PadSelect: React.FC<PadSelectProps> = ({ imageMode = false, options, allow
         <div className="pad-select">
             <div className="pad-select__options">
                 {options.map((opt) => (
-                    <div className={`pad-select__option--wrap ${selected.includes(opt.id) ? "selected" : ""}`}>
+                    <div className={`pad-select__option--wrap ${selected.includes(opt.id) ? "selected" : ""}`} key={opt.id}>
                         <div
-                            key={opt.id}
                             className={`${imageMode && 'image'} pad-select__option ${selected.includes(opt.id) ? "selected" : ""}`}
                             onClick={() => toggle(opt.id)}
                         >

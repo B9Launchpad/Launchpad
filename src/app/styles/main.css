@@ -201,8 +201,7 @@ div.guest__layout {
 .intro-layout__wrap {
     display: flex;
     justify-content: center;
-    width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
     background-color: var(--background-content);
     transition: background-color 200ms ease-in-out;
 }
@@ -272,8 +271,10 @@ button {
 }
 
 .button__icon-container {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
 }
 
 .loading-bar {
@@ -308,7 +309,7 @@ button {
         padding: var(--padding-small) var(--padding-medium);
         height: auto;
         border-radius: var(--radius-small);
-        font: var(--font-primary)
+        font: var(--font-primary);
     }
 
     button[data-icon=true] {
@@ -699,8 +700,8 @@ nav {
 }
 
 .input__field--button > button {
-    height: 32px;
-    width: 32px;
+    height: var(--input-height);
+    width: var(--input-height);
 }
 
 .input-chips__items {
@@ -1112,7 +1113,7 @@ table {
     background-color: var(--background-secondary);
     width: 276px;
     min-height: 128px;
-    height: fit-content;
+    height: 100%;
     transition: background-color 150ms ease-in-out, color 150ms ease-in-out;
     fill: var(--icon);
     border-radius: var(--radius-large);

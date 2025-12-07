@@ -1,12 +1,10 @@
-import InputSelect from "../../components/common/Input/SelectInput";
-import IntroLayout from "../../components/layout/IntroLayout";
-import { supportedCountries } from "../../functions/SupportedCountries";
-import Button from "../../components/common/Button";
 import { OnboardingDataType } from "./Index";
 import { useState } from "react";
-import makeFetchRequest from "@/utils/fetch/makeFetchRequest";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import IconGlobe from "@/components/icons/Globe";
+import List from "@/components/common/Table/List";
+import IconArrowRight from "@/components/icons/ArrowRight";
 
 interface OnboardingProps {
     onNext: (addSteps: number, data: OnboardingDataType) => void;
@@ -21,69 +19,62 @@ const OnboardingLanguage: React.FC<OnboardingProps> = ({onNext, data}) => {
     const [preferredLanguage, setPreferredLanguage] = useState<string>(currentLanguage);
     const [currentRegion, setCurrentRegion] = useState<string>("US");
 
-    const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-        let newLocale = e.currentTarget.value;
-        setPreferredLanguage(newLocale);
-        await i18n.changeLanguage(newLocale);
-        await makeFetchRequest({
-            url: '/locale',
-            body: {locale: newLocale},
-            credentials: "include",
-        })
+    const handleChange = async (lng: string) => {
+        setPreferredLanguage(lng);
+        await i18n.changeLanguage(lng);
+        //await makeFetchRequest({
+        //    url: '/locale',
+        //    body: { locale: lng },
+        //    credentials: "include",
+        //})
         router.refresh();
     }
 
-    const handleRegionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        let value = e.currentTarget.value;
-        setCurrentRegion(value);
-    }
-
-    const handleSubmit = () => {
-        data.account.language = preferredLanguage;
-        data.account.region = currentRegion;
+    const handleSubmit = async (lng: string) => {
+        data.account.language = lng;
+        await handleChange(lng);
         
         onNext(1, data)
         // TO DO: Region variable only updates when actually selected. Consider automatic region detection, etc.
     }
 
-    const regionOptions = 
-    supportedCountries.map((country: string) => ({
-        value: country,
-        label: t(country, {ns: "countries"})
-    }))
-    .sort((a, b) => a.label.localeCompare(b.label))
-
     const languageOptions = [
         {
-            value: "en",
-            label: "English",
+            label: "Deutsch",
+            code: "de"
         },
         {
-            value: "de",
-            label: "Deutsch"
+            label: "English",
+            code: "en"
         },
         {
             label: "русский",
-            value: "ru"
+            code: "ru"
         },
         {
             label: "polski",
-            value: "pl"
+            code: "pl"
         }
     ]
 
     return (
-        <IntroLayout>
+        <>
             <div className="intro__content">
-                <h1>{t('greeting')}</h1>
-                <InputSelect options={languageOptions} value={preferredLanguage} onChange={handleChange} label={t('chooseYourLanguage')}>
-                </InputSelect>
-                <InputSelect options={regionOptions} onChange={handleRegionChange} label={t('chooseYourRegion')}>
-                </InputSelect>
-                <Button onClick={handleSubmit}>{t("continue", {ns: "general"})}</Button>
+                <IconGlobe className="icon-lg"/>
+                <List items={languageOptions.map((item, index) => {
+                    return {
+                        content: <em>{item.label}</em>,
+                        action: [
+                            {
+                                icon: <IconArrowRight/>,
+                                onClick: () => handleSubmit(item.code)
+                            }
+                        ]
+                    }
+                })}/>
             </div>
             <p>Some shits here</p>
-        </IntroLayout>
+        </>
     )
 }
 

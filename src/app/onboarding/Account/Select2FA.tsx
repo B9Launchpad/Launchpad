@@ -22,7 +22,7 @@ const OnboardingSelect2FA: React.FC<OnboardingProps> = ({ onNext }) => {
     ];
 
     return (
-        <IntroLayout>
+        <>
             <div className="intro__content">
                 <h1>{t('security.methods.title')}</h1>
 
@@ -32,7 +32,7 @@ const OnboardingSelect2FA: React.FC<OnboardingProps> = ({ onNext }) => {
                 <Button onClick={() => onNext()}>{t("continue", {ns: "general"})}</Button>
             </div>
             <p>Some shits here</p>
-        </IntroLayout>
+        </>
     )
 }
 

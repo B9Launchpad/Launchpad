@@ -19,7 +19,7 @@ const OnboardingSpecialty: React.FC<OnboardingProps> = ({ onNext }) => {
     ];
 
     return (
-        <IntroLayout>
+        <>
             <div className="intro__content">
                 <h1>My company specialises in...</h1>
 
@@ -28,7 +28,7 @@ const OnboardingSpecialty: React.FC<OnboardingProps> = ({ onNext }) => {
                 <Button onClick={onNext}>{t("continue", {ns: "general"})}</Button>
             </div>
             <p>Some shits here</p>
-        </IntroLayout>
+        </>
     )
 }
 

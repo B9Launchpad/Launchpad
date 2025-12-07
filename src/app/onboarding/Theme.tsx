@@ -34,14 +34,14 @@ const OnboardingTheme: React.FC<OnboardingProps> = ({ onNext }) => {
     }
 
     return (
-        <IntroLayout>
+        <>
             <div className="intro__content">
                 <h1>{t('style')}</h1>
                 <PadSelect onChange={(id) => handleChange(id)} options={options} imageMode={true} alwaysSelected={true}></PadSelect>
                 <Button onClick={onNext}>{t("continue", {ns: "general"})}</Button>
             </div>
             <p>Some shits here</p>
-        </IntroLayout>
+        </>
     )
 }
 

@@ -12,7 +12,7 @@
         "title": "Dane osobowe",
         "name": "Twoje imię",
         "email": "Twój adres e-mail",
-        "wrongEmail": "Nieprawidłowy adres?",
+        "wrongEmail": "Możesz go później zmienić w ustawieniach aplikacji.",
         "otherEmail": "Użyj innego adresu e-mail",
         "picture": "Zdjęcie profilowe",
         "pictureInstructions": "Jeśli chcesz, możesz przesłać swoje zdjęcie profilowe. Obsługiwane formaty plików: .png, .jpg, .jpeg, .svg, .webp."

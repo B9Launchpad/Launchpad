@@ -5,6 +5,7 @@ import InputChips, { InputChipsRef } from "../../../components/common/Input/Chip
 import validateEmail from "../../../functions/validateEmail";
 import { useRef } from "react";
 import { OnboardingDataType } from "../Index";
+import Form from "@/components/common/Input/Form";
 
 interface OnboardingProps {
     onNext: (stepsToAdd: number, data: OnboardingDataType) => void;
@@ -31,14 +32,14 @@ const OnboardingAddUsers: React.FC<OnboardingProps> = ({ onNext, data }) => {
     }
 
     return (
-        <IntroLayout>
+        <Form onSubmit={handleSubmit} showSubmitButton={false}>
             <div className="intro__content">
                 <h1>Your employees</h1>
                 <InputChips maxArrayLength={10} ref={addUsersRef} type="string" autoComplete="email" required={false} label="Invite users to register" description="Please type the e-mail addresses of people you would like to add to this panel. You may add up to 10 people here – you will be able to add more later in settings."></InputChips>
                 <Button onClick={handleSubmit}>{t("continue", {ns: "general"})}</Button>
             </div>
             <p>Some shits here</p>
-        </IntroLayout>
+        </Form>
     )
 }
 

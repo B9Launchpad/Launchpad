@@ -4,11 +4,12 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import InputString, { InputStringRef } from "./StringInput";
 import { useSpring, animated } from "react-spring";
-import SpringConfig from "../../../utils/SpringConfig";
+import SpringConfig from "@utils/SpringConfig";
 import { useTranslation } from "react-i18next";
 
 export type NewPasswordRef = {
     validate: () => false | string;
+    error: (e: string) => void;
 }
 
 const NewPassword = forwardRef<NewPasswordRef>((_props, ref) => {
@@ -49,7 +50,7 @@ const NewPassword = forwardRef<NewPasswordRef>((_props, ref) => {
         setRepeatPassword(e.currentTarget.value);
     }
 
-    const allValid = 
+    const allValid =
         fulfilledCharacterCount &&
         fulfilledSmall &&
         fulfilledUpper &&
@@ -57,7 +58,7 @@ const NewPassword = forwardRef<NewPasswordRef>((_props, ref) => {
         fulfilledSpecialChar;
 
     useEffect(() => {
-        if(allValid) {
+        if (allValid) {
             setExpanded(true);
         } else {
             setExpanded(false);
@@ -68,66 +69,73 @@ const NewPassword = forwardRef<NewPasswordRef>((_props, ref) => {
 
     useImperativeHandle(ref, () => ({
         validate: () => {
-            if(!allValid) {
+            if (!allValid) {
                 return false;
             }
-            if(newPassword != repeatPassword) {
+            if (newPassword != repeatPassword) {
                 setPasswordError(t('reset.passwordNoMatchError', { ns: "auth" }));
                 return false
             }
-
             return newPassword;
+        },
+        error: (e) => {
+            setPasswordError(e);
         }
     }));
 
     useEffect(() => {
-    if (contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
-    }
-  }, [contentRef.current, passwordError]);
+        inputRef.current?.error(passwordError ?? "");
+    }, [passwordError])
 
-  const style = useSpring({
-    height: expanded ? contentHeight : 0,
-    opacity: expanded ? 1 : 0,
-    // Overflow Y?
-    config: SpringConfig,
-  });
+    useEffect(() => {
+        if (contentRef.current) {
+            setContentHeight(contentRef.current.scrollHeight);
+        }
+    }, [contentRef.current, passwordError]);
+
+    const style = useSpring({
+        height: expanded ? contentHeight : 0,
+        opacity: expanded ? 1 : 0,
+        pointerEvents: expanded ? "auto" : "none" as "auto" | "none",
+        // Overflow Y?
+        config: SpringConfig,
+    });
 
     return (
         <>
             <div className="input__wrap">
                 <InputString type="password" autoComplete="new-password" label={t('newPassword.password')} required={true} onChange={(e) => handleChange(e)}>
-                <div className="input-requirements__wrap">
-                    <p>{t('newPassword.instructions')}</p>
-                    <div className="input-requirements__content">
+                    <div className="input-requirements__wrap">
+                        <p>{t('newPassword.instructions')}</p>
+                        <div className="input-requirements__content">
 
-                        { /* TO DO: Wrap these into single component*/ }
-                        <div className={`input-requirements__item ${fulfilledCharacterCount? "active" : ""}`}>
-                            <em className="input-requirements__requirement">8-20</em>
-                            <small>{t('newPassword.characters')}</small>
-                        </div>
-                        <div className={`input-requirements__item ${fulfilledSmall? "active" : ""}`}>
-                            <em className="input-requirements__requirement">a</em>
-                            <small>{t('newPassword.lowercase')}</small>
-                        </div>
-                        <div className={`input-requirements__item ${fulfilledUpper? "active" : ""}`}>
-                            <em className="input-requirements__requirement">A</em>
-                            <small>{t('newPassword.uppercase')}</small>
-                        </div>
-                        <div className={`input-requirements__item ${fulfilledSpecialChar? "active" : ""}`}>
-                            <em className="input-requirements__requirement">#</em>
-                            <small>{t('newPassword.specialCharacter')}</small>
-                        </div>
-                        <div className={`input-requirements__item ${fulfilledNumber? "active" : ""}`}>
-                            <em className="input-requirements__requirement">123</em>
-                            <small>{t('newPassword.numbers')}</small>
+                            { /* TO DO: Wrap these into single component*/}
+                            <div className={`input-requirements__item ${fulfilledCharacterCount ? "active" : ""}`}>
+                                <em className="input-requirements__requirement">8-20</em>
+                                <small>{t('newPassword.characters')}</small>
+                            </div>
+                            <div className={`input-requirements__item ${fulfilledSmall ? "active" : ""}`}>
+                                <em className="input-requirements__requirement">a</em>
+                                <small>{t('newPassword.lowercase')}</small>
+                            </div>
+                            <div className={`input-requirements__item ${fulfilledUpper ? "active" : ""}`}>
+                                <em className="input-requirements__requirement">A</em>
+                                <small>{t('newPassword.uppercase')}</small>
+                            </div>
+                            <div className={`input-requirements__item ${fulfilledSpecialChar ? "active" : ""}`}>
+                                <em className="input-requirements__requirement">#</em>
+                                <small>{t('newPassword.specialCharacter')}</small>
+                            </div>
+                            <div className={`input-requirements__item ${fulfilledNumber ? "active" : ""}`}>
+                                <em className="input-requirements__requirement">123</em>
+                                <small>{t('newPassword.numbers')}</small>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </InputString>
             </div>
             <animated.div className="input__wrap" ref={contentRef} style={style}>
-                <InputString disabled={!expanded} ref={inputRef} onChange={(e) => handleRepeatChange(e)} label={t('newPassword.repeatPassword')} error={passwordError !== null ? passwordError : ""} autoComplete="new-password" required={true} type="password"></InputString>
+                <InputString disabled={!expanded} ref={inputRef} onChange={(e) => handleRepeatChange(e)} label={t('newPassword.repeatPassword')} autoComplete="new-password" required={true} type="password"></InputString>
             </animated.div>
         </>
     );

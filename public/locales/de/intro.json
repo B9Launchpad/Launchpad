@@ -12,7 +12,7 @@
         "title": "Persönliche Daten",
         "name": "Ihr Name",
         "email": "Ihre Email Adresse",
-        "wrongEmail": "Falsche Adresse?",
+        "wrongEmail": "Sie werden sie später in die App-Einstellungen ändern können.",
         "otherEmail": "Anderes Email verwenden",
         "picture": "Profilbild",
         "pictureInstructions": "Wenn Sie möchten, können Sie Ihres Profilbild hochladen. Unterstützte Erweiterungen: .png, .jpg, .jpeg, .svg, .webp."

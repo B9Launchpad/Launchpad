@@ -31,7 +31,7 @@ const OnboardingAssignAdmins: React.FC<OnboardingProps> = ({ onNext, data }) => 
     ]
 
     return (
-        <IntroLayout>
+        <>
             <div className="intro__content">
                 <div>
                     <h1>Make them administrators?</h1>
@@ -41,7 +41,7 @@ const OnboardingAssignAdmins: React.FC<OnboardingProps> = ({ onNext, data }) => 
                 <Button onClick={handleSubmit}>{t("continue", {ns: "general"})}</Button>
             </div>
             <p>Some shits here</p>
-        </IntroLayout>
+        </>
     )
 }
 

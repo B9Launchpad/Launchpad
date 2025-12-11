@@ -12,6 +12,7 @@ interface PageHeaderProps {
     path: HeaderPathType,
     title: string;
     action?: HeaderAction;
+    onBack?: () => void;
 }
 
 const PageHeader: React.FC<PageHeaderProps> = ({ settingsPath, path, title, action }) => {

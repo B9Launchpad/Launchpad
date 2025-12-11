@@ -54,7 +54,7 @@ const Button: React.FC<ButtonProps> = ({ children, inline = false, label = child
             setIsDisabled(disabled);
             setIsLoading(false);
         }
-    }, [fetchStatus])
+    }, [fetchStatus, disabled])
 
     return (
         <button 

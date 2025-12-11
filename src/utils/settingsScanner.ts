@@ -1,8 +1,9 @@
 import modulesManifest from '@/modules/modules.manifest.json';
-import { CachedSettingsPageSection, LazySettingsPage, SettingsPage } from '@/contexts/SettingsRegistryContext';
+import { CachedSettingsPageSection, SettingsPage } from '@/contexts/SettingsRegistryContext';
 import React from 'react';
 import { ModuleManifest, SettingsManifestPageSection } from '@/modules/module.utils';
 
+// section
 export interface SettingsPageSection {
     id: string;
     label: string;
@@ -10,14 +11,17 @@ export interface SettingsPageSection {
     loader: () => Promise<React.ComponentType>;
 }
 
-export interface SettingsManifest {
+// manifest
+export interface SettingsManifestPage {
     id: string;
     label: string;
-    ns?: string;
-    category: 'user' | 'panel' | 'misc';
+    folderName?: string;
+    category: 'user' | 'panel' | 'misc' | string;
     sections: SettingsManifestPageSection[];
+    nested?: SettingsManifestPage[];
 }
 
+// modules manifest
 interface ModulesManifest {
     module: string;
     manifestPath: string;
@@ -51,30 +55,35 @@ export class SettingsScanner {
             }
         ) => void
     ): Promise<void> {
-        //if (this.registered) return;
+        // should protect from double-scan but commented due to bugs
+        // if (this.registered) return;
 
         try {
             for (const moduleItem of modulesManifest as ModulesManifest[]) {
                 if (!moduleItem.hasSettings) continue;
 
                 try {
-                    const moduleManifest = await import(
+                    const moduleManifestImport = await import(
                         `@/modules/${moduleItem.manifestPath}`
                     );
 
-                    const settingsConfig: ModuleManifest = moduleManifest.default || moduleManifest.moduleManifest;
+                    const settingsConfig: ModuleManifest = moduleManifestImport.default || moduleManifestImport.moduleManifest;
 
                     if (!settingsConfig.settings) {
-                        console.warn(`No settings configuration found in module manifest for ${moduleItem.module} but was declared in modules-manifest.json`);
+                        console.warn(`No settings configuration found in module manifest for ${moduleItem.module}`);
                         continue;
                     }
 
-                    for (const settingsPage of settingsConfig.settings) {
+                    // single page processing helper function
+                    const processPage = (pageConfig: any, parentFolderName: string | undefined, isNested: boolean) => {
                         const pageSections: SettingsPageSection[] = [];
+                        
+                        // own or parent folder
+                        const currentFolderName = pageConfig.folderName || parentFolderName;
 
-                        for (const section of settingsPage.sections) {
+                        for (const section of pageConfig.sections) {
                             const loader = async (): Promise<React.ComponentType> => {
-                                const cacheKey = `${settingsPage.id}-${section.id}`;
+                                const cacheKey = `${pageConfig.id}-${section.id}`;
 
                                 if (this.componentCache.has(cacheKey)) {
                                     return this.componentCache.get(cacheKey)!;
@@ -82,8 +91,8 @@ export class SettingsScanner {
 
                                 try {
                                     const sectionFileName = section.fileName.replace(/\.(tsx|ts)$/, '');
-                                    const importPath = settingsPage.folderName
-                                        ? `${moduleItem.module}/settings/${settingsPage.folderName}/${sectionFileName}`
+                                    const importPath = currentFolderName
+                                        ? `${moduleItem.module}/settings/${currentFolderName}/${sectionFileName}`
                                         : `${moduleItem.module}/settings/${sectionFileName}`;
 
                                     const lazyModule = await import(
@@ -99,8 +108,8 @@ export class SettingsScanner {
                                     this.componentCache.set(cacheKey, component);
                                     return component;
                                 } catch (error) {
-                                    console.error(`Failed to load component for ${settingsPage.id}.${section.id}:`, error);
-                                    return () => React.createElement('div', null, `Failed to load: ${settingsPage.label} - ${section.label}`);
+                                    console.error(`Failed to load component for ${pageConfig.id}.${section.id}:`, error);
+                                    return () => React.createElement('div', null, `Failed to load: ${pageConfig.label} - ${section.label}`);
                                 }
                             };
 
@@ -113,12 +122,30 @@ export class SettingsScanner {
                         }
 
                         registerFunction({
-                            id: settingsPage.id,
-                            label: settingsPage.label,
+                            id: pageConfig.id,
+                            label: pageConfig.label,
                             ns: moduleItem.locales === false ? undefined : `module-${moduleItem.module}`,
-                            category: settingsPage.category,
-                            sections: pageSections
+                            category: pageConfig.category || 'misc',
+                            sections: pageSections,
+                            isNested: isNested
                         });
+
+                        // recursive nested processing
+                        if (pageConfig.nested && Array.isArray(pageConfig.nested)) {
+                            for (const nestedPage of pageConfig.nested) {
+                                // inherit parent category
+                                const nestedConfig = {
+                                    ...nestedPage,
+                                    category: nestedPage.category || pageConfig.category
+                                };
+                                processPage(nestedConfig, currentFolderName, true);
+                            }
+                        }
+                    };
+
+                    // root settings tabs
+                    for (const settingsPage of settingsConfig.settings) {
+                        processPage(settingsPage, undefined, false);
                     }
 
                 } catch (error) {
@@ -132,30 +159,28 @@ export class SettingsScanner {
         }
     }
 
-    // Load a component by ID method.
-    async loadComponent(id: string, sectionId: string, pages: Array<SettingsPage | LazySettingsPage>): Promise<React.ComponentType | null> {
-        // Check cached.
-        const page = pages.find(page => page.id === id) as SettingsPage;
+    async loadComponent(id: string, sectionId: string, pages: Array<SettingsPage | any>): Promise<React.ComponentType | null> {
+        // checked cached.
+        const page = pages.find((p: any) => p.id === id);
+        
         if (page && 'sections' in page) {
-            const section = page.sections.find(s => s.id === sectionId);
+            // check cached section.
+            const section = page.sections.find((s: any) => s.id === sectionId);
             if (section && 'component' in section) {
                 return section.component;
             }
-        }
-
-        // Find page if not in cache:
-        const lazyPage = pages.find(page => page.id === id) as LazySettingsPage;
-        const lazySection = lazyPage.sections.find(s => s.id === sectionId);
-        if (lazySection && 'loader' in lazySection) {
-            try {
-                const component = await lazySection.loader();
-                return component;
-            } catch (error) {
-                console.error(`Failed to load component for ${id}:`, error);
-                return null;
+            
+            // Check loader
+            if (section && 'loader' in section) {
+                try {
+                    const component = await section.loader();
+                    return component;
+                } catch (error) {
+                    console.error(`Failed to load component for ${id}:`, error);
+                    return null;
+                }
             }
         }
-
         return null;
     }
 }

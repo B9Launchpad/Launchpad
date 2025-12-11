@@ -5,6 +5,12 @@ export interface SettingsManifestPageSection {
     fileName: string;
 }
 
+export interface SettingsManifestNestedPage {
+    id: string;
+    label: string;
+    sections: SettingsManifestPageSection[];
+}
+
 export interface ModuleManifest {
     id: string;
     locales?: boolean;
@@ -14,5 +20,6 @@ export interface ModuleManifest {
         category: 'user' | 'panel' | 'misc';
         folderName?: string;
         sections: SettingsManifestPageSection[];
+        nested?: SettingsManifestNestedPage[];
     }>;
 }

@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { SettingsPageSection, SettingsScanner } from '@utils/settingsScanner';
+import { SettingsPageSection, SettingsScanner } from '@/utils/settingsScanner'; // Поправь путь импорта если нужно
 
 export interface SettingsPage {
     id: string;
     label: string;
     ns?: string;
     category: 'user' | 'panel' | 'misc' | string;
-    sections: CachedSettingsPageSection[]
+    sections: CachedSettingsPageSection[];
+    isNested?: boolean; // Новый флаг
 }
 
 export interface CachedSettingsPageSection {
@@ -22,6 +23,7 @@ export interface LazySettingsPage {
     ns?: string;
     category: 'user' | 'panel' | 'misc' | string;
     sections: SettingsPageSection[];
+    isNested?: boolean; // Новый флаг
 }
 
 interface SettingsRegistryContextType {
@@ -44,7 +46,7 @@ export const SettingsRegistryProvider: React.FC<{ children: ReactNode }> = ({ ch
     const registerSettingsPage = (page: SettingsPage | LazySettingsPage) => {
         setRegisteredPages(prev => {
             if (prev.find(p => p.id === page.id)) {
-                console.warn(`Settings page with id "${page.id}" is already registered`);
+                // kinda important: should prevent console spam if components re-mount
                 return prev;
             }
             return [...prev, page];
@@ -95,7 +97,8 @@ export const SettingsRegistryProvider: React.FC<{ children: ReactNode }> = ({ ch
                         label: page.label,
                         ns: page.ns,
                         category: page.category,
-                        sections: updatedSections as CachedSettingsPageSection[]
+                        sections: updatedSections as CachedSettingsPageSection[],
+                        isNested: page.isNested
                     };
 
                     return newPage;

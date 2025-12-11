@@ -3,9 +3,13 @@ import Table, { Column } from "@/components/common/Table/Table";
 import Profile, { ProfileProps } from "@/components/common/User/Profile";
 import TeamDisplay, { TeamDisplayProps } from "@/components/common/User/Team";
 import { SearchProvider } from "@/contexts/SearchContext";
-import { ReactElement } from "react";
+import { UserDataProps } from "@/contexts/UserContext";
+import makeFetchRequest from "@/utils/fetch/makeFetchRequest";
+import SettingsNested from "@/utils/SettingsNested";
+import { ReactElement, useEffect, useState } from "react";
 
 const SettingsAccounts: React.FC = () => {
+    const [users, setUsers] = useState<UserDataProps[]>([]);
     interface AccountsItem {
         user: ProfileProps;
         id: number;
@@ -44,25 +48,48 @@ const SettingsAccounts: React.FC = () => {
         }
     ];
 
-    const data: AccountsItem[] = [
-        { 
-            user: {displayFullName: true, email: "tyakovleva@b9creators.co.uk", name: ["Tatiana", "Yakovleva"]},
-            id: 55024,
-            role: 'user',
-            teams: [{label: "Legislative", color: "brown", inline: true}]
-        },
+    useEffect(() => {
+        async function getAllUsers(): Promise<void> {
+            const { response } = await makeFetchRequest({
+                url: "/user/all",
+                method: "GET",
+                credentials: "include"
+            })
+
+            setUsers(await response.json());
+        }
+
+        getAllUsers();
+    }, [])
+
+    const data: AccountsItem[] = users.map(user => (
         {
-            user: { displayFullName: true, email: "vyanukovych@b9creators.gov.ua", name: ["Viktor", "Yanukovych"] },
-            id: 55025,
-            role: 'admin',
-            teams: [{ label: "Executive", color: "success", inline: true }]
-        },
-    ]
+            user: {displayFullName: true, email: user.email, name: user.username.split(" ")},
+            id: user.id,
+            role: user.role,
+            teams: []
+        }
+    ));
+    //[
+    //    { 
+    //        user: {displayFullName: true, email: "tyakovleva@b9creators.co.uk", name: ["Tatiana", "Yakovleva"]},
+    //        id: 55024,
+    //        role: 'user',
+    //        teams: [{label: "Legislative", color: "brown", inline: true}]
+    //    },
+    //    {
+    //        user: { displayFullName: true, email: "vyanukovych@b9creators.gov.ua", name: ["Viktor", "Yanukovych"] },
+    //        id: 55025,
+    //        role: 'admin',
+    //        teams: []
+    //    },
+    //]
 
     return (
         <SearchProvider>
             <InputSearch/>
             <Table columns={columns} data={data} allowSelection footer={<p>Hello world</p>}/>
+            <SettingsNested.Trigger targetId="core.launchpad.accounts.view" data={{ userId: 123 }}><p>Click me</p></SettingsNested.Trigger>
         </SearchProvider>
     )
 }

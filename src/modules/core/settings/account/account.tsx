@@ -102,7 +102,7 @@ const SettingsAccount: React.FC = () => {
                             <div className='gap-sm flex flex-col'>
                                 <em className='input__title'>{t('account.sections.account.personalInfo.role')}</em>
                                 <div className='flex-col'>
-                                    <p>User</p>
+                                    <p>{user.role /* LOCALISE */}</p> 
                                 </div>
                             </div>
                         </div>

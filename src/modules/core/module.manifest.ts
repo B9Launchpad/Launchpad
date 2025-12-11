@@ -70,6 +70,20 @@ export const moduleManifest: ModuleManifest = {
                     default: false,
                     fileName: 'CreateAccount.tsx'
                 }
+            ],
+            nested: [
+                {
+                    id: "core.launchpad.accounts.view",
+                    label: 'accounts.view.label',
+                    sections: [
+                        {
+                            id: 'view-account',
+                            label: 'accounts.view.label',
+                            default: true,
+                            fileName: 'ViewAccount.tsx'
+                        }
+                    ]
+                }
             ]
         }
     ]

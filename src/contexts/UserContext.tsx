@@ -11,15 +11,17 @@ interface UserContextProps {
     isVerified: boolean;
     country: string;
     picture: string;
+    role: string;
 }
 
-interface UserDataProps {
+export interface UserDataProps {
     country: string;
     email: string;
     username: string;
     picture: string;
-    role: string;
+    role: "user" | "admin" | "owner";
     is_verified: boolean;
+    id: number;
 }
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
@@ -66,7 +68,7 @@ export const UserProvider = ({ children, os }: {children: React.ReactNode, os: s
     )
 
     return (
-        <UserContext.Provider value={{os, name: userData.username.split(" "), email: userData.email, isVerified: userData.is_verified, country: userData.country, picture: userData.picture}}>
+        <UserContext.Provider value={{os, name: userData.username.split(" "), email: userData.email, isVerified: userData.is_verified, country: userData.country, picture: userData.picture, role: userData.role}}>
             {children}
         </UserContext.Provider>
     )

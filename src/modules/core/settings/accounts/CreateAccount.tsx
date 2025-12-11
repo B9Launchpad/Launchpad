@@ -10,6 +10,7 @@ import WindowBlock from "@/components/modules/FormBlock"
 import validateEmail from "@/functions/validateEmail"
 import { useEffect, useMemo, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
+import Button from "@/components/common/Button"
 
 
 const SettingsAccountsCreateAccount = () => {
@@ -94,7 +95,7 @@ const SettingsAccountsCreateAccount = () => {
                     }
                 })}/>
             </Window>
-            <Window label="Review" description="Please verify all data is correct before creating new account.">
+            <Window action={[{label: "Create new account", disabled: !isValidEmail, type: 'submit'}]} label="Review" description="Please verify all data is correct before creating new account.">
                 <Profile name={["Invited user", ""]} email={newUserData.email}/>
                 <TableCompact columns={columns} data={reviewData}></TableCompact>
             </Window>

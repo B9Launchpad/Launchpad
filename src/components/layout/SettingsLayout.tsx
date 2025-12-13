@@ -66,7 +66,9 @@ const LayoutSettingsContent: React.FC = () => {
             }
 
             const page = registeredPages.find(p => p.id === currentEntry.pageId);
-            if (!page) return;
+            if (!page) {
+                throw new Error("No page found for id " + currentEntry.pageId);
+            }
 
             let targetSectionId = currentEntry.sectionId;
             if(!targetSectionId) {

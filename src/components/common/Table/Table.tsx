@@ -11,14 +11,10 @@ export interface Column<T> {
     header: string;
     accessor: keyof T | ((row: T) => React.ReactNode);
     align?: "left" | "right" | "center";
-
     getSearchValues?: (row: T) => string | string[];
-
     getSortValue?: (row: T) => string | number | Date;
-
     /** Flag to enable searching on this column. Defaults to false. */
     isSearchable?: boolean;
-
     /** Flag to enable sorting on this column. Defaults to false. */
     isSortable?: boolean;
 }
@@ -34,6 +30,7 @@ interface TableProps<T> {
     allowSelection?: boolean;
     footer?: React.ReactNode;
     className?: string;
+    onRowClick?: (row: T) => void;
 }
 
 function TableInner<T>(
@@ -44,6 +41,7 @@ function TableInner<T>(
         className,
         label,
         allowSelection = false,
+        onRowClick
     }: TableProps<T>,
     ref: React.Ref<TableRef<T>>
 ) {
@@ -230,9 +228,9 @@ function TableInner<T>(
                             { id: i, checked: selected?.[i] === true }
                         ];
                         return (
-                            <tr key={i} className="table__row">
+                            <tr key={i} onClick={() => {if(onRowClick) onRowClick(row)}} className={`table__row ${onRowClick ? "clickable" : ""}`}>
                                 {allowSelection && (
-                                    <td className="table__checkbox">
+                                    <td onClick={(e) => e.stopPropagation()} className="table__checkbox">
                                         <InputCheckbox
                                             onToggle={(state) => handleChildToggle(state, i)}
                                             options={ChildOption}

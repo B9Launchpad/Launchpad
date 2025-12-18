@@ -4,7 +4,7 @@ import GuestLayout from "@/components/layout/GuestLayout";
 import makeFetchRequest from "@/utils/fetch/makeFetchRequest";
 import { createContext, useContext, useEffect, useState } from "react";
 
-interface UserContextProps {
+export interface UserProps {
     os: string;
     name: string[];
     email: string;
@@ -24,7 +24,19 @@ export interface UserDataProps {
     id: number;
 }
 
-const UserContext = createContext<UserContextProps | undefined>(undefined);
+const UserContext = createContext<UserProps | undefined>(undefined);
+
+export const parseUserData = (data: UserDataProps) => {
+    return {
+        name: data.username.split(" "),
+        email: data.email,
+        isVerified: data.is_verified,
+        country: data.country,
+        picture: data.picture,
+        role: data.role,
+        id: data.id
+    };
+}
 
 export const UserProvider = ({ children, os }: {children: React.ReactNode, os: string}) => {
     const [userData, setUserData] = useState<UserDataProps>();
@@ -49,10 +61,6 @@ export const UserProvider = ({ children, os }: {children: React.ReactNode, os: s
 
         RetrieveUserData();
     }, [])
-
-    useEffect(() => {
-        console.log(userData)
-    }, [userData])
 
     if(fatal) return (
         <GuestLayout backgroundURL="/static/guest-layout/dusseldorf.webp">

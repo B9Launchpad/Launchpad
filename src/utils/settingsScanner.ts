@@ -127,7 +127,8 @@ export class SettingsScanner {
                             ns: moduleItem.locales === false ? undefined : `module-${moduleItem.module}`,
                             category: pageConfig.category || 'misc',
                             sections: pageSections,
-                            isNested: isNested
+                            isNested: isNested,
+                            parentId: pageConfig.parentId ?? undefined
                         });
 
                         // recursive nested processing
@@ -136,7 +137,8 @@ export class SettingsScanner {
                                 // inherit parent category
                                 const nestedConfig = {
                                     ...nestedPage,
-                                    category: nestedPage.category || pageConfig.category
+                                    category: nestedPage.category || pageConfig.category,
+                                    parentId: pageConfig.id
                                 };
                                 processPage(nestedConfig, currentFolderName, true);
                             }

@@ -1096,6 +1096,14 @@ table {
     font: var(--font-secondary)
 }
 
+.table__row.clickable {
+    cursor: pointer;
+    transition: background-color var(--transition); 
+}
+.table__row.clickable:hover {
+    background-color: var(--background-secondary);
+}
+
 /* Pad Select */
 
 .pad-select__options {

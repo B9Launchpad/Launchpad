@@ -3,6 +3,7 @@ import Table, { Column } from "@/components/common/Table/Table";
 import Profile, { ProfileProps } from "@/components/common/User/Profile";
 import TeamDisplay, { TeamDisplayProps } from "@/components/common/User/Team";
 import { SearchProvider } from "@/contexts/SearchContext";
+import { useSettingsRouter } from "@/contexts/SettingsRouterContext";
 import { UserDataProps } from "@/contexts/UserContext";
 import makeFetchRequest from "@/utils/fetch/makeFetchRequest";
 import SettingsNested from "@/utils/SettingsNested";
@@ -16,6 +17,7 @@ const SettingsAccounts: React.FC = () => {
         role: 'user' | 'admin' | 'owner';
         teams?: TeamDisplayProps[];
     }
+    const SettingsRouter = useSettingsRouter();
     
     const columns: Column<AccountsItem>[] = [
         {
@@ -85,10 +87,14 @@ const SettingsAccounts: React.FC = () => {
     //    },
     //]
 
+    const handleClick = (row: AccountsItem) => {
+        SettingsRouter.push("core.launchpad.accounts.view", null, { id: row.id })
+    }
+
     return (
         <SearchProvider>
             <InputSearch/>
-            <Table columns={columns} data={data} allowSelection footer={<p>Hello world</p>}/>
+            <Table columns={columns} onRowClick={handleClick} data={data} allowSelection footer={<p>Hello world</p>}/>
             <SettingsNested.Trigger targetId="core.launchpad.accounts.view" data={{ userId: 123 }}><p>Click me</p></SettingsNested.Trigger>
         </SearchProvider>
     )

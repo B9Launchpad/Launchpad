@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
-import { SettingsPageSection, SettingsScanner } from '@/utils/settingsScanner'; // Поправь путь импорта если нужно
+import { SettingsPageSection, SettingsScanner } from '@utils/settingsScanner';
 
 export interface SettingsPage {
     id: string;
@@ -7,7 +7,8 @@ export interface SettingsPage {
     ns?: string;
     category: 'user' | 'panel' | 'misc' | string;
     sections: CachedSettingsPageSection[];
-    isNested?: boolean; // Новый флаг
+    isNested?: boolean;
+    parentId?: string;
 }
 
 export interface CachedSettingsPageSection {
@@ -23,7 +24,8 @@ export interface LazySettingsPage {
     ns?: string;
     category: 'user' | 'panel' | 'misc' | string;
     sections: SettingsPageSection[];
-    isNested?: boolean; // Новый флаг
+    isNested?: boolean;
+    parentId?: string;
 }
 
 interface SettingsRegistryContextType {
@@ -98,7 +100,8 @@ export const SettingsRegistryProvider: React.FC<{ children: ReactNode }> = ({ ch
                         ns: page.ns,
                         category: page.category,
                         sections: updatedSections as CachedSettingsPageSection[],
-                        isNested: page.isNested
+                        isNested: page.isNested,
+                        parentId: page.parentId
                     };
 
                     return newPage;

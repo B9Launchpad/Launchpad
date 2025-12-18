@@ -35,7 +35,7 @@ const HeaderPath: React.FC<HeaderPathProps> = ({ path, from = 'dashboard' }) => 
                     )}
                     
                     {index < path.length - 1 && (
-                        <span className="mx-2 text-gray-400">→</span>
+                        <IconArrowRight className="icon-small"/>
                     )}
                 </div>
             ))}

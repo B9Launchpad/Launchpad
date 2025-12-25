@@ -8,6 +8,7 @@ import { useSpring, animated } from "react-spring";
 interface ModalContextProps {
     setModal: (content: React.ReactNode, label: string, description?: string, action?: ModalActionButtonProps[], config?: ModalConfig) => void;
     closeModal: () => void;
+    resetModal: () => void;
     updateModal: (patch: Partial<ModalState>) => void;
     isOpen: boolean;
     config?: ModalConfig;
@@ -84,6 +85,10 @@ export const PopupProvider = ({ children }: {children: React.ReactNode }) => {
             }
         });
     }, []);
+
+    const resetModal = useCallback(() => {
+        setModalStack([]);
+    }, [])
 
     useEffect(() => {
         if(!modalState.isOpen) return;
@@ -165,6 +170,7 @@ export const PopupProvider = ({ children }: {children: React.ReactNode }) => {
         setModal,
         closeModal,
         updateModal,
+        resetModal,
         isOpen: modalState.isOpen
     };
 

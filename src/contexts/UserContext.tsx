@@ -12,6 +12,7 @@ export interface UserProps {
     country: string;
     picture: string;
     role: string;
+    id: number;
 }
 
 export interface UserDataProps {
@@ -20,7 +21,7 @@ export interface UserDataProps {
     username: string;
     picture: string;
     role: "user" | "admin" | "owner";
-    is_verified: boolean;
+    is_verified: "f" | "t";
     id: number;
 }
 
@@ -30,7 +31,7 @@ export const parseUserData = (data: UserDataProps) => {
     return {
         name: data.username.split(" "),
         email: data.email,
-        isVerified: data.is_verified,
+        isVerified: data.is_verified === "f" ? false : true,
         country: data.country,
         picture: data.picture,
         role: data.role,
@@ -62,6 +63,10 @@ export const UserProvider = ({ children, os }: {children: React.ReactNode, os: s
         RetrieveUserData();
     }, [])
 
+    //useEffect(() => {
+    //    console.log(userData)
+    //}, [userData])
+
     if(fatal) return (
         <GuestLayout backgroundURL="/static/guest-layout/dusseldorf.webp">
             <div className="hero__content">
@@ -76,7 +81,7 @@ export const UserProvider = ({ children, os }: {children: React.ReactNode, os: s
     )
 
     return (
-        <UserContext.Provider value={{os, name: userData.username.split(" "), email: userData.email, isVerified: userData.is_verified, country: userData.country, picture: userData.picture, role: userData.role}}>
+        <UserContext.Provider value={{os, name: userData.username.split(" "), email: userData.email, isVerified: userData.is_verified === "f" ? false : true, country: userData.country, picture: userData.picture, role: userData.role, id: userData.id}}>
             {children}
         </UserContext.Provider>
     )

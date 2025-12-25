@@ -8,6 +8,12 @@ export interface ButtonProps {
     inline?: boolean;
     icon?: React.ReactNode;
     onClick?: () => void;
+    /** 
+    *   @deprecated
+    *   Use not recommended, will be removed in by dist version. Please resort to using `label` property instead.
+    *   Removed for consistency with other component properties and visual identity.
+    *   @since 25w55a
+    */
     children?: React.ReactNode;
     label?: string | React.ReactNode;
     disabled?: boolean;
@@ -24,8 +30,10 @@ const Button: React.FC<ButtonProps> = ({ children, inline = false, label = child
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     if(!label && !children && !icon) throw new Error("Missing required prop: 'label', 'children' or 'icon' must be provided, but received 'undefined'");
-    // if(typeof label !== undefined && typeof children !== undefined) throw new Error("Invalid prop combination: 'label' and 'children' provided, but expected either 'label' or 'children'");
-    // CONSIDER CLEANUP!
+    if(children) {
+        console.warn("Button: children prop used, but marked as deprecated and will be removed by dist")
+    }
+
     const fetchStatus = useFetchStatus();
 
     const handleFocus = () => {

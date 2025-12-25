@@ -102,13 +102,13 @@ const LoginPromptPage: React.FC = () => {
                 </InputSmall>
             </div>
             <div className="secondary__content centre">
-                <Button type="submit" onClick={handleClick}>{t('login')}</Button>
+                <Button label={t('login')} type="submit" onClick={handleClick}/>
                 <em>{t('or')}</em>
-                <Button icon={<PasskeyIcon/>} variant='tertiary'>{t('OAuthWith', {method: 'Passkey'})}</Button>
-                <Button icon={<GoogleLogo/>} variant='tertiary'>{t('OAuthContinue', {method: 'Google'})}</Button>
-                <Button icon={<MicrosoftLogo/>} variant='tertiary'>{t('OAuthContinue', {method: 'Microsoft'})}</Button>
+                <Button label={t('OAuthWith', {method: 'Passkey'})} icon={<PasskeyIcon/>} variant='tertiary'/>
+                <Button label={t('OAuthContinue', {method: 'Google'})} icon={<GoogleLogo/>} variant='tertiary'/>
+                <Button label={t('OAuthContinue', {method: 'Microsoft'})} icon={<MicrosoftLogo/>} variant='tertiary'/>
                 <animated.div style={style} ref={additionalOAuthRef} className="secondary__content centre">
-                    <Button icon={<GithubLogo/>} variant='tertiary'>{t('OAuthContinue', {method: 'GitHub'})}</Button>
+                    <Button label={t('OAuthContinue', {method: 'GitHub'})} icon={<GithubLogo/>} variant='tertiary'/>
                 </animated.div>
                 { expandedOAuthOptions ? (
                     <a onClick={() => { setExpandOAuthOptions(!expandedOAuthOptions) }} className="access">{t('showLess', {ns: "general"})}</a> 

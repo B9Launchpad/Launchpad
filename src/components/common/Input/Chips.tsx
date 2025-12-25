@@ -5,7 +5,7 @@ import Tag from "../Tag";
 import IconBin from "../../icons/Bin";
 
 interface SmallInputProps {
-    title: string;
+    label: string;
     placeholder?: string;
     type: "string" | "number" | "float" | "password";
     children?: React.ReactNode;
@@ -31,7 +31,7 @@ export type InputChipsRef = HTMLInputElement & {
   get: () => string[] | undefined;
 };
 
-const InputChips = forwardRef<InputChipsRef, SmallInputProps>(({ title, allowSameEntry = false, maxArrayLength, validation, placeholder, id, autofocus, onChange, type = 'text', children, error, value = "", chips, maxLength, autoComplete = 'off', name, disabled = false, required, description}, ref) => {
+const InputChips = forwardRef<InputChipsRef, SmallInputProps>(({ label, allowSameEntry = false, maxArrayLength, validation, placeholder, id, autofocus, onChange, type = 'text', children, error, value = "", chips, maxLength, autoComplete = 'off', name, disabled = false, required, description}, ref) => {
     const [inputValue, setInputValue] = useState<string>(value)
     const [currentChips, setCurrentChips] = useState<string[] | undefined>(chips);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -127,7 +127,7 @@ const InputChips = forwardRef<InputChipsRef, SmallInputProps>(({ title, allowSam
         <div className={`input__wrap`}>
             <div className={`input__content ${disabled === true ? 'disabled' : ''}`}>
                 <span className="input__title-content">
-                    <p className="input__title">{title}</p>
+                    <p className="input__title">{label}</p>
                     {required && (<p className="input__mandatory">*</p>)}
                 </span>
                 {description && (<p className="input__description">{description}</p>)}
@@ -135,7 +135,7 @@ const InputChips = forwardRef<InputChipsRef, SmallInputProps>(({ title, allowSam
             <div className={`input__field`}>
                 <div className="input__field--button">
                     <input onFocus={handleFocus} onBlur={handleBlur} onKeyDown={handleKeyDown} disabled={disabled} maxLength={maxLength} id={id} autoFocus={autofocus} autoComplete={autoComplete} name={name} onChange={handleChange} onClick={disableError} value={inputValue} type={type} className={`input__main ${inputError ? 'input__main--error' : ''} ${disabled == true ? 'disabled' : ''}`} ref={inputRef} placeholder={placeholder}></input>
-                    <Button tabIndex={-1} onClick={handleClick}>+</Button>
+                    <Button label={"+"} tabIndex={-1} onClick={handleClick}/>
                 </div>
                 {maxLength && (
                     <small className="input__char--counter">

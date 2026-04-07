@@ -12,7 +12,7 @@
         "title": "Personal details",
         "name": "Your name",
         "email": "Your email address",
-        "wrongEmail": "Wrong address?",
+        "wrongEmail": "You can change your email later in the app settings.",
         "otherEmail": "Use a different email",
         "picture": "Profile picture",
         "pictureInstructions": "If you wish, you may upload your profile picture. Supported file formats: .png, .jpg, .jpeg, .svg, .webp."

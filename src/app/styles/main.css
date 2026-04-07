@@ -1125,6 +1125,7 @@ table {
     transition: background-color 150ms ease-in-out, color 150ms ease-in-out;
     fill: var(--icon);
     border-radius: var(--radius-large);
+    border: 1px solid var(--hover-background-secondary)
 }
 
 .pad-select__option.image {
@@ -1166,8 +1167,8 @@ table {
     background-color: var(--background-primary);
     color: var(--contrast);
     outline: var(--background-primary) 1px;
+    border-color: var(--muted)
 }
-
 /* Note: This is an accessibility measure so that users can tell which one is selected with the outline.
 Please consider alternatives before removing */
 
@@ -1179,6 +1180,7 @@ Please consider alternatives before removing */
         display: inline-flex;
         transition: border-color var(--transition) 
     }
+
     .pad-select__option--wrap.selected {
         border-color: var(--background-primary);
     }

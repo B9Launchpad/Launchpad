@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/common/Button";
-import InputCheckbox, { CheckboxState, id, InputCheckboxRef } from "../../../components/common/Input/Checkbox";
-import { useMemo, useRef, useState } from "react";
+import InputCheckbox, { InputCheckboxRef } from "../../../components/common/Input/Checkbox";
+import { useMemo, useRef } from "react";
 import NewPassword, { NewPasswordRef } from "../../../components/common/Input/NewPassword";
 import { OnboardingDataType } from "../Index";
 import Form from "@/components/common/Input/Form";
@@ -23,7 +23,7 @@ const OnboardingPassword: React.FC<OnboardingProps> = ({ onNext, data }) => {
 
     const handleSubmit = () => {
         const isValid = newPasswordRef.current?.validate();
-        if(!isValid || typeof isValid === undefined) {
+        if(!isValid) {
             return;
         }
 
@@ -39,10 +39,8 @@ const OnboardingPassword: React.FC<OnboardingProps> = ({ onNext, data }) => {
         <Form onSubmit={handleSubmit} showSubmitButton={false}>
             <div className="intro__content">
                 <h1>{t('security.password.title')}</h1>
-                <NewPassword ref={newPasswordRef}></NewPassword>
-                
-                <InputCheckbox ref={checkboxRef} options={checkboxOptions}></InputCheckbox>
-
+                <NewPassword ref={newPasswordRef}/>
+                <InputCheckbox ref={checkboxRef} options={checkboxOptions}/>
                 <Button type={"submit"} onClick={handleSubmit}>{t("continue", {ns: "general"})}</Button>
             </div>
         </Form>

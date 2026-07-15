@@ -3,24 +3,40 @@ import useLastInteractionKeyboard from "@/functions/useLastInteractionKeyboard";
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-type SectionBrowserItem = {
-    label: string;
+export type SectionBrowserItem = {
+    label?: string;
+    icon?: React.ReactNode;
     id: string;
     onClick: () => void;
 }
 
 interface HeaderSectionBrowserProps {
     currentId?: string;
-    items: SectionBrowserItem[]
+    items: SectionBrowserItem[];
+    transparentInactiveItems?: boolean;
+    excludeInstructions?: boolean;
 }
 
-const HeaderSectionBrowser: React.FC<HeaderSectionBrowserProps> = ({ items, currentId }) => {
+/**
+ * Creates a navigation panel with section switch buttons with assigned `onClick()` actions.
+ * @param currentId ID of currently active section, defaults to first provided section.
+ * @param items `Array<SectionBrowserItem> of buttons to render (see type `SectionBrowserItem`)
+ * @param transparentInactiveItems Sets whether to add a background colour to inactive buttons, defaults to `true`.
+ * @param excludeInstructions Specifies whether to exclude `Browse sections` label for the user, defauts to `false`.
+ */
+const HeaderSectionBrowser: React.FC<HeaderSectionBrowserProps> = ({ items, currentId, transparentInactiveItems = true, excludeInstructions = false }) => {
     const { t } = useTranslation('main')
     const [currentSectionId, setCurrentSectionId] = useState<string>(currentId || items[0]?.id || '');
     const containerRef = useRef<HTMLDivElement>(null);
     const [focusedIndex, setFocusedIndex] = useState<number>(0);
     const [hasFocus, setHasFocus] = useState<boolean>(false)
     const lastInteractionKeyboard = useLastInteractionKeyboard();
+
+    for(let i = 0; i < items.length; i++) {
+        if(!items[i].icon && !items[i].label) {
+            throw new Error("<HeaderSectionBrowser> requires items to have `label` or `icon` defined, but received `undefined` for both.")
+        }
+    }
 
     useEffect(() => {
         if (currentId && currentId !== currentSectionId) {
@@ -91,7 +107,7 @@ const HeaderSectionBrowser: React.FC<HeaderSectionBrowserProps> = ({ items, curr
 
     return (
         <div className="header__section-browser">
-            <small className="header__section-browser--label">{t('layout.browseSections')}</small>
+            {!excludeInstructions && <small className="header__section-browser--label">{t('layout.browseSections')}</small>}
             <div
                 onKeyDown={handleKeyDown}
                 onFocus={handleFocus}
@@ -107,7 +123,8 @@ const HeaderSectionBrowser: React.FC<HeaderSectionBrowserProps> = ({ items, curr
                                 key={index}
                                 isFocused={focusedIndex === index && hasFocus === true}
                                 label={item.label}
-                                color={item.id === currentSectionId ? 'access' : 'transparent'}
+                                icon={item.icon}
+                                color={item.id === currentSectionId ? 'access' : (transparentInactiveItems ? 'transparent' : 'secondary')}
                                 onClick={item.onClick}
                             />
                         )

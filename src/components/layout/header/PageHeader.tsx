@@ -8,14 +8,14 @@ export type HeaderAction =
 }
 
 interface PageHeaderProps {
-    settingsPath: boolean;
+    settingsPath?: boolean;
     path: HeaderPathType,
     title: string;
     action?: HeaderAction;
     onBack?: () => void;
 }
 
-const PageHeader: React.FC<PageHeaderProps> = ({ settingsPath, path, title, action }) => {
+const PageHeader: React.FC<PageHeaderProps> = ({ settingsPath = false, path, title, action }) => {
     return(
         <header className="">
             <HeaderPath path={path} from={settingsPath === true ? "settings" : "dashboard"}/>

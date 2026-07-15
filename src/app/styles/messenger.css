@@ -1,0 +1,10 @@
+.messenger__window-wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: var(--gap-standard);
+}
+
+.messenger__window-wrap > div {
+    width: 50%;
+}

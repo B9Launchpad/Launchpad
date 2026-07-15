@@ -284,3 +284,7 @@ p {
 .gap-lg {
     gap: var(--gap-large) !important;
 }
+
+.justify-space-between {
+    justify-content: space-between;
+}

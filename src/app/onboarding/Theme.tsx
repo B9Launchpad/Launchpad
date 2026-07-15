@@ -3,8 +3,8 @@ import { useTranslation } from "react-i18next";
 import Button from "../../components/common/Button";
 import PadSelect from "../../components/misc/intro/PadSelect";
 import { useContext } from "react";
-import ThemeContext from "../../functions/ThemeContext";
-import type { Theme } from "../../functions/ThemeContext";
+import ThemeContext from "../../contexts/ThemeContext";
+import type { Theme } from "../../contexts/ThemeContext";
 
 interface OnboardingProps {
     onNext: () => void;
@@ -34,14 +34,14 @@ const OnboardingTheme: React.FC<OnboardingProps> = ({ onNext }) => {
     }
 
     return (
-        <IntroLayout>
+        <>
             <div className="intro__content">
                 <h1>{t('style')}</h1>
                 <PadSelect onChange={(id) => handleChange(id)} options={options} imageMode={true} alwaysSelected={true}></PadSelect>
                 <Button onClick={onNext}>{t("continue", {ns: "general"})}</Button>
             </div>
             <p>Some shits here</p>
-        </IntroLayout>
+        </>
     )
 }
 

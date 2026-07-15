@@ -5,6 +5,7 @@ import InputString, { InputStringRef } from "../../../components/common/Input/St
 import FileUpload from "../../../components/common/Input/FileUpload/FileUpload";
 import { OnboardingDataType } from "../Index";
 import { useRef } from "react";
+import Form from "@/components/common/Input/Form";
 
 interface OnboardingProps {
     onNext: (stepsToAdd: number, data: OnboardingDataType) => void;
@@ -32,15 +33,15 @@ const OnboardingCompany: React.FC<OnboardingProps> = ({ onNext, data }) => {
     }
 
     return (
-        <IntroLayout>
+        <Form onSubmit={handleSubmit} showSubmitButton={false}>
             <div className="intro__content">
                 <h1>{t('company.title')}</h1>
-                <InputString ref={inputRef} autoComplete={"name"} title={t('company.name')} isMandatory={true} type="string" error=""></InputString>
-                <FileUpload accept={".png .svg .webp .jpg .jpeg"} title={t('company.logo')} description={t('company.logoInstructions', { productName: t('Launchpad', {ns: "general"})})} allowMultiple={false}></FileUpload>
+                <InputString ref={inputRef} autoComplete={"name"} label={t('company.name')} required={true} type="string" error=""></InputString>
+                <FileUpload accept={".png .svg .webp .jpg .jpeg"} label={t('company.logo')} description={t('company.logoInstructions', { productName: t('Launchpad', {ns: "general"})})} allowMultiple={false}></FileUpload>
                 <Button onClick={handleSubmit}>{t("continue", {ns: "general"})}</Button>
             </div>
             <p>Some shits here</p>
-        </IntroLayout>
+        </Form>
     )
 }
 

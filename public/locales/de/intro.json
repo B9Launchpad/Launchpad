@@ -10,10 +10,10 @@
     },
     "personalDetails": {
         "title": "Persönliche Daten",
-        "name": "Ihre Name",
+        "name": "Ihr Name",
         "email": "Ihre Email Adresse",
-        "wrongEmail": "Falsche Adresse?",
-        "otherEmail": "Andere Email verwenden",
+        "wrongEmail": "Sie werden sie später in die App-Einstellungen ändern können.",
+        "otherEmail": "Anderes Email verwenden",
         "picture": "Profilbild",
         "pictureInstructions": "Wenn Sie möchten, können Sie Ihres Profilbild hochladen. Unterstützte Erweiterungen: .png, .jpg, .jpeg, .svg, .webp."
     },

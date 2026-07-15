@@ -1,21 +1,33 @@
 interface TagProps {
-    children: React.ReactNode;
-    color?: "access" | "warning" | "critical" | "success" | "pink" | "purple" | "orange" | "blue" | "brown" | "primary" | "secondary" | "muted";
+    children?: React.ReactNode;
+    label?: string;
+    color?: Colors | "transparent";
     onClick?: () => void;
     icon?: React.ReactNode;
     iconAfterText?: true;
+    tabIndex?: number;
+    isFocused?: boolean;
 }
 
-const Tag: React.FC<TagProps> = ({ children, color = "secondary", onClick, icon, iconAfterText = false }) => {
+export type Colors = "access" | "warning" | "critical" | "success" | "pink" | "purple" | "orange" | "blue" | "brown" | "primary" | "secondary" | "muted";
+
+const Tag: React.FC<TagProps> = ({ tabIndex = null, isFocused = false, children, label, color = "secondary", onClick, icon, iconAfterText = false }) => {
+    const handleClick = () => {
+        if(!onClick) return
+        onClick();
+    }
+
     return (
         <div 
             role={"button"}
-            onClick={onClick}
+            onClick={handleClick}
             className={`tag__wrap ${color} 
-            ${onClick ? "clickable" : ""}`}
+            ${onClick ? "clickable" : ""}
+            ${isFocused ? 'focused' : ""}`}
+            tabIndex={tabIndex === null ? onClick ? 0 : -1 : tabIndex}
         >
             {(!iconAfterText && icon) && icon}
-            {children}
+            {children}{label}
             {(iconAfterText && icon) && icon}
         </div>
     )

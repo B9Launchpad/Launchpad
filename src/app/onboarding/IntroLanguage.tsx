@@ -1,12 +1,10 @@
-import InputSelect from "../../components/common/Input/SelectInput";
-import IntroLayout from "../../components/layout/IntroLayout";
-import { supportedCountries } from "../../functions/SupportedCountries";
-import Button from "../../components/common/Button";
 import { OnboardingDataType } from "./Index";
 import { useState } from "react";
-import makeFetchRequest from "@/utils/fetch/makeFetchRequest";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
+import IconGlobe from "@/components/icons/Globe";
+import List from "@/components/common/Table/List";
+import IconArrowRight from "@/components/icons/ArrowRight";
 
 interface OnboardingProps {
     onNext: (addSteps: number, data: OnboardingDataType) => void;
@@ -21,57 +19,62 @@ const OnboardingLanguage: React.FC<OnboardingProps> = ({onNext, data}) => {
     const [preferredLanguage, setPreferredLanguage] = useState<string>(currentLanguage);
     const [currentRegion, setCurrentRegion] = useState<string>("US");
 
-    const handleChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-        let newLocale = e.currentTarget.value;
-        setPreferredLanguage(newLocale);
-        await i18n.changeLanguage(newLocale);
-        await makeFetchRequest({
-            url: '/locale',
-            body: {locale: newLocale},
-            includeCredentials: true,
-        })
+    const handleChange = async (lng: string) => {
+        setPreferredLanguage(lng);
+        await i18n.changeLanguage(lng);
+        //await makeFetchRequest({
+        //    url: '/locale',
+        //    body: { locale: lng },
+        //    credentials: "include",
+        //})
         router.refresh();
     }
 
-    const handleRegionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        let value = e.currentTarget.value;
-        setCurrentRegion(value);
-    }
-
-    const handleSubmit = () => {
-        data.account.language = preferredLanguage;
-        data.account.region = currentRegion;
+    const handleSubmit = async (lng: string) => {
+        data.account.language = lng;
+        await handleChange(lng);
         
         onNext(1, data)
         // TO DO: Region variable only updates when actually selected. Consider automatic region detection, etc.
     }
 
+    const languageOptions = [
+        {
+            label: "Deutsch",
+            code: "de"
+        },
+        {
+            label: "English",
+            code: "en"
+        },
+        {
+            label: "русский",
+            code: "ru"
+        },
+        {
+            label: "polski",
+            code: "pl"
+        }
+    ]
+
     return (
-        <IntroLayout>
+        <>
             <div className="intro__content">
-                <h1>{t('greeting')}</h1>
-                <InputSelect value={preferredLanguage} onChange={handleChange} title={t('chooseYourLanguage')}>
-                    <option value="en">English</option>
-                    <option value="de">Deutsch</option>
-                    <option value="pl">polski</option>
-                    <option value="ru">русский</option>
-                </InputSelect>
-                <InputSelect onChange={handleRegionChange} title={t('chooseYourRegion')}>
-                    {
-                        supportedCountries.map((country: string) => ({
-                            key: country,
-                            label: t(country, {ns: "countries"})
-                        }))
-                        .sort((a, b) => a.label.localeCompare(b.label))
-                        .map(({key, label}) => (
-                            <option value={key} key={key}>{label}</option>
-                        ))
+                <IconGlobe className="icon-lg"/>
+                <List items={languageOptions.map((item, index) => {
+                    return {
+                        content: <em>{item.label}</em>,
+                        action: [
+                            {
+                                icon: <IconArrowRight/>,
+                                onClick: () => handleSubmit(item.code)
+                            }
+                        ]
                     }
-                </InputSelect>
-                <Button onClick={handleSubmit}>{t("continue", {ns: "general"})}</Button>
+                })}/>
             </div>
             <p>Some shits here</p>
-        </IntroLayout>
+        </>
     )
 }
 

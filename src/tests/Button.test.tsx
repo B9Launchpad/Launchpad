@@ -14,10 +14,10 @@ describe("Button component", () => {
     jest.clearAllMocks();
   });
 
-  it("renders children", () => {
+  it("renders label", () => {
     (useLastInteractionKeyboard as jest.Mock).mockReturnValue(false);
 
-    render(<Button>Click Me</Button>);
+    render(<Button label={"Click Me"}/>);
     expect(screen.getByText("Click Me")).toBeInTheDocument();
   });
 
@@ -25,7 +25,7 @@ describe("Button component", () => {
     (useLastInteractionKeyboard as jest.Mock).mockReturnValue(false);
 
     render(
-      <Button icon={<span data-testid="icon">*</span>}>With Icon</Button>
+      <Button label={"With icon"} icon={<span data-testid="icon">*</span>}></Button>
     );
     expect(screen.getByTestId("icon")).toBeInTheDocument();
   });
@@ -33,7 +33,7 @@ describe("Button component", () => {
   it("applies the correct variant class", () => {
     (useLastInteractionKeyboard as jest.Mock).mockReturnValue(false);
 
-    render(<Button variant="secondary">Test</Button>);
+    render(<Button label="Test" variant="secondary"/>);
     const button = screen.getByRole("button");
     expect(button).toHaveClass("secondary");
   });
@@ -42,7 +42,7 @@ describe("Button component", () => {
     (useLastInteractionKeyboard as jest.Mock).mockReturnValue(false);
 
     const handleClick = jest.fn();
-    render(<Button onClick={handleClick}>Click</Button>);
+    render(<Button label={"Click"} onClick={handleClick}/>);
     fireEvent.click(screen.getByRole("button"));
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
@@ -52,9 +52,7 @@ describe("Button component", () => {
 
     const handleClick = jest.fn();
     render(
-      <Button onClick={handleClick} disabled>
-        Disabled
-      </Button>
+      <Button label={"Disabled"} onClick={handleClick} disabled/>
     );
     fireEvent.click(screen.getByRole("button"));
     expect(handleClick).not.toHaveBeenCalled();
@@ -63,7 +61,7 @@ describe("Button component", () => {
   it("adds 'focused' class on focus if last interaction was keyboard", () => {
     (useLastInteractionKeyboard as jest.Mock).mockReturnValue(true);
 
-    render(<Button>Focusable</Button>);
+    render(<Button label="Focusable"/>);
     const button = screen.getByRole("button");
 
     fireEvent.focus(button);
@@ -76,7 +74,7 @@ describe("Button component", () => {
   it("does not add 'focused' class on focus if last interaction was not keyboard", () => {
     (useLastInteractionKeyboard as jest.Mock).mockReturnValue(false);
 
-    render(<Button>Focusable</Button>);
+    render(<Button label="Focusable"/>);
     const button = screen.getByRole("button");
 
     fireEvent.focus(button);

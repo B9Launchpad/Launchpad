@@ -17,24 +17,43 @@ interface Item {
   url: string;
 }
 
-interface SidebarItemProps {
-  children: React.ReactNode;
+export interface SidebarItemProps {
+  label: string;
   type?: 'primary' | 'secondary';
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   url?: string;
   items?: Item[];
+  active?: boolean;
+  critical?: boolean;
+  onClick?: () => void;
+  id?: string;
+  isFocused?: boolean;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ children, icon, url, type = 'primary', items }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({ id, isFocused = false, label, active = false, critical = false, icon, url, type = 'primary', items, onClick }) => {
   const [expanded, setExpanded] = useState(false);
   const contentRef = useRef<HTMLUListElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [contentHeight, setContentHeight] = useState(0);
   const pathname = usePathname()
-  const isActive = pathname === url
+  const isActive = pathname === url;
+  const itemRef = useRef<HTMLDivElement>(null);
+
+  //useEffect(() => {
+  //  if (isFocused && itemRef.current) {
+  //    itemRef.current.scrollIntoView({
+  //       behavior: 'smooth',
+  //       block: 'nearest'
+  //    });
+  //  }
+  //}, [isFocused]);
 
 {/* Konfiguration für Animation des zusammneklappbares Elements */}
- 
+  
+  if(onClick && url) {
+    throw new Error("SidebarItem.tsx: Sidebar item must not have both url and onClick properties")
+  }
+
   useEffect(() => {
     if (contentRef.current) {
       setContentHeight(contentRef.current.scrollHeight);
@@ -50,19 +69,30 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ children, icon, url, type = '
 
   const isExpandable = items && items.length > 0;
 
+  if(onClick && isExpandable) {
+    throw new Error("SidebarItem.tsx: onClick is not supported with expandable sidebar items.")  
+  }
+
+  const handleClick = () => {
+    isExpandable ? setExpanded(!expanded) : undefined;
+    if(onClick) onClick();
+  }
+
   return (
     <div className='sidebar__item'>
       <div
-        className="sidebar__item-wrap"
-        onClick={() => isExpandable ? setExpanded(!expanded) : undefined}
+        ref={itemRef}
+        className={`sidebar__item-wrap${critical === true ? ' critical' : ''}${active ? ' active' : ''}${isFocused ? ' focused' : ''}`}
+        onClick={handleClick}
       >
         <div className="sidebar__item-link-group">
           <Link
+            tabIndex={-1}
             href={url || '#'}
             className={`sidebar__item-content ${isActive ? 'font-semibold' : ''}`}
           >
-            <span className='sidebar__item-icon'>{icon}</span>
-            <span className={`sidebar__item-label ${type}`}>{children}</span>
+            {icon && <span className='sidebar__item-icon'>{icon}</span>}
+            <span className={`sidebar__item-label ${type}`}>{label}</span>
           </Link>
           {isExpandable && (
             <span className={`sidebar__item-expandable_label ${expanded ? 'active' : ''}`}><DropdownIcon/></span>

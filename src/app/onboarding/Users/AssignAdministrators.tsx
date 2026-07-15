@@ -1,7 +1,7 @@
 import IntroLayout from "../../../components/layout/IntroLayout";
 import { useTranslation } from "react-i18next";
 import Button from "../../../components/common/Button";
-import SmallTable, { Column } from "../../../components/common/Table/Table";
+import SmallTable, { Column } from "../../../components/common/Table/TableCompact";
 import { OnboardingDataType } from "../Index";
 
 interface OnboardingProps {
@@ -31,7 +31,7 @@ const OnboardingAssignAdmins: React.FC<OnboardingProps> = ({ onNext, data }) => 
     ]
 
     return (
-        <IntroLayout>
+        <>
             <div className="intro__content">
                 <div>
                     <h1>Make them administrators?</h1>
@@ -41,7 +41,7 @@ const OnboardingAssignAdmins: React.FC<OnboardingProps> = ({ onNext, data }) => 
                 <Button onClick={handleSubmit}>{t("continue", {ns: "general"})}</Button>
             </div>
             <p>Some shits here</p>
-        </IntroLayout>
+        </>
     )
 }
 

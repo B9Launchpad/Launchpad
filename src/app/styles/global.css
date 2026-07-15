@@ -5,20 +5,38 @@ please create a separate stylesheet file.
 
 For example, if your element only appears once and needs a lot of styling (e.g. over 100 lines), create a separate file for it. */
 
+*:disabled {
+    cursor: not-allowed;
+}
+
+header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-small);
+}
+
 h1 {
-    font: var(--text-title-header);
+    font: var(--font-title-header);
     margin: 0;
     color: var(--text);
 }
 
 h2 {
-    font: var(--text-subtitle);
+    font: var(--font-subtitle);
     margin: 0;
     color: var(--text);
 }
 
+h4 {
+    font: var(--font-primary);
+    font-weight: var(--font-weight-bold);
+    margin-bottom: 0px;
+}
+
 p {
     color: var(--text);
+    font: var(--font-primary);
+    font-weight: var(--font-weight-thin)
 }
 
 small {
@@ -26,8 +44,17 @@ small {
     color: var(--muted);
 }
 
+small.success, p.success, em.success {
+    color: var(--success)
+}
+
+small.critical, p.critical, em.critical {
+    color: var(--critical);
+}
+
 strong {
-    font-weight: var(--font-weight-bold)
+    color: inherit;
+    font-weight: var(--font-weight-bold);
 }
 
 a {
@@ -36,7 +63,7 @@ a {
     color: var(--access);
 }
 
-a:focus-visible, .access:focus-visible {
+a:focus-visible, .access:focus-visible, .tag__wrap:focus-visible, .sidebar__item-wrap.focused, .tag__wrap.focused {
     outline: var(--focus-outline)
 }
 
@@ -45,12 +72,20 @@ em {
     color: var(--text);
 }
 
-.flex {
-    display: flex;
+.icon {
+    width: 32px;
+    height: 32px;
+    fill: var(--icon)
 }
 
-.flex-col {
-    flex-direction: column;
+.icon-lg {
+    width: 96px;
+    height: 96px;
+    fill: var(--icon)
+}
+
+.system-font {
+    font-family: "system-ui", sans-serif;
 }
 
 .w100 {

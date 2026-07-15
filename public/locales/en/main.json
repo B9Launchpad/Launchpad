@@ -1,0 +1,25 @@
+{
+    "layout": {
+        "search": {
+            "noResults": "No search results",
+            "search": "Search"
+        },
+        "browseSections": "Browse sections"
+    },
+    "modules": {
+        "settings": {
+            "label": "Settings",
+            "userSettings": "User settings",
+            "panelSettings": "Panel settings",
+            "logout": "Log out"
+        }
+    },
+    "errors": {
+        "back": "Back to dashboard",
+        "404": {
+            "title": "404",
+            "subtitle": "This page could not be found on your Launchpad",
+            "description": "If you typed the URL manually, check that it is correct."
+        }
+    }
+}

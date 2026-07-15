@@ -1,6 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import IconCheck from "../../icons/Input/Check";
-import IconMinus from "../../icons/Input/Minus";
 import useLastInteractionKeyboard from "../../../functions/useLastInteractionKeyboard";
 
 interface RadioOption {

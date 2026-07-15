@@ -1,0 +1,121 @@
+import Tag from "@/components/common/Tag";
+import useLastInteractionKeyboard from "@/functions/useLastInteractionKeyboard";
+import { useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+
+type SectionBrowserItem = {
+    label: string;
+    id: string;
+    onClick: () => void;
+}
+
+interface HeaderSectionBrowserProps {
+    currentId?: string;
+    items: SectionBrowserItem[]
+}
+
+const HeaderSectionBrowser: React.FC<HeaderSectionBrowserProps> = ({ items, currentId }) => {
+    const { t } = useTranslation('main')
+    const [currentSectionId, setCurrentSectionId] = useState<string>(currentId || items[0]?.id || '');
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [focusedIndex, setFocusedIndex] = useState<number>(0);
+    const [hasFocus, setHasFocus] = useState<boolean>(false)
+    const lastInteractionKeyboard = useLastInteractionKeyboard();
+
+    useEffect(() => {
+        if (currentId && currentId !== currentSectionId) {
+            setCurrentSectionId(currentId);
+
+            const newIndex = items.findIndex(item => item.id === currentId);
+            if (newIndex !== -1) {
+                setFocusedIndex(newIndex);
+            }
+        }
+    }, [currentId, currentSectionId, items]);
+
+    useEffect(() => {
+        if (!hasFocus) {
+            handleBlur();
+        }
+    }, [hasFocus])
+
+    useEffect(() => {
+        if (!lastInteractionKeyboard) {
+            setHasFocus(false);
+        }
+    }, [lastInteractionKeyboard])
+
+    const handleFocus = () => {
+        if (lastInteractionKeyboard) {
+            setHasFocus(true);
+        }
+    }
+
+    const handleBlur = () => {
+        setHasFocus(false);
+        setFocusedIndex(0);
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+        if (!hasFocus || items.length === 0) return;
+
+        function execute(): void {
+            e.preventDefault();
+            const focusedItem = items[focusedIndex];
+            focusedItem.onClick();
+        }
+
+        switch (e.key) {
+            case "ArrowRight": {
+                e.preventDefault();
+                if (focusedIndex + 1 > items.length - 1) return;
+                setFocusedIndex((prev) => prev + 1);
+                break;
+            }
+            case "ArrowLeft": {
+                e.preventDefault();
+                if (focusedIndex - 1 < 0) return;
+                setFocusedIndex((prev) => (prev - 1 + items.length) % items.length);
+                break;
+            }
+            case "Enter": {
+                execute()
+                break;
+            }
+            case " ": {
+                execute();
+                break;
+            }
+        }
+    }
+
+    return (
+        <div className="header__section-browser">
+            <small className="header__section-browser--label">{t('layout.browseSections')}</small>
+            <div
+                onKeyDown={handleKeyDown}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+                ref={containerRef}
+                tabIndex={0}
+                className="header__section-browser--items">
+                {
+                    items.map((item, index) => {
+                        return (
+                            <Tag
+                                tabIndex={-1}
+                                key={index}
+                                isFocused={focusedIndex === index && hasFocus === true}
+                                label={item.label}
+                                color={item.id === currentSectionId ? 'access' : 'transparent'}
+                                onClick={item.onClick}
+                            />
+                        )
+                    })
+                }
+            </div>
+        </div>
+    )
+}
+
+export default HeaderSectionBrowser;

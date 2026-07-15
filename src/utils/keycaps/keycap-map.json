@@ -1,0 +1,36 @@
+{
+    "Backspace": {
+        "windows": "Backspace",
+        "macos": "⌫"
+    },
+    "Enter": "↩",
+    "Shift": {
+        "windows": "shift",
+        "macos": "⇧"
+    },
+    "Control": {
+        "windows": "Ctrl",
+        "macos": "⌘"
+    },
+    "Meta": "⌘",
+    "Alt": {
+        "windows": "Alt",
+        "macos": "⌥"
+    },
+    "Pause": "Pause",
+    "CapsLock": {
+        "windows": "Caps Lock",
+        "macos": "⇪"
+    },
+    "Escape": {
+        "windows": "Esc",
+        "macos": "⎋"
+    },
+    " ": "Spacebar",
+    "PageUp": "Page up",
+    "PageDown": "Page down",
+    "Delete": {
+        "windows": "Del",
+        "macos": "⌦"
+    }
+}

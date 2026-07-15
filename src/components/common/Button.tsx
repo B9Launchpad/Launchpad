@@ -3,11 +3,19 @@ import useLastInteractionKeyboard from "../../functions/useLastInteractionKeyboa
 import { useFetchStatus } from "../../utils/fetch/useFetchStatus";
 
 // Configuring interface for propos to be used within the button
-interface ButtonProps {
+export interface ButtonProps {
     variant?: 'primary' | 'secondary' | 'access' | 'critical' | 'tertiary';
+    inline?: boolean;
     icon?: React.ReactNode;
     onClick?: () => void;
-    children: React.ReactNode;
+    /** 
+    *   @deprecated
+    *   Use not recommended, will be removed in by dist version. Please resort to using `label` property instead.
+    *   Removed for consistency with other component properties and visual identity.
+    *   @since 25w55a
+    */
+    children?: React.ReactNode;
+    label?: string | React.ReactNode;
     disabled?: boolean;
     className?: string;
     type?: "submit" | "reset" | "button" | undefined;
@@ -15,12 +23,17 @@ interface ButtonProps {
 }
 
 // Declaration of Button component with its configured props and styles
-const Button: React.FC<ButtonProps> = ({ variant='primary', tabIndex = 0, icon, onClick, children, disabled = false, className, type}) => {
+const Button: React.FC<ButtonProps> = ({ children, inline = false, label = children, variant='primary', tabIndex = 0, icon, onClick, disabled = false, className, type}) => {
     const lastInteractionWasKeyboard = useLastInteractionKeyboard();
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [isDisabled, setIsDisabled] = useState<boolean>(disabled);
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    // CONSIDER CLEANUP!
+
+    if(!label && !children && !icon) throw new Error("Missing required prop: 'label', 'children' or 'icon' must be provided, but received 'undefined'");
+    if(children) {
+        console.warn("Button: children prop used, but marked as deprecated and will be removed by dist")
+    }
+
     const fetchStatus = useFetchStatus();
 
     const handleFocus = () => {
@@ -49,15 +62,17 @@ const Button: React.FC<ButtonProps> = ({ variant='primary', tabIndex = 0, icon, 
             setIsDisabled(disabled);
             setIsLoading(false);
         }
-    }, [fetchStatus])
+    }, [fetchStatus, disabled])
 
     return (
-        <button className={[
+        <button 
+            data-icon={icon ? true : false}
+            className={[
             className, // optional external classes
             variant,   // 'primary', 'secondary', etc.
-            icon && 'icon', // if icon exists, add 'icon' class
-            isLoading && "loading"
-            ].filter(Boolean).join(' ')}
+            isLoading && "loading",
+            inline && "button--inline"
+        ].filter(Boolean).join(' ')}
             onFocus={handleFocus} 
             onBlur={handleBlur}
             type={type}
@@ -68,7 +83,7 @@ const Button: React.FC<ButtonProps> = ({ variant='primary', tabIndex = 0, icon, 
 
             onClick={handleClick} disabled={isDisabled}>
             {icon && <span className="button__icon-container">{icon}</span>}
-            {children}
+            {label}
         </button>
     );
 };

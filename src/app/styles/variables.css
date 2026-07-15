@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /* General & Light Theme Variable Declarations */
 :root { 
     /* Text and Basic Variables */
@@ -12,31 +14,33 @@
 
     /* UI Backgrounds */
     --background: #EEEEEE;
+    --background-modal: #8f8f8f9d;
     --background-content: #FFFFFF;
     --background-login: #EEEEEECC;
 
     /* Buttons, tags, etc. Backgrounds */
     /* Primary Type */
     --background-primary: #000000;
-    --hover-background-primary: #AAAAAA;
-    --hover-text-primary: #000000;
+    --hover-background-primary: #666666;
+    --hover-text-primary: #FFFFFF;
     /* Secondary Type */
     --background-secondary: #CBCBCB;
-    --hover-background-secondary: #5C5E66;
-    --hover-text-secondary: #FFFFFF;
+    --hover-background-secondary: #A1A1A1;
+    --hover-text-secondary: #000000;
     /* Access Type Button */
     --background-access: #DEE1FE;
     --hover-background-access: #5865F2;
     --hover-text-access: #DEE1FE;
     /* Critical Type */
     --background-critical: #F1C5C1;
-    --hover-background-critical: #F23F42;
-    --hover-text-critical: #F1C5C1;
+    --hover-background-critical: #ECACA6;
+    --hover-text-critical: #fc2023;
 
+    --background-success: #D4F2DF;
     --background-warning: #FFF1D4;
     --background-tag: #D9D9D9;
     /* Table */
-    --background-table-hero: #D9D9D9;
+    --background-table-hero: #F0F4F8;
 
     /* Other Primary */
     --purple: #9747FF;
@@ -60,29 +64,34 @@
 
     --font-size-primary: 20px;
     --font-size-secondary: 16px;
-    --font-size-tertiary: 14px;
+    --font-size-tertiary: 12px;
     --font-size-title: 24px;
     --font-size-header: 32px;
     --font-size-large: 48px;
 
     /* Standard font combination declaration */
 
-    --text-title-large:
+    --font-title-large:
         var(--font-weight-bold)
         var(--font-size-large)
         var(--font-family);
 
-    --text-title-header:
+    --font-title-header:
         var(--font-weight-bold)
         var(--font-size-header)
         var(--font-family);
 
-    --text-subtitle: 
+    --font-section-title:
+        var(--font-weight-bold)
+        var(--font-size-title)
+        var(--font-family);
+
+    --font-subtitle: 
         var(--font-weight-regular)
         var(--font-size-title)
         var(--font-family);
     
-    --text-primary-bold:
+    --font-primary-bold:
         var(--font-weight-bold)
         var(--font-size-primary)
         var(--font-family);
@@ -92,18 +101,18 @@
         var(--font-size-primary)
         var(--font-family);
         
-    --text-secondary:
+    --font-secondary:
         var(--font-weight-regular)
         var(--font-size-secondary)
         var(--font-family);
 
-    --text-tertiary:
+    --font-tertiary:
         var(--font-weight-regular)
         var(--font-size-tertiary)
         var(--font-family);
 
     --input-label:
-        var(--font-weight-bold)
+        var(--font-weight-regular)
         var(--font-size-primary)
         var(--font-family);
 
@@ -134,23 +143,44 @@
 
     /* Miscelanneous */
 
+    --radius-tiny: 4px;
     --radius-small: 8px;
     --radius: 12px;
     --radius-large: 24px;
+
+    --gap-window: 32px;
     --gap-large: 24px;
+    --gap-medium: 16px;
     --gap-standard: 12px;
     --gap-small: 6px;
+    --gap-tiny: 4px;
+
     --transition: 150ms ease-in-out;
     --border-thin: solid 1px;
 
     --padding-outer-border: 3px;
-    --padding: 8px;
+    --padding-small: 4px;
+    --padding-standard: 8px;
+    --padding-medium: 12px;
+    --padding-semilarge: 16px;
+    --padding-large: 24px;
+    --padding-huge: 32px;
 
     --transition: 150ms ease-out;
 
     --focus-outline: 2px solid var(--access);
 
     --checkbox-radio-size: 20px;
+
+        /* Sizing */
+
+        --input-height: 42px;
+        --table-row: 52px;
+        --icon-base: 64px;
+        --icon-md: 72px;
+        --icon-lg: 96px;
+
+    --main-sidebar-width: 300px;
 }
 
 /* Dark Mode Variable Declarations */
@@ -160,37 +190,51 @@
     --muted: #868686;
     --warning: #F0B132;
     --success: #3BA561;
-    --access: #5865F2;
+    --access: #727df7;
     --critical: #E14636;
     --contrast: #000000;
     --icon: #F8F8F8;
 
     /* UI Backgrounds */
     --background: #0D0D0D;
+    --background-modal: #0000008D;
     --background-content: #1D1D1B;
     --background-login: #0D0D0DCC;
+    
     /* Buttons, tags, etc. Backgrounds */
+    /* Primary Type */
     --background-primary: #FFFFFF;
+    --hover-background-primary: #ACACAC;
+    --hover-text-primary: #000000;
+    /* Secondary Type */
     --background-secondary: #393939;
-    --background-warning: #FFF1D4;
-    --background-access: #DEE1FE;
-    --background-critical: #F1C5C1;
+    --hover-background-secondary: #515151;
+    --hover-text-secondary: #FFFFFF;
+    /* Access Type Button */
+    --background-access: #182ef836;
+    /* Critical Type */
+    --background-critical: #C7170740;
+    --hover-background-critical: #C7170766;
+    --hover-text-critical: #f04936;
+
+    --background-success: #28BE5F33;
+    --background-warning: #FFB92833;
     --background-tag: #E2E2E2;
     /* Table */
-    --background-table-hero: #2C2C2C;
+    --background-table-hero: #789CC01C;
 
     /* Other Primary */
     --purple: #9747FF;
     --pink: #DC6BA6;
     --orange: #E84F13;
-    --blue: #2A3D8F;
-    --brown: #A75616;
+    --blue: #909CD1; /* Consider changing back to #2A3D8F */
+    --brown: #cc7430; /* Consider changing back to #A75616 */
     /* Other Backgrounds */
-    --background-purple: #E3CDFF;
-    --background-pink: #FFE2F1;
-    --background-orange: #FFDDD0;
-    --background-blue: #CDD6FF;
-    --background-brown: #E4B997;
+    --background-purple: #7305FF33;
+    --background-pink: #FF178F20;
+    --background-orange: #FF551433;
+    --background-blue: #0532FF33; /* Consider changing back to #CDD6FF for legibility with access scheme*/
+    --background-brown: #7e553580; /* Consider changing back to #E4B997 (legibility) */
 }
 
 /* Bringing standard styles down to desired Launchpad Identity */
@@ -207,4 +251,36 @@ a {
 
 p {
     margin: 0;
+}
+
+.flex-col, .flex-row {
+    display: flex;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.flex-row {
+    flex-direction: row;
+}
+
+.gap-xs {
+    gap: var(--gap-tiny);
+}
+
+.gap-sm {
+    gap: var(--gap-small);
+}
+
+.gap {
+    gap: var(--gap-standard)
+}
+
+.gap-md {
+    gap: var(--gap-medium) !important;
+}
+
+.gap-lg {
+    gap: var(--gap-large) !important;
 }

@@ -1,0 +1,24 @@
+{
+    "layout": {
+        "search": {
+            "noResults": "Brak wyników wyszukiwania",
+            "search": "Szukaj"
+        },
+        "browseSections": "Przeglądaj sekcje"
+    },
+    "modules": {
+        "settings": {
+            "label": "Ustawienia",
+            "userSettings": "Ustawiena użytkownika",
+            "panelSettings": "Ustawiena aplikacji",
+            "logout": "Wyloguj"
+        }
+    },
+    "errors": {
+        "back": "Wrócz do Dashboard",
+        "404": {
+            "subtitle": "Niestety, ta strona nie została znaleziona na Twoim Launchpadzie",
+            "description": "Jeśli wpisałeś adres ręcznie, sprawdź czy jest on poprawny."
+        }
+    }
+}

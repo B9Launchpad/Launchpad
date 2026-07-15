@@ -2,19 +2,21 @@ import Button from '@components/common/Button';
 import SettingsIcon from '@components/icons/Settings';
 import SidebarItem from '@components/layout/sidebar/SidebarItem';
 import InputString from '@components/common/Input/StringInput';
-import InputSearch from '@components/common/Input/SearchInput';
-import Profile from '@components/common/Profile';
+import InputSearch from '@/components/common/Input/Search/SearchInput';
+import Profile from '@/components/common/User/Profile';
 import FileUpload from '@components/common/Input/FileUpload/FileUpload';
 import InputCheckbox, { CheckboxOption } from '@components/common/Input/Checkbox';
 import NewPassword from '@components/common/Input/NewPassword';
 import InputRadio from '@components/common/Input/Radio';
 import InputChips from '@components/common/Input/Chips';
 import validateEmail from '@functions/validateEmail';
-import SmallTable, { Column, SmallTableRef } from '@components/common/Table/Table';
+import SmallTable, { Column, SmallTableRef } from '@/components/common/Table/TableCompact';
 import { useRef } from 'react';
-import { SearchProvider } from '@functions/SearchContext';
+import { SearchProvider } from '@/contexts/SearchContext';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
+import KeyCap from '@/components/misc/KeyCap';
+import Tag, { Colors } from '@/components/common/Tag';
 
 
 function PlaygroundPage() {
@@ -73,6 +75,8 @@ const handleGet = () => {
   console.log(smallTableRef.current?.getSelected())
 }
 
+  const tagColours = ["access", "warning", "critical", "success", "pink", "purple", "orange", "blue", "brown", "primary", "secondary", "muted", "transparent"] as Colors[]
+
   return (
     <section style={{backgroundColor: "var(--background-content)"}}>
     
@@ -86,7 +90,13 @@ const handleGet = () => {
       </Button>
     </SearchProvider>
 
-
+      <div className='playground'>
+        {tagColours.map((colour, index) => {
+          console.log(colour);
+          return (
+          <Tag label='Hello world!' color={tagColours[index]} key={index}></Tag>
+        )})}
+      </div>
       <div className='playground'>
         <Button>Hello world!</Button>
         <Button icon={<SettingsIcon/>}>Hello world!</Button>
@@ -107,21 +117,21 @@ const handleGet = () => {
         <Button icon={<SettingsIcon/>}  variant='critical'>Hello world!</Button>
         <Button variant='critical' disabled={true}>Hello world!</Button>
       </div>
-      <SidebarItem url='www.google.com' icon={<SettingsIcon/>}>Settings</SidebarItem>
-      <SidebarItem type={"secondary"} items={[{label: 'Hello world!', url: '/hello-world'}, {label: 'Hello world!', url: '/hello-world'}, {label: 'Hello world!', url: '/hello-world'}]} icon={<SettingsIcon/>}>Settings</SidebarItem>
+      <SidebarItem label={"Settings"} url='www.google.com' icon={<SettingsIcon/>}></SidebarItem>
+      <SidebarItem label={"Settings"} type={"secondary"} items={[{label: 'Hello world!', url: '/hello-world'}, {label: 'Hello world!', url: '/hello-world'}, {label: 'Hello world!', url: '/hello-world'}]} icon={<SettingsIcon/>}></SidebarItem>
 
       <Profile name={["Tatiana", "Yakovleva"]} email="tyakovleva@b9creators.co.uk" picture="/storage/d70ee478ead2fef85d9a86575b6d0315.webp"></Profile>
-      <InputString isMandatory={true} title={'Hello world!'} description={'This is where you type something'} type={'string'}/>
+      <InputString required={true} label={'Hello world!'} description={'This is where you type something'} type={'string'}/>
 
       
-      <FileUpload accept='.png .jpg .zip' title='Profile picutre' description="Upload sm" allowMultiple={false}></FileUpload>
+      <FileUpload accept='.png .jpg .zip' label='Profile picutre' description="Upload sm" allowMultiple={false}></FileUpload>
       
       <NewPassword></NewPassword>
 
       <InputCheckbox onToggle={(id) => { return }} label={"Hello world!"} options={checkboxOptions} description='Hello world!'></InputCheckbox>
 
       <InputRadio onToggle={() => { return }} options={options}></InputRadio>
-      <InputChips maxArrayLength={10} validation={[validateEmail, "Incorrect data"]} title={"Invite users to register"} type='string' isMandatory={false}></InputChips>
+      <InputChips maxArrayLength={10} validation={[validateEmail, "Incorrect data"]} label={"Invite users to register"} type='string' required={false}></InputChips>
     </section>
   );
 }

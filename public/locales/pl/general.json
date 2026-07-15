@@ -5,7 +5,13 @@
     "termsOfUse": "Warunki użytkowania",
     "copyrightNote": "wszelkie prawa zastrzeżone",
     "greeting": "Witamy, {{name}}!",
+
     "submit": "Podtwierdź",
+    "cancel": "Anuluj",
+    "edit": "Zmień",
+    "remove": "Usuń",
+    "close": "Zamknij",
+
     "tryAgain": "Spróbuj ponownie",
     "continue": "Dalej",
     "or": "albo",

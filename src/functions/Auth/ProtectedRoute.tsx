@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState } from "react";
 import makeFetchRequest from "../../utils/fetch/makeFetchRequest";
 import { useRouter } from "next/navigation";
@@ -17,7 +18,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
                 const res = await makeFetchRequest({
                     method: "GET",
                     url: '/verify',
-                    includeCredentials: true,
+                    credentials: "include",
                 });
 
                 setAuthStatus(res.status === 200 ? 'authenticated' : 'unauthenticated');

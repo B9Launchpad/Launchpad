@@ -1181,7 +1181,6 @@ Please consider alternatives before removing */
         display: inline-flex;
         transition: border-color var(--transition) 
     }
-
     .pad-select__option--wrap.selected {
         border-color: var(--background-primary);
     }

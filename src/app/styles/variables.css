@@ -162,7 +162,9 @@
     --padding-small: 4px;
     --padding-standard: 8px;
     --padding-medium: 12px;
+    --padding-semilarge: 16px;
     --padding-large: 24px;
+    --padding-huge: 32px;
 
     --transition: 150ms ease-out;
 
@@ -225,7 +227,7 @@
     --purple: #9747FF;
     --pink: #DC6BA6;
     --orange: #E84F13;
-    --blue: #909CD1; /* Consdier changing back to #2A3D8F */
+    --blue: #909CD1; /* Consider changing back to #2A3D8F */
     --brown: #cc7430; /* Consider changing back to #A75616 */
     /* Other Backgrounds */
     --background-purple: #7305FF33;

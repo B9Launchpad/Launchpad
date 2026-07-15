@@ -8,6 +8,7 @@ import SidebarComponent, { SidebarItems } from "./sidebar/Sidebar";
 import LayoutSettings from "./SettingsLayout";
 import { SettingsRegistryProvider } from "@/contexts/SettingsRegistryContext";
 import { PopupProvider } from "@/contexts/ModalContext";
+import { useUser } from "@/contexts/UserContext";
 
 interface MainLayoutProps {
     children: React.ReactNode;
@@ -15,10 +16,11 @@ interface MainLayoutProps {
 
 export default function MainLayoutContent({ children }: MainLayoutProps) {
     const { showSettings } = useView();
+    const user = useUser()
 
     const profile = {
-        name: ["Tatiana", "Yakovleva"],
-        email: "tyakovleva@b9creators.co.uk",
+        name: user.name,
+        email: user.email,
         picture: "/storage/d70ee478ead2fef85d9a86575b6d0315.webp"
     } satisfies ProfileProps;
 

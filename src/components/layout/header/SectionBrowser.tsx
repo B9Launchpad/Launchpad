@@ -72,6 +72,11 @@ const HeaderSectionBrowser: React.FC<HeaderSectionBrowserProps> = ({ items, curr
         setFocusedIndex(0);
     }
 
+    const handleClick = (id: string, onClick: () => any) => {
+        setCurrentSectionId(id);
+        onClick();
+    }
+
     const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
         if (!hasFocus || items.length === 0) return;
 
@@ -125,7 +130,7 @@ const HeaderSectionBrowser: React.FC<HeaderSectionBrowserProps> = ({ items, curr
                                 label={item.label}
                                 icon={item.icon}
                                 color={item.id === currentSectionId ? 'access' : (transparentInactiveItems ? 'transparent' : 'secondary')}
-                                onClick={item.onClick}
+                                onClick={() => {handleClick(item.id, item.onClick)}}
                             />
                         )
                     })

@@ -7,6 +7,7 @@ import IconAtSymbol from "@/components/icons/AtSymbol"
 import IconFolder from "@/components/icons/Folder"
 import IconStar from "@/components/icons/Star"
 import HeaderSectionBrowser, { SectionBrowserItem } from "@/components/layout/header/SectionBrowser"
+import MessengerMessageListItem from "./MessageListItem"
 
 
 const MessengerMessageList = () => {
@@ -48,6 +49,7 @@ const MessengerMessageList = () => {
                     <InputCheckbox options={[{label: "Unread", id: "messenger.launchpad.unread"}]}/>
                 </div>
             </div>
+            <MessengerMessageListItem/>
         </Window>
     )
 }

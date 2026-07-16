@@ -1,9 +1,10 @@
 import { Colors } from "../Tag";
+import { ProfilePictureSize } from "./Profile";
 
 interface ProfilePicturePlaceholderProps {
     label: string;
     color: Colors;
-    size?: "xs" | "sm" | "base" | "lg";
+    size?: ProfilePictureSize;
 }
 
 const ProfilePicturePlaceholder: React.FC<ProfilePicturePlaceholderProps> = ({ label, color, size = "base"}) => {

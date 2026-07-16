@@ -1235,6 +1235,11 @@ Please consider alternatives before removing */
         height: 40px;
     }
 
+    .profile__picture-md {
+        width: 56px;
+        height: 56px;
+    }
+
     .profile__picture-lg {
         font-size: 32px!important;
         width: 96px;

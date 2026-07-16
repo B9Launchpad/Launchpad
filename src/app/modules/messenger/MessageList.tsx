@@ -8,9 +8,37 @@ import IconFolder from "@/components/icons/Folder"
 import IconStar from "@/components/icons/Star"
 import HeaderSectionBrowser, { SectionBrowserItem } from "@/components/layout/header/SectionBrowser"
 import MessengerMessageListItem from "./MessageListItem"
+import { useUser } from "@/contexts/UserContext"
+import { Message } from "./Message"
+import { DisplayedProfile } from "@/components/common/User/Profile"
 
 
-const MessengerMessageList = () => {
+const mockSender: DisplayedProfile = {
+    name: ['Alice', 'Johnson'],
+    email: '@alicej',
+    pictureUrl: 'https://i.pravatar.cc/150?img=1',
+};
+
+const message: Message = {
+    content: {
+        text: (
+            <div>
+                Hey! Here's that <strong>photo</strong> I promised you. 🌅
+                <br />
+                <em>(tap to expand)</em><em>(tap to expand)</em><em>(tap to expand)</em><em>(tap to expand)</em>
+            </div>
+        ),
+        images: [
+            { url: 'https://picsum.photos/seed/beach/800/600', alt: 'Sunset at the beach' },
+            { url: 'https://picsum.photos/seed/palm/800/600', alt: 'Palm trees' },
+        ],
+    },
+    sender: mockSender,
+    sentOn: new Date('2026-07-15T14:30:00Z'),
+    editedOn: new Date('2026-07-15T14:35:00Z'),
+};
+
+const MessengerMessageList: React.FC = () => {
 
     const handleClick = () => {
         return;
@@ -49,7 +77,7 @@ const MessengerMessageList = () => {
                     <InputCheckbox options={[{label: "Unread", id: "messenger.launchpad.unread"}]}/>
                 </div>
             </div>
-            <MessengerMessageListItem/>
+            <MessengerMessageListItem user={mockSender} lastMessage={message} lastOpened={new Date()}/>
         </Window>
     )
 }

@@ -22,10 +22,10 @@ const HeaderPath: React.FC<HeaderPathProps> = ({ path, from = 'dashboard' }) => 
             {path.map((item, index) => (
                 <div key={index} className="path__wrap">
                         <a className="path__item--root">
-                            <SettingsIcon className="icon-small"/>
+                            <SettingsIcon className="icon-sm"/>
                             {t('modules.' + from + '.label')}
                         </a>
-                        <IconArrowRight className="icon-small"/>
+                        <IconArrowRight className="icon-sm"/>
                     {item.url ? (
                         <a href={item.url} className="path__item">
                             {item.slug}
@@ -35,7 +35,7 @@ const HeaderPath: React.FC<HeaderPathProps> = ({ path, from = 'dashboard' }) => 
                     )}
                     
                     {index < path.length - 1 && (
-                        <IconArrowRight className="icon-small"/>
+                        <IconArrowRight className="icon-sm"/>
                     )}
                 </div>
             ))}

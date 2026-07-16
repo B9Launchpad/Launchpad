@@ -5,6 +5,12 @@ import ProfilePicture from "./ProfilePicture";
 
 export type ProfilePictureSize = "xs" | "sm" | "base" | "md" | "lg";
 
+export type DisplayedProfile = {
+    name: string[];
+    email: string;
+    pictureUrl?: string;
+}
+
 export interface ProfileProps {
     onClick?: () => void;
     name: string[];

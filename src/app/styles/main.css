@@ -1317,10 +1317,28 @@ Please consider alternatives before removing */
 
 /* Icons */
 
-.icon-small {
+.icon {
+    width: 32px;
+    height: 32px;
+    fill: var(--icon)
+}
+
+.icon-sm {
     width: 16px;
     height: 16px;
     fill: var(--muted)
+}
+
+.icon-md {
+    width: 24px;
+    height: 24px;
+    fill: inherit;
+}
+
+.icon-lg {
+    width: 96px;
+    height: 96px;
+    fill: var(--icon)
 }
 
 /* Accessibility */

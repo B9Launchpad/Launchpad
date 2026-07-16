@@ -9,6 +9,7 @@ import LayoutSettings from "./SettingsLayout";
 import { SettingsRegistryProvider } from "@/contexts/SettingsRegistryContext";
 import { PopupProvider } from "@/contexts/ModalContext";
 import { useUser } from "@/contexts/UserContext";
+import IconMessages from "../icons/Messages";
 
 interface MainLayoutProps {
     children: React.ReactNode;
@@ -26,16 +27,16 @@ export default function MainLayoutContent({ children }: MainLayoutProps) {
 
     const SidebarItems = [
         {
-            label: "Settings",
-            type: 'secondary',
-            icon: <SettingsIcon></SettingsIcon>,
-            url: '/'
-        },
-        {
             label: "Safety",
             type: 'primary',
             icon: <IconSecurity/>,
             url: '/'
+        },
+        {
+            label: "Messages",
+            type: "primary",
+            icon: <IconMessages/>,
+            url: '/modules/messenger'
         }
     ] satisfies SidebarItems;
 

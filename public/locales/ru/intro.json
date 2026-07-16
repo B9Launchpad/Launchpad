@@ -6,7 +6,7 @@
     "styleOption": {
         "light": "Светлый",
         "dark": "Тёмный",
-        "auto": "Настройка устройства"
+        "auto": "Системный"
     },
     "personalDetails": {
         "title": "Личная информация",

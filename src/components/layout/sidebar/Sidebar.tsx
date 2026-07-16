@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import SettingsIcon from "@/components/icons/Settings";
 import { useView } from "@/contexts/ViewContext";
 import { useUser } from "@/contexts/UserContext";
+import SearchNoResults from "@/components/common/Input/Search/NoResults";
 
 interface SidebarComponentProps {
     items?: SidebarItems;
@@ -41,7 +42,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ items, profile }) =
             <InputSearch placeholder={t('layout.search.search')} debounce={false}/>
             <div className="sidebar__items--wrap">
                 {noQueryResults ? (
-                    <p>Nothing found (BEAUTIFY!)</p>
+                    <SearchNoResults/>
                 ) : (
                     filteredItems?.map((item, index) => (
                         <SidebarItem 
@@ -49,6 +50,7 @@ const SidebarComponent: React.FC<SidebarComponentProps> = ({ items, profile }) =
                             label={item.label} 
                             icon={item.icon} 
                             type={item?.type}
+                            url={item?.url}
                         />
                     ))
                 )

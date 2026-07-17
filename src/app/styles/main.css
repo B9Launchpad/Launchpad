@@ -1235,6 +1235,11 @@ Please consider alternatives before removing */
         height: 40px;
     }
 
+    .profile__picture-semi-md {
+        width: 48px;
+        height: 48px;
+    }
+
     .profile__picture-md {
         width: 56px;
         height: 56px;

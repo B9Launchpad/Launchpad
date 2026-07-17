@@ -1,5 +1,4 @@
 "use client"
-import Button from "@/components/common/Button"
 import InputCheckbox from "@/components/common/Input/Checkbox"
 import InputSearch from "@/components/common/Input/Search/SearchInput"
 import Window from "@/components/common/Window"
@@ -8,7 +7,6 @@ import IconFolder from "@/components/icons/Folder"
 import IconStar from "@/components/icons/Star"
 import HeaderSectionBrowser, { SectionBrowserItem } from "@/components/layout/header/SectionBrowser"
 import MessengerMessageListItem from "./MessageListItem"
-import { useUser } from "@/contexts/UserContext"
 import { Message } from "./Message"
 import { DisplayedProfile } from "@/components/common/User/Profile"
 
@@ -16,7 +14,7 @@ import { DisplayedProfile } from "@/components/common/User/Profile"
 const mockSender: DisplayedProfile = {
     name: ['Alice', 'Johnson'],
     email: '@alicej',
-    pictureUrl: 'https://i.pravatar.cc/150?img=1',
+    pictureUrl: 'https://avatars.githubusercontent.com/u/98335821?v=4',
 };
 
 const message: Message = {
@@ -77,7 +75,10 @@ const MessengerMessageList: React.FC = () => {
                     <InputCheckbox options={[{label: "Unread", id: "messenger.launchpad.unread"}]}/>
                 </div>
             </div>
-            <MessengerMessageListItem user={mockSender} lastMessage={message} lastOpened={new Date()}/>
+            <div className="message-list flex-col gap-sm">
+                <MessengerMessageListItem user={mockSender} lastMessage={message} lastOpened={new Date()}/>
+                <MessengerMessageListItem user={mockSender} lastMessage={message} lastOpened={new Date()}/>
+            </div>
         </Window>
     )
 }

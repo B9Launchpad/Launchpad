@@ -3,7 +3,7 @@
 import ProfilePicturePlaceholder from "./PicturePlaceholder";
 import ProfilePicture from "./ProfilePicture";
 
-export type ProfilePictureSize = "xs" | "sm" | "base" | "md" | "lg";
+export type ProfilePictureSize = "xs" | "sm" | "base" | "semi-md" | "md" | "lg";
 
 export type DisplayedProfile = {
     name: string[];

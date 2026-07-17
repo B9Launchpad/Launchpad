@@ -10,10 +10,21 @@
 }
 
 .message-list__item {
-    height: 64px;
+    max-height: fit-content;
+    padding: var(--padding-standard) var(--padding-small);
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    user-select: none;
     align-items: center;
     width: 100%;
     flex: 1 1 0;
+    background-color: transparent;
+    transition: var(--transition);
+}
+
+.message-list__item:hover {
+    background-color: var(--hover-background-secondary); /* THIS IS TOO BRIGHT! */
+    cursor: pointer;
 }
 
 .message-list__item-info--wrap {

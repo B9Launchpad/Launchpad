@@ -97,6 +97,7 @@ main.main-layout__content {
     display: flex;
     flex-direction: column;
     gap: var(--gap-large);
+    overflow-y: scroll;
 }
 
 .path__wrap {
@@ -319,6 +320,13 @@ button {
     button[data-icon=true] {
         padding: 10px 6px;
     }
+    .button--inline[data-icon-only=true] {
+        height: 40px;
+    }
+    button[data-icon-only=true] {
+        aspect-ratio: 1 / 1;
+    }
+
     button:disabled{
         opacity: 50%;
         cursor: not-allowed;
@@ -1221,6 +1229,7 @@ Please consider alternatives before removing */
     border-radius: 50%;
     width: 40px;
     height: 40px;
+    aspect-ratio: 1 / 1;
 }
 
     /* Profile picture sizing */

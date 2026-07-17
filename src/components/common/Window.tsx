@@ -2,16 +2,18 @@ import Button from "./Button";
 import type { ModalActionButtonProps } from "./Modal";
 import Modal from "./Modal";
 
-interface WindowProps {
+interface WindowProps extends React.ComponentPropsWithoutRef<'div'> {
     label?: string;
     description?: string;
     children: React.ReactNode;
-    action?: ModalActionButtonProps[]
+    action?: ModalActionButtonProps[],
 }
 
-const Window: React.FC<WindowProps> = ({ label, description, children, action }) => {
+const Window: React.FC<WindowProps> = ({ label, description, children, action, ...props}) => {
+    const { className, ...rest} = props;
+
     return (
-        <div className="content-window">
+        <div className={"content-window " + (className || "")} {...rest}>
             {label && ( <div>
                 {label && (<h2 className="content-window__label">{label}</h2>)}
                 {description && (<small className="content-window__description">{description}</small>)}

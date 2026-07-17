@@ -67,6 +67,7 @@ const Button: React.FC<ButtonProps> = ({ children, inline = false, label = child
     return (
         <button 
             data-icon={icon ? true : false}
+            data-icon-only={icon && !label ? true : false}
             className={[
             className, // optional external classes
             variant,   // 'primary', 'secondary', etc.

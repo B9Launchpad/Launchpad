@@ -3,7 +3,7 @@ import MessengerMessageList from "./MessageList";
 import "@styles/messenger.css"
 import PageHeader from "@/components/layout/header/PageHeader";
 import { HeaderPathType } from "@/components/layout/header/HeaderPath";
-import MessengerCorrespondenceLayout from "./CorrespondenceLayout";
+import MessengerCorrespondenceLayout from "./Correspondence/CorrespondenceLayout";
 import { useUser } from "@/contexts/UserContext";
 
 
@@ -21,7 +21,7 @@ const MessengerLayout: React.FC = () => {
             <PageHeader path={path} title="Messages"/>
             <div className="messenger__window-wrap">
                 <MessengerMessageList></MessengerMessageList>
-                <MessengerCorrespondenceLayout user={user}/>
+                <MessengerCorrespondenceLayout activeChat={{id: 123, user}}/>
             </div>
         </>
     )

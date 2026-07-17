@@ -1,6 +1,6 @@
 import { DisplayedProfile } from "@/components/common/User/Profile";
 import ProfilePicture from "@/components/common/User/ProfilePicture";
-import { Message } from "./Message";
+import { Message } from "./Correspondence/Message";
 import { isValidElement, useMemo } from "react";
 import IconImage from "@/components/icons/Files/Image";
 

@@ -1,8 +1,18 @@
+.messenger__window {
+    height: 100%;
+}
+
 .messenger__window-wrap {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     gap: var(--gap-standard);
+    height: 100%;
+}
+
+.message-list {
+    height: 100%;
+    overflow-y: scroll;
 }
 
 .messenger__window-wrap > div {

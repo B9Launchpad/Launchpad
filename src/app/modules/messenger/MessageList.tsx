@@ -7,14 +7,13 @@ import IconFolder from "@/components/icons/Folder"
 import IconStar from "@/components/icons/Star"
 import HeaderSectionBrowser, { SectionBrowserItem } from "@/components/layout/header/SectionBrowser"
 import MessengerMessageListItem from "./MessageListItem"
-import { Message } from "./Message"
+import { Message } from "./Correspondence/Message"
 import { DisplayedProfile } from "@/components/common/User/Profile"
 
 
 const mockSender: DisplayedProfile = {
     name: ['Alice', 'Johnson'],
     email: '@alicej',
-    pictureUrl: 'https://avatars.githubusercontent.com/u/98335821?v=4',
 };
 
 const message: Message = {
@@ -67,7 +66,7 @@ const MessengerMessageList: React.FC = () => {
     ]
 
     return (
-        <Window>
+        <Window className="messenger__window">
             <div className="flex-col gap">
                 <InputSearch placeholder="Name, email, message contents..."/>
                 <div className="flex-row gap justify-space-between">
@@ -76,6 +75,11 @@ const MessengerMessageList: React.FC = () => {
                 </div>
             </div>
             <div className="message-list flex-col gap-sm">
+                <MessengerMessageListItem user={mockSender} lastMessage={message} lastOpened={new Date()}/>
+                <MessengerMessageListItem user={mockSender} lastMessage={message} lastOpened={new Date()}/>
+                <MessengerMessageListItem user={mockSender} lastMessage={message} lastOpened={new Date()}/>
+                <MessengerMessageListItem user={mockSender} lastMessage={message} lastOpened={new Date()}/>
+                <MessengerMessageListItem user={mockSender} lastMessage={message} lastOpened={new Date()}/>
                 <MessengerMessageListItem user={mockSender} lastMessage={message} lastOpened={new Date()}/>
                 <MessengerMessageListItem user={mockSender} lastMessage={message} lastOpened={new Date()}/>
             </div>

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import UploadIcon from "../../../icons/Upload";
+import IconUpload from "../../../icons/Upload";
 import useGetSupportedFormats from "../../../../functions/getSupportedFormats";
 import Button from "../../Button";
 import FilePreview from "./File";
@@ -140,7 +140,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                 onDragLeave={() => setIsDraggedOver(false)}
                 onDrop={handleDrop}
             >
-                <UploadIcon />
+                <IconUpload />
                 <em>{t("fileupload.drag", { count: allowMultiple ? 2 : 1 })}</em>
                 <small>{t("or", { ns: "general" })}</small>
                 <Button type="button" disabled={disabled}>

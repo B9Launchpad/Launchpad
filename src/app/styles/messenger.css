@@ -21,7 +21,7 @@
 
 .message-list__item {
     max-height: fit-content;
-    padding: var(--padding-standard) var(--padding-small);
+    padding: 0 var(--padding-standard);
     border: 1px solid transparent;
     border-radius: var(--radius);
     user-select: none;
@@ -32,8 +32,12 @@
     transition: var(--transition);
 }
 
+.message-list__item > * {
+    padding: var(--padding-standard) 0;
+}
+
 .message-list__item:hover {
-    background-color: var(--hover-background-secondary); /* THIS IS TOO BRIGHT! */
+    background-color: var(--background); /* THIS IS TOO BRIGHT! */
     cursor: pointer;
 }
 
@@ -43,15 +47,16 @@
     justify-content: space-between;
     width: 100%;
     overflow: hidden;
+    border-bottom: 1px solid var(--muted);
 }
 
-.message-list__item-info--wrap.active .message-list__item--date,
-.message-list__item-info--wrap.active * {
+.message-list__item-info--wrap[data-unread=true] .message-list__item--date,
+.message-list__item-info--wrap[data-unread=true] * {
     fill: var(--text);
     color: var(--text);
 }
 
-.message-list__item-info--wrap.active .message-list__item--name {
+.message-list__item-info--wrap[data-unread=true] .message-list__item--name {
     font: var(--font-primary-bold);
 }
 
@@ -115,4 +120,92 @@
 
 .message-list__item--unread.mention {
     background-color: var(--critical);
+}
+
+/** Input Field */
+
+.messenger__input--wrap {
+    background-color: var(--background);
+    border: 1px solid var(--background-secondary);
+    border-radius: var(--radius-small);
+    min-height: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 var(--padding-small) 0 var(--padding-standard);
+    width: 100%;
+}
+
+.messenger__input--editable {
+    padding: var(--padding-standard) 0;
+    min-height: 1ch;
+    max-height: 20ch;
+    overflow-y: scroll;
+    width: 100%;
+    pointer-events: all;
+    position: relative;
+}
+
+.messenger__input--editable:hover {
+    cursor: text;
+}
+
+.messenger__input--editable::before {
+    content: attr(data-placeholder);
+    color: var(--muted);
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+    white-space: nowrap;
+    padding: var(--padding-standard) 0;
+    transition: left var(--transition), opacity var(--transition);
+}
+
+.messenger__input--editable[data-touched=false]::before {
+    left: 0;
+    opacity: 1;
+}
+
+.messenger__input--editable[data-touched=true]::before {
+    left: 10px;
+    opacity: 0;
+}
+
+.messenger__input--tools button {
+    background-color: var(--background-content);
+    fill: var(--muted);
+    border: 1px solid var(--background-secondary);
+    height: 32px !important;
+    width: 32px !important;
+}
+
+.messenger__input--tools button svg {
+    height: 18px;
+}
+
+.messenger__input--tools button:not(:disabled):hover {
+    background-color: var(--background-secondary);
+    fill: var(--text);
+    border: 1px solid var(--muted);
+}
+
+.messenger__input--send-wrap button {
+    border-radius: 50%;
+    background-color: var(--access);
+    fill: var(--text);
+    transition: var(--transition);
+    opacity: 1;
+}
+
+.messenger__input--send-wrap button:not(:disabled):hover {
+    border-radius: 50%;
+    background-color: var(--access);
+    fill: var(--text);
+    opacity: 0.9;
+}
+
+.messenger__input--send-wrap button .button__icon-container {
+    height: 36px;
+    width: 28px;
 }

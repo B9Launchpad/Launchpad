@@ -14,7 +14,7 @@ interface HeaderSectionBrowserProps {
     currentId?: string;
     items: SectionBrowserItem[];
     transparentInactiveItems?: boolean;
-    excludeInstructions?: boolean;
+    hideInstructions?: boolean;
 }
 
 /**
@@ -22,9 +22,9 @@ interface HeaderSectionBrowserProps {
  * @param currentId ID of currently active section, defaults to first provided section.
  * @param items `Array<SectionBrowserItem> of buttons to render (see type `SectionBrowserItem`)
  * @param transparentInactiveItems Sets whether to add a background colour to inactive buttons, defaults to `true`.
- * @param excludeInstructions Specifies whether to exclude `Browse sections` label for the user, defauts to `false`.
+ * @param hideInstructions Specifies whether to exclude `Browse sections` label for the user, defauts to `false`.
  */
-const HeaderSectionBrowser: React.FC<HeaderSectionBrowserProps> = ({ items, currentId, transparentInactiveItems = true, excludeInstructions = false }) => {
+const HeaderSectionBrowser: React.FC<HeaderSectionBrowserProps> = ({ items, currentId, transparentInactiveItems = true, hideInstructions = false }) => {
     const { t } = useTranslation('main')
     const [currentSectionId, setCurrentSectionId] = useState<string>(currentId || items[0]?.id || '');
     const containerRef = useRef<HTMLDivElement>(null);
@@ -112,7 +112,7 @@ const HeaderSectionBrowser: React.FC<HeaderSectionBrowserProps> = ({ items, curr
 
     return (
         <div className="header__section-browser">
-            {!excludeInstructions && <small className="header__section-browser--label">{t('layout.browseSections')}</small>}
+            {!hideInstructions && <small className="header__section-browser--label">{t('layout.browseSections')}</small>}
             <div
                 onKeyDown={handleKeyDown}
                 onFocus={handleFocus}

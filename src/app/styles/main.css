@@ -326,6 +326,9 @@ button {
     button[data-icon-only=true] {
         aspect-ratio: 1 / 1;
     }
+    button[data-icon-only=true] .button__icon-container {
+        justify-content: center;
+    }
 
     button:disabled{
         opacity: 50%;

@@ -68,7 +68,7 @@ const MessengerMessageListItem: React.FC<MessengerMessageListItemProps> = ({ use
     return (
         <div className="flex-row gap message-list__item">
             <ProfilePicture displayName={user.name} url={user.pictureUrl} size="md"/>
-            <div className={`message-list__item-info--wrap ${preview.unread ? "active" : ""}`}>
+            <div data-unread={preview.unread} className={`message-list__item-info--wrap ${preview.unread ? "unread" : ""}`}>
                 <div className="flex-col">
                     <p className="message-list__item--name">{user.name.join(" ")}</p>
                     <small className="message-list__item--message-content flex-row gap-sm align-center">

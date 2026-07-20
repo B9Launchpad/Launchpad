@@ -2,6 +2,7 @@
 import SuspenseLoader from "@/components/common/Loader";
 import GuestLayout from "@/components/layout/GuestLayout";
 import makeFetchRequest from "@/utils/fetch/makeFetchRequest";
+import { useRouter } from "next/navigation";
 import { createContext, useContext, useEffect, useState } from "react";
 
 export interface UserProps {
@@ -42,6 +43,7 @@ export const parseUserData = (data: UserDataProps) => {
 export const UserProvider = ({ children, os }: {children: React.ReactNode, os: string}) => {
     const [userData, setUserData] = useState<UserDataProps>();
     const [fatal, setFatal] = useState<boolean>(false);
+    const router = useRouter();
 
 
     useEffect(() => {
@@ -52,6 +54,11 @@ export const UserProvider = ({ children, os }: {children: React.ReactNode, os: s
                     method: "GET",
                     credentials: 'include'
                 })
+
+                if(response.status === 401) {
+                    router.push('/login');
+                    return;
+                };
 
                 setUserData(await response.json());
             } catch(e) {

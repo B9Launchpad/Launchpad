@@ -6,6 +6,8 @@ import Window from "@/components/common/Window"
 import IconSearch from "@/components/icons/Search";
 import { useState } from "react";
 import MessengerSenderProfile from "./SenderProfile";
+import HeaderSectionBrowser, { SectionBrowserItem } from "@/components/layout/header/SectionBrowser";
+import InputMessenger from "./InputMessenger";
 
 
 export type MessengerActiveChat = {
@@ -16,6 +18,34 @@ export type MessengerActiveChat = {
 interface MessengerCorrespondenceLayoutProps {
     activeChat: MessengerActiveChat;
 }
+
+const headerItems: SectionBrowserItem[] = [
+    {
+        id: "messenger.launchpad.chat-chat",
+        label: "Chat",
+        onClick: () => {}
+    },
+    {
+        id: "messenger.launchpad.chat-pinned",
+        label: "Pinned",
+        onClick: () => {}
+    },
+    {
+        id: "messenger.launchpad.chat-media",
+        label: "Media",
+        onClick: () => {}
+    },
+    {
+        id: "messenger.launchpad.chat-links",
+        label: "Links",
+        onClick: () => {}
+    },
+    {
+        id: "messenger.launchpad.chat-files",
+        label: "Files",
+        onClick: () => {}
+    },
+] 
 
 const MessengerCorrespondenceLayout: React.FC<MessengerCorrespondenceLayoutProps> = ({ activeChat }) => {
     const [isSearching, setIsSearching] = useState<boolean>(false);
@@ -34,7 +64,9 @@ const MessengerCorrespondenceLayout: React.FC<MessengerCorrespondenceLayoutProps
                     {isSearching && (
                         <InputSearch/>
                     )}
+                    <HeaderSectionBrowser items={headerItems} hideInstructions/>
                     <>{/* message history */}</>
+                    <InputMessenger/>
                 </div>
             </div>
         </Window>

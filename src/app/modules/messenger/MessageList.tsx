@@ -70,11 +70,11 @@ const MessengerMessageList: React.FC = () => {
             <div className="flex-col gap">
                 <InputSearch placeholder="Name, email, message contents..."/>
                 <div className="flex-row gap justify-space-between">
-                    <HeaderSectionBrowser items={browserItems} transparentInactiveItems={false} excludeInstructions/>
+                    <HeaderSectionBrowser items={browserItems} transparentInactiveItems={false} hideInstructions/>
                     <InputCheckbox options={[{label: "Unread", id: "messenger.launchpad.unread"}]}/>
                 </div>
             </div>
-            <div className="message-list flex-col gap-sm">
+            <div className="message-list flex-col">
                 <MessengerMessageListItem user={mockSender} lastMessage={message} lastOpened={new Date()}/>
                 <MessengerMessageListItem user={mockSender} lastMessage={message} lastOpened={new Date()}/>
                 <MessengerMessageListItem user={mockSender} lastMessage={message} lastOpened={new Date()}/>

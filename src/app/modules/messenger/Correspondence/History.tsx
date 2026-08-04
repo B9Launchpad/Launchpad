@@ -49,19 +49,21 @@ const historyBuilder = (history: History): BuiltHistory => {
 
         if (previous.sender !== message.sender) {
             builtHistory.push({ kind: "message", data: currentGroup });
+            
             currentGroup = [message];
             continue;
         }
 
         if (timeDiff > GROUP_TIME_WINDOW_MS) {
             builtHistory.push({ kind: "message", data: currentGroup });
+
             currentGroup = [message];
             continue;
         }
 
         currentGroup.push(message);
     }
-    
+
     if (currentGroup.length > 0) {
         builtHistory.push({ kind: "message", data: currentGroup });
     }

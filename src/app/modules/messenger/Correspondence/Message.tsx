@@ -11,6 +11,7 @@ export type Message = {
     sender: Omit<DisplayedProfile, "email">;
     sentOn: Date;
     editedOn?: Date;
+    isOwn?: boolean;
 };
 
 /**
@@ -65,6 +66,8 @@ function generateRandomMessage(): Message {
 
 // ----- Create your variable -----
 const message: Message = generateRandomMessage();
+
+export default message;
 
 // Log it to see the result
 console.log(message);

@@ -8,6 +8,8 @@ import { useState } from "react";
 import MessengerSenderProfile from "./SenderProfile";
 import HeaderSectionBrowser, { SectionBrowserItem } from "@/components/layout/header/SectionBrowser";
 import InputMessenger from "./InputMessenger";
+import MessengerMessageHistory from "./History";
+import message from "./Message";
 
 
 export type MessengerActiveChat = {
@@ -53,8 +55,8 @@ const MessengerCorrespondenceLayout: React.FC<MessengerCorrespondenceLayoutProps
 
     return (
         <Window className="messenger__window">
-            <div className="flex-col gap-sm">
-                <div className="flex-col gap">
+            <div className="flex-col gap-sm messenger__utility-wrapper">
+                <div className="flex-col gap messenger__utility-wrapper">
                     <div className="flex-row justify-space-between">
                         <MessengerSenderProfile user={activeChat.user}/>
                         <div className="flex-row gap">
@@ -65,7 +67,7 @@ const MessengerCorrespondenceLayout: React.FC<MessengerCorrespondenceLayoutProps
                         <InputSearch/>
                     )}
                     <HeaderSectionBrowser items={headerItems} hideInstructions/>
-                    <>{/* message history */}</>
+                    <MessengerMessageHistory history={[message]}/>
                     <InputMessenger/>
                 </div>
             </div>

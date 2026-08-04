@@ -26,7 +26,7 @@
     "react-i18next": "^11.8.0",
     "react-spring": "^10.0.1",
     "react-typace": "^1.1.4",
-    "tailwindcss": "^4.1.15",
+    "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
     "web-vitals": "^2.1.4"
   },

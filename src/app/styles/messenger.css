@@ -1,4 +1,13 @@
+* {
+    --gap-xxs: 2px;
+}
+
 .messenger__window {
+    height: 100%;
+    flex: 1;
+}
+
+.messenger__utility-wrapper {
     height: 100%;
 }
 
@@ -128,22 +137,32 @@
     background-color: var(--background);
     border: 1px solid var(--background-secondary);
     border-radius: var(--radius-small);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 var(--padding-small) 0 var(--padding-standard);
+    min-height: fit-content;
+}
+
+.messenger__input--content {
     min-height: 1rem;
     display: flex;
     flex-direction: row;
-    align-items: center;
-    padding: 0 var(--padding-small) 0 var(--padding-standard);
+    align-items: flex-end;
     width: 100%;
 }
 
 .messenger__input--editable {
-    padding: var(--padding-standard) 0;
     min-height: 1ch;
     max-height: 20ch;
     overflow-y: scroll;
     width: 100%;
     pointer-events: all;
     position: relative;
+}
+
+.messenger__input--editable, .messenger__input--tools {
+    padding: var(--padding-standard) 0;
 }
 
 .messenger__input--editable:hover {
@@ -174,10 +193,19 @@
 
 .messenger__input--tools button {
     background-color: var(--background-content);
+    color: var(--muted);
     fill: var(--muted);
     border: 1px solid var(--background-secondary);
     height: 32px !important;
     width: 32px !important;
+}
+
+.messenger__input--tools button * {
+    color: var(--muted);
+}
+
+.messenger__input--tools button:not(:disabled):hover * {
+    color: var(--text);
 }
 
 .messenger__input--tools button svg {
@@ -188,6 +216,11 @@
     background-color: var(--background-secondary);
     fill: var(--text);
     border: 1px solid var(--muted);
+}
+
+.messenger__input--send-wrap {
+    display: flex;
+    align-items: flex-end;
 }
 
 .messenger__input--send-wrap button {
@@ -208,4 +241,26 @@
 .messenger__input--send-wrap button .button__icon-container {
     height: 36px;
     width: 28px;
+}
+
+.messenger__input--formatting {
+    padding-top: 0;
+    overflow: hidden;
+    transition: padding-top var(--transition);
+}
+
+.messenger__input--formatting[data-active=true] {
+    padding-top: var(--padding-small);
+}
+
+
+/** History */
+
+.messenger__history--wrap {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-medium);
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }

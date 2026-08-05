@@ -1,7 +1,6 @@
 import Button from "@/components/common/Button";
 import InputSearch from "@/components/common/Input/SearchInput";
 import { DisplayedProfile } from "@/components/common/User/Profile";
-import ProfilePicture from "@/components/common/User/ProfilePicture";
 import Window from "@/components/common/Window"
 import IconSearch from "@/components/icons/Search";
 import { useState } from "react";
@@ -9,7 +8,7 @@ import MessengerSenderProfile from "./SenderProfile";
 import HeaderSectionBrowser, { SectionBrowserItem } from "@/components/layout/header/SectionBrowser";
 import InputMessenger from "./InputMessenger";
 import MessengerMessageHistory from "./History";
-import message from "./Message";
+import { generatedMessage } from "./Message";
 
 
 export type MessengerActiveChat = {
@@ -67,7 +66,7 @@ const MessengerCorrespondenceLayout: React.FC<MessengerCorrespondenceLayoutProps
                         <InputSearch/>
                     )}
                     <HeaderSectionBrowser items={headerItems} hideInstructions/>
-                    <MessengerMessageHistory history={[message]}/>
+                    <MessengerMessageHistory history={[generatedMessage]}/>
                     <InputMessenger/>
                 </div>
             </div>

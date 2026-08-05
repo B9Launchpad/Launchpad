@@ -20,5 +20,36 @@
             "subtitle": "Niestety, ta strona nie została znaleziona na Twoim Launchpadzie",
             "description": "Jeśli wpisałeś adres ręcznie, sprawdź czy jest on poprawny."
         }
+    },
+
+    "date": {
+        "today": "Dzisiaj",
+        "yesterday": "Wczoraj",
+        "weekday": "{{weekday}}",
+        "sameYear": "{{day}} {{month}}",
+        "full": "{{day}} {{month}} {{year}}",
+        "weekdays": {
+            "0": "niedziela",
+            "1": "poniedziałek",
+            "2": "wtorek",
+            "3": "środa",
+            "4": "czwartek",
+            "5": "piątek",
+            "6": "sobota"
+        },
+        "months": {
+            "0": "stycznia",
+            "1": "lutego",
+            "2": "marca",
+            "3": "kwietnia",
+            "4": "maja",
+            "5": "czerwca",
+            "6": "lipca",
+            "7": "sierpnia",
+            "8": "września",
+            "9": "października",
+            "10": "listopada",
+            "11": "grudnia"
+        }
     }
 }

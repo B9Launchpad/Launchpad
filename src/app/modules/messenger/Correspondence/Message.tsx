@@ -11,7 +11,7 @@ export type Message = {
     sender: Omit<DisplayedProfile, "email">;
     sentOn: Date;
     editedOn?: Date;
-    isOwn?: boolean;
+    isOwn: boolean;
 };
 
 /**
@@ -61,13 +61,19 @@ function generateRandomMessage(): Message {
         },
         sentOn: new Date(Date.now() - Math.random() * 86400000 * 7), // random time within last 7 days
         editedOn: Math.random() > 0.5 ? new Date() : undefined, // 50% chance of being edited
+        isOwn: Math.random() > 0.5 ? true : false
     };
 }
 
 // ----- Create your variable -----
-const message: Message = generateRandomMessage();
+export const generatedMessage: Message = generateRandomMessage();
 
-export default message;
+const MessengerMessage: React.FC<Message> = ({ content, sender, sentOn, editedOn, isOwn }) => {
+    return (
+        <div className="messenger__history--group-item__rich">
+            {content.text}
+        </div>
+    )
+}
 
-// Log it to see the result
-console.log(message);
+export default MessengerMessage;

@@ -73,7 +73,7 @@ em {
 }
 
 .system-font {
-    font-family: "system-ui", sans-serif;
+    --font-family: var(--fontstack-system)
 }
 
 .w100 {

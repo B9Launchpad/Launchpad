@@ -3,11 +3,9 @@ import MessengerMessage, { Message } from "./Message";
 import { useTranslation } from "react-i18next";
 
 type History = Message[]
-interface BuiltHistoryMessage extends Message {
-    displayTime: boolean;
-}
+
 type BuiltHistoryItem = 
-    | {kind: "message"; data: { group: BuiltHistoryMessage[], isOwn: boolean } }
+    | {kind: "message"; data: { group: Message[], isOwn: boolean } }
     | {kind: "date"; data: Date}
 type BuiltHistory = BuiltHistoryItem[];
 
@@ -27,71 +25,92 @@ interface MessengerMessageHistoryProps {
  * @returns mappable message history of type `BuiltHistory` for use in render.
  */
 const historyBuilder = (history: History): BuiltHistory => {
-    const GROUP_TIME_WINDOW_MS = 5 * 60 * 1000;
     if (history.length === 0) return [];
 
-    const builtHistory: BuiltHistory = [];
-    let currentGroup: BuiltHistoryMessage[] = [];
+    const GROUP_WINDOW_MS = 5 * 60 * 1000; // 5 minutes
+    const sorted = [...history].reverse();
 
-    for (let i = 0; i < history.length; i++) {
-        const message = history[i];
+    const result: BuiltHistory = [];
+    let currentGroup: Message[] = [];
+    let previousMessage: Message | null = null; // chronologically previous (overall)
+    let previousGroupDate: Date | null = null; // date of the oldest message in previous group
 
-        if(builtHistory.length === 0) {
-            builtHistory.push({ kind: "date", data: history[history.length - 1].sentOn})
+    for (const msg of sorted as Message[]) {
+        const isFirstInGroup = currentGroup.length === 0;
+
+        if (!isFirstInGroup) {
+            const lastInGroup = currentGroup[currentGroup.length - 1];
+            const sameDay = isSameDay(msg.sentOn, lastInGroup.sentOn);
+            const sameSender = msg.sender === lastInGroup.sender;
+            const withinWindow = (msg.sentOn.getTime() - lastInGroup.sentOn.getTime()) <= GROUP_WINDOW_MS;
+
+            if (!(sameDay && sameSender && withinWindow)) {
+                result.push({
+                    kind: 'message',
+                    data: {
+                        group: currentGroup,
+                        isOwn: currentGroup[0].isOwn
+                    }
+                });
+                
+                previousGroupDate = currentGroup[0].sentOn;
+                currentGroup = [];
+            }
         }
 
         if (currentGroup.length === 0) {
-            currentGroup.push({...message, displayTime: true}); // set to true for now, re-think how to actually know based on the rules.
-            continue;
+            const groupDate = msg.sentOn;
+            if (result.length === 0) {
+                result.push({
+                    kind: 'date',
+                    data: groupDate
+                });
+            } else if (previousGroupDate && !isSameDay(groupDate, previousGroupDate)) {
+                result.push({
+                    kind: 'date',
+                    data: groupDate
+                });
+            }
+            msg.displaySender = true;
+        } else {
+            msg.displaySender = false;
         }
 
-        const previous = currentGroup[currentGroup.length - 1];
-        const timeDiff = previous.sentOn.getTime() - message.sentOn.getTime();
-
-        const prevDate = previous.sentOn;
-        const currDate = message.sentOn;
-        const isSameDay = 
-            prevDate.getFullYear() === currDate.getFullYear() &&
-            prevDate.getMonth() === currDate.getMonth() &&
-            prevDate.getDate() === currDate.getDate();
-
-        const isOwn = currentGroup[0].isOwn;
-        const sentWithinSameMinute = 
-            isSameDay &&
-            prevDate.getHours() === currDate.getHours() &&
-            prevDate.getMinutes() === currDate.getMinutes();
-
-        if (!isSameDay) {
-            builtHistory.push({ kind: "message", data: {group: currentGroup, isOwn } });
-            builtHistory.push({ kind: "date", data: message.sentOn });
-
-            currentGroup = [{...message, displayTime: sentWithinSameMinute}];
-            continue;
+        if (previousMessage) {
+            const sameMinute = isSameMinute(msg.sentOn, previousMessage.sentOn);
+            msg.displayTime = !sameMinute;
+        } else {
+            msg.displayTime = true;
         }
 
-        if (previous.sender !== message.sender) {
-            builtHistory.push({ kind: "message", data: {group: currentGroup, isOwn } });
-
-            currentGroup = [{...message, displayTime: sentWithinSameMinute}];
-            continue;
-        }
-
-        if (timeDiff > GROUP_TIME_WINDOW_MS) {
-            builtHistory.push({ kind: "message", data: {group: currentGroup, isOwn } });
-
-            currentGroup = [{...message, displayTime: sentWithinSameMinute}];
-            continue;
-        }
-
-        currentGroup.push({...message, displayTime: sentWithinSameMinute});
+        currentGroup.push(msg);
+        previousMessage = msg;
     }
 
     if (currentGroup.length > 0) {
-        builtHistory.push({ kind: "message", data: {group: currentGroup, isOwn: currentGroup[0].isOwn} });
+        result.push({
+            kind: 'message',
+            data: {
+                group: currentGroup,
+                isOwn: currentGroup[0].isOwn
+            }
+        });
     }
 
-    return builtHistory;
+    return result;
 };
+
+const isSameDay = (a: Date, b: Date): boolean => {
+    return a.getFullYear() === b.getFullYear() &&
+        a.getMonth() === b.getMonth() &&
+        a.getDate() === b.getDate();
+}
+
+const isSameMinute = (a: Date, b: Date): boolean => {
+    return isSameDay(a, b) &&
+        a.getHours() === b.getHours() &&
+        a.getMinutes() === b.getMinutes();
+}
 
 const MessengerMessageHistory: React.FC<MessengerMessageHistoryProps> = ({history}) => {
     const builtHistory = historyBuilder(history);
@@ -111,12 +130,9 @@ const MessengerMessageHistory: React.FC<MessengerMessageHistoryProps> = ({histor
                         } else {
                             return (
                                 <div className="messenger__history--group" data-isown={data.data.isOwn} key={index}>
-                                    <span className="messenger__history--group-label">You</span>
                                     {data.data.group.map((message, index) => {
                                         return (
-                                            <div className="messenger__history--group-item" key={index}>
-                                                <MessengerMessage {...message}/>
-                                            </div>
+                                            <MessengerMessage key={index} {...message}/>
                                         )
                                     })}
                                 </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { DisplayedProfile } from '@/components/common/User/Profile';
+import { formatTime } from '@/utils/formatDate';
 
 export type MessageContent = {
     text?: string | React.ReactNode;
@@ -12,6 +13,8 @@ export type Message = {
     sentOn: Date;
     editedOn?: Date;
     isOwn: boolean;
+    displaySender: boolean;
+    displayTime: boolean;
 };
 
 /**
@@ -33,7 +36,7 @@ const textSamples = [
     'Hey, check this out!',
     'Just came back from vacation 🏖️',
     <span>Look at this <strong>beautiful</strong> view!</span>,
-    <div>Here's a <code>code snippet</code> and some <em>italic</em> text.</div>,
+    <div>Here's a <code>code snippet</code> and some <i>italic</i> text.</div>,
     'Can you believe this weather?',
     <p>👉 <b>Important:</b> Don't forget to review the docs.</p>,
 ];
@@ -61,17 +64,34 @@ function generateRandomMessage(): Message {
         },
         sentOn: new Date(Date.now() - Math.random() * 86400000 * 7), // random time within last 7 days
         editedOn: Math.random() > 0.5 ? new Date() : undefined, // 50% chance of being edited
-        isOwn: Math.random() > 0.5 ? true : false
+        isOwn: Math.random() > 0.5 ? true : false,
+        displaySender: false,
+        displayTime: false
     };
 }
 
 // ----- Create your variable -----
 export const generatedMessage: Message = generateRandomMessage();
 
-const MessengerMessage: React.FC<Message> = ({ content, sender, sentOn, editedOn, isOwn }) => {
+const MessengerMessage: React.FC<Message> = ({ content, sender, sentOn, editedOn, isOwn, displaySender, displayTime }) => {
+    console.log(displaySender, displayTime)
+    const displayLabel = displaySender || displayTime;
+
     return (
-        <div className="messenger__history--group-item__rich">
-            {content.text}
+        <div className='messenger__history--group-item'>
+            { displayLabel && ( 
+                <span className='messenger__history--label'>
+                    { displaySender && (isOwn ? "You" : sender.name.join(" "))}
+                    { displayLabel && 
+                        <span className='messenger__history--label-time'>
+                            {formatTime(sentOn)}
+                        </span>
+                    }
+                </span> 
+            )}
+            <div className="messenger__history--group-item__rich">
+                {content.text}
+            </div>
         </div>
     )
 }

@@ -275,7 +275,8 @@
 .messenger__history--group-item {
     display: flex;
     flex-direction: column;
-    gap: var(--gap-xxs)
+    gap: var(--gap-xxs);
+    width: fit-content;
 }
 
 .messenger__history--group {
@@ -289,6 +290,10 @@
 
     .messenger__history--group[data-isown=true] {
         align-self: flex-end;
+    }
+
+    .messenger__history--group[data-isown=true] .messenger__history--label {
+        justify-content: flex-end;
     }
 
     .messenger__history--group[data-isown=true] .messenger__history--group-item__rich {
@@ -310,6 +315,19 @@
     }
 
     /** Message contents */
+
+    .messenger__history--label {
+        display: flex;
+        flex-direction: row;
+        gap: var(--gap-small);
+        font: var(--font-secondary-bold);
+        color: var(--text);
+    }
+
+    .messenger__history--label-time {
+        color: var(--muted);
+        font: var(--font-secondary);
+    }
     
     .messenger__history--group-item__rich {
         padding: var(--padding-standard);
@@ -318,5 +336,38 @@
     }
     
     .messenger__history--group-item__rich * {
-        font: var(--font-secondary)!important;
-}
+        font: var(--font-secondary);
+    }
+
+        /** Styles */
+
+        .messenger__history--group-item__rich pre, .messenger__history--group-item__rich code {
+            tab-size: 4; /** Consider establishing preference for tab size */
+            font-family: var(--fontstack-monospace);
+            font-size: 85%;
+            border-radius: var(--radius-tiny);
+        }
+
+        .messenger__history--group-item__rich code {
+            white-space-collapse: break-spaces;
+            text-wrap-mode: wrap;
+            background-color: var(--background-modal);
+            margin: 0;
+            padding: var(--padding-outer-border) var(--padding-small);
+        }
+
+        .messenger__history--group-item__rich pre {
+            line-height: 1.45;
+            overflow: auto;
+            word-break: normal;
+            overflow-wrap: normal;
+            padding: var(--padding-semilarge);
+        }
+
+        .messenger__history--group-item__rich i {
+            font-style: italic;
+        }
+
+        .messenger__history--group-item__rich b, .messenger__history--group-item__rich strong {
+            font-weight: 600;
+        }

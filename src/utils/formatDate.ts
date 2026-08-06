@@ -84,3 +84,16 @@ export function formatAbsoluteDate(date: Date, t: TFunction): string {
     const monthName = t(`date.months.${month}`);
     return t('date.full', { day, month: monthName, year });
 }
+
+/**
+ * Formats date into human readable `hh:mm` or `hh:mm:ss` time format.
+ * @param date instance of `Date` class or timestamp.
+ * @param includeSeconds will change output format to `hh:mm:ss`, defaults to `false`.
+ * @returns `string` of `hh:mm` or `hh:mm:ss` time.
+ */
+export function formatTime(date: Date, includeSeconds: boolean = false): string {
+    return date.getHours().toString().padStart(2, "0") 
+        + ":" + 
+        date.getMinutes().toString().padStart(2, "0")
+        + (includeSeconds ? ":" + date.getSeconds().toString().padStart(2, "0") : "");
+}

@@ -1,8 +1,10 @@
 import { DisplayedProfile } from "@/components/common/User/Profile";
 import ProfilePicture from "@/components/common/User/ProfilePicture";
-import { Message } from "./Correspondence/Message";
+import { Message } from "./correspondence/Message";
 import { isValidElement, useMemo } from "react";
 import IconImage from "@/components/icons/Files/Image";
+import { formatRelativeDate } from "@/utils/formatDate";
+import { useTranslation } from "react-i18next";
 
 /**
  * Extracts only text as `string` from a rich text message (e.g. with formatting)
@@ -61,6 +63,8 @@ interface MessengerMessageListItemProps {
 }
 
 const MessengerMessageListItem: React.FC<MessengerMessageListItemProps> = ({ user, lastMessage, lastOpened }) => {
+    const { t } = useTranslation("main")
+
     const preview = useMemo(() => {
         return getMessagePreview(lastMessage, lastOpened);
     }, [lastMessage, lastOpened])
@@ -77,7 +81,7 @@ const MessengerMessageListItem: React.FC<MessengerMessageListItemProps> = ({ use
                     </small>
                 </div>
                 <div className="flex-row message-list__item--message-details">
-                    <p className={`message-list__item--date`}>{lastMessage.sentOn.getDate()}</p>
+                    <p className={`message-list__item--date`}>{formatRelativeDate(lastMessage.sentOn, t)}</p>
                     {preview.unread && <div className={`message-list__item--unread`}/>}
                 </div>
             </div>

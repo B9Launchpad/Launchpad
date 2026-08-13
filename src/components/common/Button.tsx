@@ -3,7 +3,7 @@ import useLastInteractionKeyboard from "../../functions/useLastInteractionKeyboa
 import { useFetchStatus } from "../../utils/fetch/useFetchStatus";
 
 // Configuring interface for propos to be used within the button
-export interface ButtonProps {
+export interface ButtonProps extends React.ComponentPropsWithoutRef<'button'> {
     variant?: 'primary' | 'secondary' | 'access' | 'critical' | 'tertiary';
     inline?: boolean;
     icon?: React.ReactNode;
@@ -23,7 +23,7 @@ export interface ButtonProps {
 }
 
 // Declaration of Button component with its configured props and styles
-const Button: React.FC<ButtonProps> = ({ children, inline = false, label = children, variant='primary', tabIndex = 0, icon, onClick, disabled = false, className, type}) => {
+const Button: React.FC<ButtonProps> = ({ children, inline = false, label = children, variant='primary', tabIndex = 0, icon, onClick, disabled = false, className, type, ...props}) => {
     const lastInteractionWasKeyboard = useLastInteractionKeyboard();
     const buttonRef = useRef<HTMLButtonElement>(null);
     const [isDisabled, setIsDisabled] = useState<boolean>(disabled);
@@ -82,7 +82,9 @@ const Button: React.FC<ButtonProps> = ({ children, inline = false, label = child
 
             // Declaration of classes based on button type
 
-            onClick={handleClick} disabled={isDisabled}>
+            onClick={handleClick} disabled={isDisabled}
+            {...props}
+        >
             {icon && <span className="button__icon-container">{icon}</span>}
             {label}
         </button>

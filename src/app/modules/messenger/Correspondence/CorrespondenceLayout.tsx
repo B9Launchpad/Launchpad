@@ -6,7 +6,7 @@ import IconSearch from "@/components/icons/Search";
 import { useState } from "react";
 import MessengerSenderProfile from "./SenderProfile";
 import HeaderSectionBrowser, { SectionBrowserItem } from "@/components/layout/header/SectionBrowser";
-import InputMessenger from "./InputMessenger";
+import InputMessenger from "./input/InputMessenger";
 import MessengerMessageHistory from "./History";
 import { generatedMessage } from "./Message";
 

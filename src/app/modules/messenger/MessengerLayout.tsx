@@ -3,7 +3,7 @@ import MessengerMessageList from "./MessageList";
 import "@styles/messenger.css"
 import PageHeader from "@/components/layout/header/PageHeader";
 import { HeaderPathType } from "@/components/layout/header/HeaderPath";
-import MessengerCorrespondenceLayout from "./Correspondence/CorrespondenceLayout";
+import MessengerCorrespondenceLayout from "./correspondence/CorrespondenceLayout";
 import { useUser } from "@/contexts/UserContext";
 
 

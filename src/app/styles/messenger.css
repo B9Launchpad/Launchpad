@@ -2,6 +2,10 @@
     --gap-xxs: 2px;
 }
 
+:root {
+    --input-line-height: 1.3125;
+}
+
 .messenger__window {
     height: 100%;
     flex: 1;
@@ -151,6 +155,13 @@
     align-items: flex-end;
     width: 100%;
 }
+.messenger__input--editable-wrap {
+    height: 100%;
+    width: 100%;
+    overflow-y: visible;
+    display: flex;
+    align-items: center;
+}
 
 .messenger__input--editable {
     min-height: 1ch;
@@ -159,9 +170,10 @@
     width: 100%;
     pointer-events: all;
     position: relative;
+    line-height: var(--input-line-height);
 }
 
-.messenger__input--editable, .messenger__input--tools {
+.messenger__input--editable-wrap, .messenger__input--tools {
     padding: var(--padding-standard) 0;
 }
 
@@ -174,11 +186,13 @@
     color: var(--muted);
     pointer-events: none;
     position: absolute;
-    top: 0;
+    top: 50%;
+    transform: translateY(-50%);
     pointer-events: none;
     white-space: nowrap;
-    padding: var(--padding-standard) 0;
+    /* padding: var(--padding-standard) 0; */
     transition: left var(--transition), opacity var(--transition);
+    display: block;
 }
 
 .messenger__input--editable[data-touched=false]::before {
@@ -202,6 +216,20 @@
 
 .messenger__input--tools button * {
     color: var(--muted);
+}
+
+.messenger__input--tools button:not(:disabled)[data-active=true] {
+    background-color: var(--hover-background-secondary);
+    border-color: var(--muted);
+}
+
+.messenger__input--tools button:not(:disabled):hover[data-active=true] {
+    border-color: var(--text);
+}
+
+.messenger__input--tools button:not(:disabled)[data-active=true] * {
+    color: var(--text);
+    fill: var(--text);
 }
 
 .messenger__input--tools button:not(:disabled):hover * {
@@ -339,7 +367,31 @@
         font: var(--font-secondary);
     }
 
-        /** Styles */
+        /** Font styles */
+
+        .messenger__input--editable * {
+            font: var(--font-secondary);
+        }
+
+        .messenger--editor-bold {
+            font: var(--font-secondary-bold);
+        }
+
+        .messenger--editor-italic {
+            font-style: italic;
+        }
+
+        .messenger--editor-underline {
+            text-decoration: underline;
+        }
+
+        .messenger--editor-strikethrough {
+            text-decoration: line-through;
+        }
+
+        .messenger--editor-underline-strikethrough {
+            text-decoration: line-through underline;
+        }
 
         .messenger__history--group-item__rich pre, .messenger__history--group-item__rich code {
             tab-size: 4; /** Consider establishing preference for tab size */

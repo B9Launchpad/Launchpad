@@ -7,7 +7,7 @@ import IconFolder from "@/components/icons/Folder"
 import IconStar from "@/components/icons/Star"
 import HeaderSectionBrowser, { SectionBrowserItem } from "@/components/layout/header/SectionBrowser"
 import MessengerMessageListItem from "./MessageListItem"
-import { Message } from "./Correspondence/Message"
+import { Message } from "./correspondence/Message"
 import { DisplayedProfile } from "@/components/common/User/Profile"
 
 

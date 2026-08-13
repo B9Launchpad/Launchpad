@@ -1,9 +1,8 @@
 import { ModalActionButtonProps } from "@/components/common/Modal";
-import { ButtonProps } from "@components/common/Button";
 import Window from "@components/common/Window";
 import { createFocusTrap } from "focus-trap";
-import React, { createContext, ReactElement, useCallback, useContext, useEffect, useRef, useState } from "react";
-import { useSpring, animated } from "react-spring";
+import React, { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
+import { useTransition, animated } from "react-spring";
 
 interface ModalContextProps {
     setModal: (content: React.ReactNode, label: string, description?: string, action?: ModalActionButtonProps[], config?: ModalConfig) => void;
@@ -15,7 +14,9 @@ interface ModalContextProps {
 }
 
 export interface ModalConfig {
+    /** If set to `true`, modal window will close upon a click outside of this window */
     closeOnBackdrop?: boolean;
+    /** If set to `true`, modal window will close upon pressing "Escape" */
     closeOnEscape?: boolean
 }
 
@@ -31,30 +32,24 @@ export interface ModalState {
 }
 
 export const PopupProvider = ({ children }: {children: React.ReactNode }) => {
-    const [modalState, setModalState] = useState<ModalState>({
-        content: null,
-        label: "",
-        description: "",
-        action: [],
-        isOpen: false
-    });
+    const [currentModal, setCurrentModal] = useState<ModalState | null>(null);
     const [modalStack, setModalStack] = useState<ModalState[]>([]);
-    const [isVisible, setIsVisible] = useState<boolean>(false);
+    const [leavingModal, setLeavingModal] = useState<ModalState | null>(null);
     const backdropRef = useRef<HTMLDivElement>(null);
-    const [isTransition, setIsTransition] = useState<boolean>(false);
+
+    const isOpen = currentModal !== null;
 
     const setModal = useCallback((content: React.ReactNode, label: string, description?: string, action?: ModalActionButtonProps[], config?: ModalConfig) => {
-        setModalState(prevState => {
-            if (prevState.content !== null) {
-                setModalStack(prevStack => [...prevStack, prevState]);
-                setIsTransition(true);
+        setCurrentModal(prev => {
+            if (prev !== null) {
+                setModalStack(stack => [...stack, prev]);
             }
-
+            setLeavingModal(null);
             return {
                 content,
-                action,
                 label,
                 description,
+                action,
                 isOpen: true,
                 config: {
                     closeOnBackdrop: true,
@@ -66,134 +61,134 @@ export const PopupProvider = ({ children }: {children: React.ReactNode }) => {
     }, []);
 
     const updateModal = useCallback((patch: Partial<ModalState>) => {
-        setModalState(prev => ({
-            ...prev,
-            ...patch
-        }));
+        setCurrentModal(prev => {
+            if (prev === null) return null;
+            return { ...prev, ...patch };
+        });
     }, []);
 
+    /** Closes the most recent modal window */
     const closeModal = useCallback(() => {
         setModalStack(prev => {
             if (prev.length > 0) {
                 const previousModal = prev[prev.length - 1];
-                setIsTransition(true);
-                setModalState(previousModal);
+                setLeavingModal(null);
+                setCurrentModal(previousModal);
                 return prev.slice(0, -1);
             } else {
-                setIsVisible(false);
+                setLeavingModal(currentModal);
+                setCurrentModal(null);
                 return prev;
             }
         });
-    }, []);
+    }, [currentModal]);
 
     const resetModal = useCallback(() => {
         setModalStack([]);
-    }, [])
+        setCurrentModal(null);
+        setLeavingModal(null);
+    }, []);
 
+    /** Sets up event listeners for "Escape" and backdrop click. */
     useEffect(() => {
-        if(!modalState.isOpen) return;
-        setIsVisible(true);
+        if (!isOpen) return;
 
         const handleKeyDown = (e: KeyboardEvent) => {
-            if(e.key === "Escape") {
+            if (e.key === "Escape" && currentModal?.config?.closeOnEscape) {
                 closeModal();
             }
-        }
+        };
 
         const handleClick = (e: MouseEvent) => {
-            if(backdropRef.current && e.target === backdropRef.current && modalState.config?.closeOnBackdrop) {
+            if (
+                backdropRef.current &&
+                e.target === backdropRef.current &&
+                currentModal?.config?.closeOnBackdrop
+            ) {
                 closeModal();
             }
-        }
+        };
 
-        document.addEventListener('keyup', handleKeyDown);
+        document.addEventListener('keydown', handleKeyDown);
         document.addEventListener('click', handleClick);
 
         return () => {
-            document.removeEventListener('keyup', handleKeyDown);
+            document.removeEventListener('keydown', handleKeyDown);
             document.removeEventListener('click', handleClick);
         };
-    }, [modalState.isOpen])
+    }, [isOpen, currentModal, closeModal]);
 
-
-    const fadeInStyle = useSpring({
-        from: {
-            opacity: 0,
-        },
-        to: {
-            opacity: isVisible ? 1 : 0,
-        },
-        config: {
-            tension: 400,
-            precision: 0.01,
-            velocity: 0.001
-        },
-        onRest: () => {
-            if(!isVisible) {
-                setModalState(prev => ({
-                    ...prev,
-                    content: null,
-                    isOpen: false
-                }));
-            }
-        }
-    })
-
-    const popupStyle = useSpring({
-        from: {
-            scale: isTransition ? 1 : 0.8,
-        },
-        to: {
-            scale: isVisible ? (isTransition ? 0.8 : 1) : 0.7
-        },
-        config: {
-            friction: 31,
-            tension: 400,
-            precision: 0.001,
-            velocity: 0.001
-        },
-        immediate: isTransition,
-        onRest: () => { if(isTransition) setIsTransition(false)}
-    })
-
+    /** Focus trap */
     useEffect(() => {
-        if(!isVisible) return;
-        const trap = createFocusTrap(backdropRef?.current as HTMLElement);
+        if (!isOpen || !backdropRef.current) return;
+        const trap = createFocusTrap(backdropRef.current);
         trap.activate();
 
         return () => {
             trap.deactivate();
+        };
+    }, [isOpen]);
+
+    /** Animate mount and unmount, previously onRest() was used for this. */
+    const transitions = useTransition(isOpen, {
+        from: { opacity: 0, transform: 'scale(0.8)' },
+        enter: { opacity: 1, transform: 'scale(1)' },
+        leave: { opacity: 0, transform: 'scale(0.7)' },
+        config: { tension: 400, friction: 30, precision: 0.001 },
+        onRest: () => {
+            if (!isOpen && leavingModal) {
+                setLeavingModal(null);
+            }
         }
-    }, [isVisible])
+    });
 
     const value: ModalContextProps = {
         setModal,
         closeModal,
         updateModal,
         resetModal,
-        isOpen: modalState.isOpen
+        isOpen,
     };
 
     return (
         <ModalContext.Provider value={value}>
             {children}
-            { modalState.isOpen && (
-                <animated.div ref={backdropRef} style={fadeInStyle} className="main-layout__layer modal__wrap">
-                    <animated.div className="modal__content" role={"dialog"} aria-modal={true} style={popupStyle}>
-                        <Window label={modalState.label} description={modalState?.description} action={modalState.action}>
-                            {modalState.content}
-                        </Window>
+            {transitions((style, item) => {
+                if (!item) return null;
+                const modal = currentModal ?? leavingModal;
+                if (!modal) return null;
+
+                return (
+                    <animated.div
+                        ref={backdropRef}
+                        style={{ opacity: style.opacity }}
+                        className="main-layout__layer modal__wrap"
+                    >
+                        <animated.div
+                            className="modal__content"
+                            role="dialog"
+                            aria-modal={true}
+                            style={{ transform: style.transform }}
+                        >
+                            <Window
+                                label={modal.label}
+                                description={modal.description}
+                                action={modal.action}
+                            >
+                                {modal.content}
+                            </Window>
+                        </animated.div>
                     </animated.div>
-                </animated.div>
-            )}
+                );
+            })}
         </ModalContext.Provider>
-    )
-}
+    );
+};
 
 export const useModal = (): ModalContextProps => {
     const context = useContext(ModalContext);
-    if(context === undefined) {
+    if (context === undefined) {
         throw new Error("useModal must be used within a PopupProvider");
     }
     return context;
-}
+};

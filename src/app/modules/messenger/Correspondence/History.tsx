@@ -1,16 +1,16 @@
 import { formatRelativeDate } from "@/utils/formatDate";
-import MessengerMessage, { Message } from "./Message";
+import MessengerMessage, { MessengerMessageProps } from "./Message";
 import { useTranslation } from "react-i18next";
 
-type History = Message[]
+export type MessengerHistory = MessengerMessageProps[]
 
 type BuiltHistoryItem = 
-    | {kind: "message"; data: { group: Message[], isOwn: boolean } }
+    | {kind: "message"; data: { group: MessengerMessageProps[], isOwn: boolean } }
     | {kind: "date"; data: Date}
 type BuiltHistory = BuiltHistoryItem[];
 
 interface MessengerMessageHistoryProps {
-    history: History;
+    history: MessengerHistory;
 }
 /**
  * Groups and divides messages based on date and time between them, adds date separator entries.
@@ -24,18 +24,18 @@ interface MessengerMessageHistoryProps {
  * @param history Array of messages sorted from newest to oldest.
  * @returns mappable message history of type `BuiltHistory` for use in render.
  */
-const historyBuilder = (history: History): BuiltHistory => {
+const historyBuilder = (history: MessengerHistory): BuiltHistory => {
     if (history.length === 0) return [];
 
     const GROUP_WINDOW_MS = 5 * 60 * 1000; // 5 minutes
     const sorted = [...history].reverse();
 
     const result: BuiltHistory = [];
-    let currentGroup: Message[] = [];
-    let previousMessage: Message | null = null; // chronologically previous (overall)
+    let currentGroup: MessengerMessageProps[] = [];
+    let previousMessage: MessengerMessageProps | null = null; // chronologically previous (overall)
     let previousGroupDate: Date | null = null; // date of the oldest message in previous group
 
-    for (const msg of sorted as Message[]) {
+    for (const msg of sorted as MessengerMessageProps[]) {
         const isFirstInGroup = currentGroup.length === 0;
 
         if (!isFirstInGroup) {

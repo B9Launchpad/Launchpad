@@ -29,7 +29,8 @@
     "react-typace": "^1.1.4",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "zustand": "^5.0.15"
   },
   "scripts": {
     "dev": "node src/utils/generate-modules-manifest.js && next dev --turbopack",

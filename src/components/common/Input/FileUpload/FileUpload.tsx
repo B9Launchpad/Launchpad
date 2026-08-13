@@ -48,6 +48,8 @@ const FileUpload: React.FC<FileUploadProps> = ({
     //        3. PARTIALLY IMPLEMENTED: Implement delete button functionality (including small button as shown in Figma designs for File Previews)
 
     const processFiles = (files: File[]) => {
+        if(files.length === 0) return;
+
         setErrorMessage(null);
         const filteredFiles = files.filter(checkIsAllowed);
         const rejectedCount = files.length - filteredFiles.length;

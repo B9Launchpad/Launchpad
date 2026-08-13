@@ -3,7 +3,6 @@ import { SearchProvider } from "@/contexts/SearchContext";
 import { useView } from "@/contexts/ViewContext";
 import { ProfileProps } from "../common/User/Profile";
 import IconSecurity from "../icons/Security";
-import SettingsIcon from "../icons/Settings";
 import SidebarComponent, { SidebarItems } from "./sidebar/Sidebar";
 import LayoutSettings from "./SettingsLayout";
 import { SettingsRegistryProvider } from "@/contexts/SettingsRegistryContext";

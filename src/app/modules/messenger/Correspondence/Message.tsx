@@ -7,7 +7,7 @@ export type MessageContent = {
     images?: Array<{ url: string; alt?: string }>;
 };
 
-export type Message = {
+export type MessengerMessageProps = {
     content: MessageContent;
     sender: Omit<DisplayedProfile, "email">;
     sentOn: Date;
@@ -45,7 +45,7 @@ function getRandomItem<T>(arr: T[]): T {
     return arr[Math.floor(Math.random() * arr.length)];
 }
 
-function generateRandomMessage(): Message {
+function generateRandomMessage(): MessengerMessageProps {
     const includeImages = Math.random() > 0.3; // 70% chance of having images
     const images = includeImages
         ? Array.from(
@@ -71,9 +71,9 @@ function generateRandomMessage(): Message {
 }
 
 // ----- Create your variable -----
-export const generatedMessage: Message = generateRandomMessage();
+export const generatedMessage: MessengerMessageProps = generateRandomMessage();
 
-const MessengerMessage: React.FC<Message> = ({ content, sender, sentOn, editedOn, isOwn, displaySender, displayTime }) => {
+const MessengerMessage: React.FC<MessengerMessageProps> = ({ content, sender, sentOn, editedOn, isOwn, displaySender, displayTime }) => {
     console.log(displaySender, displayTime)
     const displayLabel = displaySender || displayTime;
 

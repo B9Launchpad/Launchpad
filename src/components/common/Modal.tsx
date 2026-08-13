@@ -47,8 +47,13 @@ const ModalTrigger: React.FC<ModalTriggerProps> = ({
     children,
     label = "",
     description = "",
+    /** Properties of action button(s) to be appended into modal window. */
     action = [],
+    /** Configuration of modal window */
     config,
+    /** sets whether trigger should only work on successful operation within modal (e.g. form).
+     * @default false
+     */
     triggerOnSuccess = false,
 }) => {
     const { setModal, closeModal } = useModal();
@@ -80,8 +85,11 @@ const ModalTrigger: React.FC<ModalTriggerProps> = ({
 };
 
 export interface ModalActionButtonProps extends ButtonProps {
+    /** callback to run when button is clicked */
     onClick?: () => void | boolean | Promise<void> | Promise<boolean>;
+    /** sets up trigger to open another modal on button click */
     trigger?: Omit<ModalTriggerProps, "children">;
+    /** sets whether trigger should only work on successful operation within modal (e.g. form).  */
     triggerOnSuccess?: boolean;
 }
 
@@ -89,6 +97,13 @@ interface ModalActionsProps {
     action: ModalActionButtonProps[];
 }
 
+/** Properties of action button(s) to be appended into modal window.
+ * 
+ * @param onClick callback to run when button is clicked
+ * @param trigger sets up trigger to open another modal on button click
+ * @param triggerOnSuccess sets whether trigger should only work on successful operation within modal (e.g. form). 
+ * @returns modal action buttons
+ */
 const ModalAction: React.FC<ModalActionsProps> = ({ action }) => {
     const { updateModal } = useModal();
 
